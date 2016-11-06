@@ -4,11 +4,18 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
+require_once _PS_MODULE_DIR_.'gamification/vendor/autoload.php';
+
 /**
  * Class Gamification
  */
 class Gamification extends Module
 {
+    /**
+     * Module admin controllers
+     */
+    const ADMIN_GAMIFICATION_MODULE_CONTROLLER = 'AdminGamificationModule';
+
     /**
      * Gamification constructor.
      */
@@ -17,7 +24,6 @@ class Gamification extends Module
         $this->name = 'gamification';
         $this->author = 'Šarūnas Jonušas';
         $this->tab = 'front_office_features';
-        //@todo: change version before release
         $this->version = '1.0.0';
         $this->need_instance = 0;
 
@@ -31,5 +37,37 @@ class Gamification extends Module
             [],
             'Modules.Gamification'
         );
+    }
+
+    /**
+     * Process module installation
+     *
+     * @return bool
+     */
+    public function install()
+    {
+        $installer = new GamificationInstaller($this);
+
+        if (!parent::install() || !$installer->install()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Process module uninstall
+     *
+     * @return bool
+     */
+    public function uninstall()
+    {
+        $installer = new GamificationInstaller($this);
+
+        if (!$installer->uninstall() || !parent::uninstall()) {
+            return false;
+        }
+
+        return true;
     }
 }

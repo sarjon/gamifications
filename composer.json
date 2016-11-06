@@ -1,0 +1,15 @@
+{
+    "name": "sarjon/gamification",
+    "type": "prestashop-module",
+    "authors": [
+        {
+            "name": "Šarūnas Jonušas",
+            "email": "jonusas.sarunas@gmail.com"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    }
+}
