@@ -1,5 +1,7 @@
 <?php
 
+use PrestaShop\PrestaShop\Core\Foundation\Database\EntityManager;
+
 if (!defined('_PS_VERSION_')) {
     exit;
 }
@@ -15,11 +17,21 @@ class Gamification extends Module
      * Module admin controllers
      */
     const ADMIN_GAMIFICATION_MODULE_CONTROLLER = 'AdminGamificationModule';
+    const ADMIN_GAMIFICATION_PREFERENCE_CONTROLLER = 'AdminGamificationPreference';
+    const ADMIN_GAMIFICATION_CHALLANGE_CONTROLLER = 'AdminGamificationChallange';
+    const ADMIN_GAMIFICATION_REWARD_CONTROLLER = 'AdminGamificationReward';
+
+    /**
+     * @var EntityManager
+     */
+    private $em;
 
     /**
      * Gamification constructor.
+     *
+     * @param EntityManager $em
      */
-    public function __construct()
+    public function __construct(EntityManager $em)
     {
         $this->name = 'gamification';
         $this->author = 'Šarūnas Jonušas';
@@ -37,6 +49,8 @@ class Gamification extends Module
             [],
             'Modules.Gamification'
         );
+
+        $this->em = $em;
     }
 
     /**
@@ -69,5 +83,23 @@ class Gamification extends Module
         }
 
         return true;
+    }
+
+    /**
+     * Redirect to Preference controller
+     */
+    public function getContent()
+    {
+        return Tools::redirectAdmin($this->context->link->getAdminLink(self::ADMIN_GAMIFICATION_PREFERENCE_CONTROLLER));
+    }
+
+    /**
+     * Get entity manager
+     *
+     * @return EntityManager
+     */
+    public function getEntityManager()
+    {
+        return $this->em;
     }
 }
