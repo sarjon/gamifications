@@ -5,6 +5,9 @@
  */
 class GamificationAdminController extends ModuleAdminController
 {
+    /** @var Gamification */
+    public $module;
+
     public $bootstrap = true;
 
     /**

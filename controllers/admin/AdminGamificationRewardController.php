@@ -5,6 +5,9 @@
  */
 class AdminGamificationRewardController extends GamificationAdminController
 {
+    /** @var GamificationReward */
+    protected $object;
+
     /**
      * AdminGamificationRewardController constructor.
      */
@@ -15,6 +18,51 @@ class AdminGamificationRewardController extends GamificationAdminController
         $this->identifier = GamificationReward::$definition['primary'];
 
         parent::__construct();
+    }
+
+    /**
+     * Process ajax, add & save reward
+     *
+     * @return bool
+     */
+    public function postProcess()
+    {
+        if ($this->isXmlHttpRequest()) {
+
+            $query = Tools::getValue('q');
+            $limit = (int) Tools::getValue('limit');
+
+            /** @var GamificationProductRepository $productRepository */
+            $productRepository = $this->module->getEntityManager()->getRepository('GamificationProduct');
+            $products = $productRepository->findAllProductsNamesAndIdsByQuery(
+                $query,
+                $limit,
+                $this->context->language->id,
+                $this->context->shop->id
+            );
+
+            die(json_encode(['products' => $products]));
+        }
+
+        return parent::postProcess();
+    }
+
+    /**
+     * Add custom js & css to controller
+     */
+    public function setMedia()
+    {
+        parent::setMedia();
+
+        if (in_array($this->display, ['add', 'edit'])) {
+            $this->addJqueryPlugin('autocomplete');
+            $this->addJS($this->module->getPathUri().'views/js/admin/reward.js');
+
+            Media::addJsDef([
+                '$gamificationRewardControllerUrl' =>
+                    $this->context->link->getAdminLink(Gamification::ADMIN_GAMIFICATION_REWARD_CONTROLLER),
+            ]);
+        }
     }
 
     /**
@@ -31,6 +79,31 @@ class AdminGamificationRewardController extends GamificationAdminController
         }
 
         parent::initPageHeaderToolbar();
+    }
+
+    /**
+     * Customize list
+     *
+     * @param int $idLang
+     * @param null $orderBy
+     * @param null $orderWay
+     * @param int $start
+     * @param null $limit
+     * @param bool $idLangShop
+     */
+    public function getList($idLang, $orderBy = null, $orderWay = null, $start = 0, $limit = null, $idLangShop = false)
+    {
+        parent::getList($idLang, $orderBy, $orderWay, $start, $limit, $idLangShop);
+
+        if (empty($this->_list)) {
+            return;
+        }
+
+        $rewardTypeTranslations = GamificationReward::getRewardsTranslations();
+
+        foreach ($this->_list as &$listItem) {
+            $listItem['reward_type'] = $rewardTypeTranslations[$listItem['reward_type']];
+        }
     }
 
     /**
@@ -55,6 +128,9 @@ class AdminGamificationRewardController extends GamificationAdminController
         ];
     }
 
+    /**
+     * Initialize form
+     */
     protected function initForm()
     {
         $this->lang = true;
@@ -96,6 +172,10 @@ class AdminGamificationRewardController extends GamificationAdminController
                                 'id' => GamificationReward::REWARD_TYPE_FREE_SHIPPING,
                                 'name' => $this->trans('Free shipping'),
                             ],
+                            [
+                                'id' => GamificationReward::REWARD_TYPE_PRIZE,
+                                'name' => $this->trans('Prize'),
+                            ],
                         ],
                     ],
                 ],
@@ -109,6 +189,20 @@ class AdminGamificationRewardController extends GamificationAdminController
 
                 ],
                 [
+                    // THIS FIELD IS NOT SAVED
+                    'label' => $this->trans('Product as a prize'),
+                    'name' => 'prize_name',
+                    'type' => 'text',
+                    'hint' => $this->trans('Enter product name and available products will show up'),
+                    'class' => 'fixed-width-xxl',
+
+                ],
+                [
+                    'label' => '',
+                    'name' => 'prize',
+                    'type' => 'hidden',
+                ],
+                [
                     'label' => $this->trans('Discount type'),
                     'type' => 'select',
                     'name' => 'discount_reduction_type',
@@ -118,11 +212,11 @@ class AdminGamificationRewardController extends GamificationAdminController
                         'query' => [
                             [
                                 'id' => GamificationReward::DISCOUNT_REDUCTION_PERCENT,
-                                'name' => $this->trans('Percent'),
+                                'name' => $this->trans('Percent (%)'),
                             ],
                             [
                                 'id' => GamificationReward::DISCOUNT_REDUCTION_AMOUNT,
-                                'name' => $this->trans('Amount'),
+                                'name' => $this->trans('Amount (%currency%)', ['%currency%' => $defaultCurrency->sign]),
                             ],
                         ],
                     ],
@@ -131,7 +225,8 @@ class AdminGamificationRewardController extends GamificationAdminController
                     'label' => $this->trans('Discount value'),
                     'type' => 'text',
                     'name' => 'discount_value',
-                    'hint' => $this->trans('Percent (%) or amount (%currency%)', ['%currency%' => $defaultCurrency->sign]),
+                    'hint' =>
+                        $this->trans('Percent (%) or amount (%currency%)', ['%currency%' => $defaultCurrency->sign]),
                     'class' => 'fixed-width-sm',
                 ],
                 [
@@ -184,5 +279,36 @@ class AdminGamificationRewardController extends GamificationAdminController
                 'name' => 'checkBoxShopAsso',
             ];
         }
+    }
+
+    /**
+     * Add custom fields to object if it's loaded
+     *
+     * @param bool $opt
+     *
+     * @return false|GamificationReward
+     */
+    protected function loadObject($opt = false)
+    {
+        $response = parent::loadObject($opt);
+
+        if (Validate::isLoadedObject($this->object)) {
+
+            if ($this->object->prize) {
+                $product = new Product(
+                    $this->object->prize,
+                    false,
+                    $this->context->language->id,
+                    $this->context->shop->id
+                );
+
+                if (Validate::isLoadedObject($product)) {
+                    $this->object->prize_name = $product->name;
+                }
+            }
+
+        }
+
+        return $response;
     }
 }

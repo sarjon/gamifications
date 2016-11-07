@@ -2,10 +2,11 @@ CREATE TABLE IF NOT EXISTS `PREFIX_gamification_reward` (
   `id_gamification_reward` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `reward_type` VARCHAR(50) NOT NULL,
   `points` INT(11) UNSIGNED NOT NULL DEFAULT 0,
+  `prize` VARCHAR(20) NOT NULL DEFAULT 0,
   `minimum_cart_amount` INT(11) UNSIGNED NOT NULL DEFAULT 0,
   `discount_reduction_type` VARCHAR(50) NOT NULL DEFAULT '',
   `discount_apply_type` VARCHAR(50) NOT NULL DEFAULT '',
-  `discount_value` INT(11) NOT NULL DEFAULT 0,
+  `discount_value` INT(11) UNSIGNED NOT NULL DEFAULT 0,
   `discount_valid_days` INT(11) UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id_gamification_reward`)
 ) ENGINE=ENGINE_TYPE DEFAULT CHARSET=utf8;

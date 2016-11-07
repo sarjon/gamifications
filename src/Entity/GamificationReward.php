@@ -10,7 +10,8 @@ class GamificationReward extends ObjectModel
      */
     const REWARD_TYPE_POINTS = 'points';
     const REWARD_TYPE_DISCOUNT = 'discount';
-    const REWARD_TYPE_FREE_SHIPPING = 'shipping';
+    const REWARD_TYPE_FREE_SHIPPING = 'free_shipping';
+    const REWARD_TYPE_PRIZE = 'prize';
 
     /**
      * Discount reduction types
@@ -65,6 +66,11 @@ class GamificationReward extends ObjectModel
     public $discount_valid_days;
 
     /**
+     * @var string id_product
+     */
+    public $prize;
+
+    /**
      * @var array
      */
     public static $definition = [
@@ -79,6 +85,11 @@ class GamificationReward extends ObjectModel
 
             ],
             'points' => [
+                'type' => self::TYPE_INT,
+                'required' => false,
+                'validate' => 'isUnsignedInt',
+            ],
+            'prize' => [
                 'type' => self::TYPE_INT,
                 'required' => false,
                 'validate' => 'isUnsignedInt',
@@ -133,5 +144,26 @@ class GamificationReward extends ObjectModel
     {
         parent::__construct($id, $idLang, $idShop);
         Shop::addTableAssociation(self::$definition['table'], ['type' => 'shop']);
+    }
+
+    /**
+     * Get translation(s) for reward type(s)
+     *
+     * @param string|null $rewardType
+     *
+     * @return array|string
+     */
+    public static function getRewardsTranslations($rewardType = null)
+    {
+        $translator = Context::getContext()->getTranslator();
+
+        $translations = [
+            self::REWARD_TYPE_POINTS => $translator->trans('Points', [], 'Modules.Gamification'),
+            self::REWARD_TYPE_DISCOUNT => $translator->trans('Discount', [], 'Modules.Gamification'),
+            self::REWARD_TYPE_FREE_SHIPPING => $translator->trans('Free shipping', [], 'Modules.Gamification'),
+            self::REWARD_TYPE_PRIZE => $translator->trans('Prize', [], 'Modules.Gamification'),
+        ];
+
+        return (null === $rewardType) ? $translations : $translations[$rewardType];
     }
 }
