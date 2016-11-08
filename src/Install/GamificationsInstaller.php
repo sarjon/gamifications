@@ -1,29 +1,29 @@
 <?php
 
 /**
- * Class GamificationInstaller
+ * Class GamificationsInstaller
  */
-class GamificationInstaller extends AbstractGamificationInstaller
+class GamificationsInstaller extends AbstractGamificationsInstaller
 {
     /**
-     * @var Gamification
+     * @var Gamifications
      */
     private $module;
 
     /**
-     * @var GamificationDbInstaller
+     * @var GamificationsDbInstaller
      */
     private $dbInstaller;
 
     /**
      * GamificationInstaller constructor.
      *
-     * @param Gamification $module
+     * @param Gamifications $module
      */
-    public function __construct(Gamification $module)
+    public function __construct(Gamifications $module)
     {
         $this->module = $module;
-        $this->dbInstaller = new GamificationDbInstaller($module);
+        $this->dbInstaller = new GamificationsDbInstaller($module);
     }
 
     /**
@@ -85,24 +85,24 @@ class GamificationInstaller extends AbstractGamificationInstaller
     {
         return [
             [
-                'name' => $this->module->getTranslator()->trans('Gamification', [], 'Modules.Gamification'),
+                'name' => $this->module->getTranslator()->trans('Gamification', [], 'Modules.Gamifications'),
                 'parent' => 'IMPROVE',
-                'class_name' => Gamification::ADMIN_GAMIFICATION_MODULE_CONTROLLER,
+                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
             ],
             [
-                'name' => $this->module->getTranslator()->trans('Preferences', [], 'Modules.Gamification'),
-                'parent' => Gamification::ADMIN_GAMIFICATION_MODULE_CONTROLLER,
-                'class_name' => Gamification::ADMIN_GAMIFICATION_PREFERENCE_CONTROLLER,
+                'name' => $this->module->getTranslator()->trans('Preferences', [], 'Modules.Gamifications'),
+                'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
+                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_PREFERENCE_CONTROLLER,
             ],
             [
-                'name' => $this->module->getTranslator()->trans('Rewards', [], 'Modules.Gamification'),
-                'parent' => Gamification::ADMIN_GAMIFICATION_MODULE_CONTROLLER,
-                'class_name' => Gamification::ADMIN_GAMIFICATION_REWARD_CONTROLLER,
+                'name' => $this->module->getTranslator()->trans('Rewards', [], 'Modules.Gamifications'),
+                'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
+                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_REWARD_CONTROLLER,
             ],
             [
-                'name' => $this->module->getTranslator()->trans('Challanges', [], 'Modules.Gamification'),
-                'parent' => Gamification::ADMIN_GAMIFICATION_MODULE_CONTROLLER,
-                'class_name' => Gamification::ADMIN_GAMIFICATION_CHALLANGE_CONTROLLER,
+                'name' => $this->module->getTranslator()->trans('Challanges', [], 'Modules.Gamifications'),
+                'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
+                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_CHALLANGE_CONTROLLER,
             ],
         ];
     }

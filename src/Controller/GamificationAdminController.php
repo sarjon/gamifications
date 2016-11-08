@@ -1,13 +1,18 @@
 <?php
 
 /**
- * Class GamificationAdminController custom admin controller for module
+ * Class GamificationsAdminController custom admin controller for module
  */
-class GamificationAdminController extends ModuleAdminController
+class GamificationsAdminController extends ModuleAdminController
 {
-    /** @var Gamification */
+    /**
+     * @var Gamifications
+     */
     public $module;
 
+    /**
+     * @var bool
+     */
     public $bootstrap = true;
 
     /**
@@ -32,7 +37,7 @@ class GamificationAdminController extends ModuleAdminController
      *
      * @return string
      */
-    protected function trans($id, array $parameters = [], $domain = 'Modules.Gamification', $locale = null)
+    protected function trans($id, array $parameters = [], $domain = 'Modules.Gamifications', $locale = null)
     {
         return parent::trans($id, $parameters, $domain, $locale);
     }

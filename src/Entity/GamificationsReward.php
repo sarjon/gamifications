@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class GamificationReward
+ * Class GamificationsReward
  */
-class GamificationReward extends ObjectModel
+class GamificationsReward extends ObjectModel
 {
     /**
      * Reward types
@@ -74,8 +74,8 @@ class GamificationReward extends ObjectModel
      * @var array
      */
     public static $definition = [
-        'table' => 'gamification_reward',
-        'primary' => 'id_gamification_reward',
+        'table' => 'gamifications_reward',
+        'primary' => 'id_gamifications_reward',
         'fields' => [
             'reward_type' => [
                 'type' => self::TYPE_STRING,
@@ -158,10 +158,10 @@ class GamificationReward extends ObjectModel
         $translator = Context::getContext()->getTranslator();
 
         $translations = [
-            self::REWARD_TYPE_POINTS => $translator->trans('Points', [], 'Modules.Gamification'),
-            self::REWARD_TYPE_DISCOUNT => $translator->trans('Discount', [], 'Modules.Gamification'),
-            self::REWARD_TYPE_FREE_SHIPPING => $translator->trans('Free shipping', [], 'Modules.Gamification'),
-            self::REWARD_TYPE_PRIZE => $translator->trans('Prize', [], 'Modules.Gamification'),
+            self::REWARD_TYPE_POINTS => $translator->trans('Points', [], 'Modules.Gamifications'),
+            self::REWARD_TYPE_DISCOUNT => $translator->trans('Discount', [], 'Modules.Gamifications'),
+            self::REWARD_TYPE_FREE_SHIPPING => $translator->trans('Free shipping', [], 'Modules.Gamifications'),
+            self::REWARD_TYPE_PRIZE => $translator->trans('Prize', [], 'Modules.Gamifications'),
         ];
 
         return (null === $rewardType) ? $translations : $translations[$rewardType];

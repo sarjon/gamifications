@@ -1,5 +1,5 @@
-CREATE TABLE IF NOT EXISTS `PREFIX_gamification_reward` (
-  `id_gamification_reward` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `PREFIX_gamifications_reward` (
+  `id_gamifications_reward` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `reward_type` VARCHAR(50) NOT NULL,
   `points` INT(11) UNSIGNED NOT NULL DEFAULT 0,
   `prize` VARCHAR(20) NOT NULL DEFAULT 0,
@@ -8,18 +8,18 @@ CREATE TABLE IF NOT EXISTS `PREFIX_gamification_reward` (
   `discount_apply_type` VARCHAR(50) NOT NULL DEFAULT '',
   `discount_value` INT(11) UNSIGNED NOT NULL DEFAULT 0,
   `discount_valid_days` INT(11) UNSIGNED NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id_gamification_reward`)
+  PRIMARY KEY (`id_gamifications_reward`)
 ) ENGINE=ENGINE_TYPE DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `PREFIX_gamification_reward_lang` (
-  `id_gamification_reward` INT(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `PREFIX_gamifications_reward_lang` (
+  `id_gamifications_reward` INT(11) UNSIGNED NOT NULL,
   `id_lang` INT(11) UNSIGNED NOT NULL,
   `name` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`id_gamification_reward`, `id_lang`)
+  PRIMARY KEY (`id_gamifications_reward`, `id_lang`)
 ) ENGINE=ENGINE_TYPE DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `PREFIX_gamification_reward_shop` (
-  `id_gamification_reward` INT(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `PREFIX_gamifications_reward_shop` (
+  `id_gamifications_reward` INT(11) UNSIGNED NOT NULL,
   `id_shop` INT(11) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id_gamification_reward`, `id_shop`)
+  PRIMARY KEY (`id_gamifications_reward`, `id_shop`)
 ) ENGINE=ENGINE_TYPE DEFAULT CHARSET=utf8;

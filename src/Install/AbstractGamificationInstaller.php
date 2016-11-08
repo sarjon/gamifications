@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class AbstractGamificationInstaller
+ * Class AbstractGamificationsInstaller
  */
-abstract class AbstractGamificationInstaller
+abstract class AbstractGamificationsInstaller
 {
     /**
      * Get module name

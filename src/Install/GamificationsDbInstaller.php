@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Class GamificationDbInstaller
+ * Class GamificationsDbInstaller
  */
-class GamificationDbInstaller
+class GamificationsDbInstaller
 {
     /**
-     * @var Gamification
+     * @var Gamifications
      */
     private $module;
 
     /**
      * GamificationDbInstaller constructor.
      *
-     * @param Gamification $module
+     * @param Gamifications $module
      */
-    public function __construct(Gamification $module)
+    public function __construct(Gamifications $module)
     {
         $this->module = $module;
     }

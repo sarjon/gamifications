@@ -3,9 +3,9 @@
 use PrestaShop\PrestaShop\Core\Foundation\Database\EntityRepository;
 
 /**
- * Class GamificationProductRepository
+ * Class GamificationsProductRepository
  */
-class GamificationProductRepository extends EntityRepository
+class GamificationsProductRepository extends EntityRepository
 {
     /**
      * Find all products by query, idShop and idLang

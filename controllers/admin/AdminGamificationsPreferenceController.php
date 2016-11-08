@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class AdminGamificationPreferenceController
+ * Class AdminGamificationsPreferenceController
  */
-class AdminGamificationPreferenceController extends GamificationAdminController
+class AdminGamificationsPreferenceController extends GamificationsAdminController
 {
     protected function initOptions()
     {
@@ -11,13 +11,13 @@ class AdminGamificationPreferenceController extends GamificationAdminController
             'challange_preferences' => [
                 'title' => $this->trans('Challange preferences'),
                 'fields' => [
-                    GamificationConfig::CHALLANGES_STATUS => [
+                    GamificationsConfig::CHALLANGES_STATUS => [
                         'title' => $this->trans('Enable challanges'),
                         'hint' => $this->trans('Challanges feature in Front Office'),
                         'validation' => 'isBool',
                         'type' => 'bool',
                     ],
-                    GamificationConfig::CHALLANGES_DISPLAY_REWARDS => [
+                    GamificationsConfig::CHALLANGES_DISPLAY_REWARDS => [
                         'title' => $this->trans('Display rewards'),
                         'hint' =>
                             $this->trans('Display rewards that customer gets after completing challange'),

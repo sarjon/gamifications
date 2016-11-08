@@ -12,7 +12,7 @@ $(document).ready(function () {
      * Autocomplete products search in from
      */
     $prizeProductInput
-        .autocomplete($gamificationRewardControllerUrl, {
+        .autocomplete($gamificationsRewardControllerUrl, {
             minChars: 3,
             max: 10,
             width: 300,

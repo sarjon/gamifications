@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Class GamificationChallange
+ * Class GamificationsChallange
  */
-class GamificationChallange extends ObjectModel
+class GamificationsChallange extends ObjectModel
 {
     const CHALLANGE_TYPE_PRODUCTS_VIEWS = 'products_views';
     const CHALLANGE_TYPE_ORDERS_MADE = 'orders_made';
 
     //@todo: finish definition
     public static $definition = [
-        'table' => 'gamification_challange',
-        'primary' => 'id_gamification_challange',
+        'table' => 'gamifications_challange',
+        'primary' => 'id_gamifications_challange',
         'fields' => [
             'name' => [
                 'type' => self::TYPE_STRING,

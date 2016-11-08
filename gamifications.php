@@ -6,20 +6,18 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-require_once _PS_MODULE_DIR_.'gamification/vendor/autoload.php';
-
 /**
- * Class Gamification
+ * Class Gamifications
  */
-class Gamification extends Module
+class Gamifications extends Module
 {
     /**
      * Module admin controllers
      */
-    const ADMIN_GAMIFICATION_MODULE_CONTROLLER = 'AdminGamificationModule';
-    const ADMIN_GAMIFICATION_PREFERENCE_CONTROLLER = 'AdminGamificationPreference';
-    const ADMIN_GAMIFICATION_CHALLANGE_CONTROLLER = 'AdminGamificationChallange';
-    const ADMIN_GAMIFICATION_REWARD_CONTROLLER = 'AdminGamificationReward';
+    const ADMIN_GAMIFICATIONS_MODULE_CONTROLLER = 'AdminGamificationsModule';
+    const ADMIN_GAMIFICATIONS_PREFERENCE_CONTROLLER = 'AdminGamificationsPreference';
+    const ADMIN_GAMIFICATIONS_CHALLANGE_CONTROLLER = 'AdminGamificationsChallange';
+    const ADMIN_GAMIFICATIONS_REWARD_CONTROLLER = 'AdminGamificationsReward';
 
     /**
      * @var EntityManager
@@ -33,7 +31,7 @@ class Gamification extends Module
      */
     public function __construct(EntityManager $em)
     {
-        $this->name = 'gamification';
+        $this->name = 'gamifications';
         $this->author = 'Šarūnas Jonušas';
         $this->tab = 'front_office_features';
         $this->version = '1.0.0';
@@ -41,13 +39,15 @@ class Gamification extends Module
 
         parent::__construct();
 
+        $this->requireAutoloader();
+
         $this->ps_versions_compliancy = ['min' => '1.7.0.0', 'max' => _PS_VERSION_];
-        $this->displayName = $this->trans('Gamification', [], 'Modules.Gamification');
+        $this->displayName = $this->trans('Gamification', [], 'Modules.Gamifications');
         $this->description = $this->trans(
             'Increase customers loyality by adding various activities to your shop! 
              Daily rewards, challanges, ranks, points and prizes',
             [],
-            'Modules.Gamification'
+            'Modules.Gamifications'
         );
 
         $this->em = $em;
@@ -60,7 +60,7 @@ class Gamification extends Module
      */
     public function install()
     {
-        $installer = new GamificationInstaller($this);
+        $installer = new GamificationsInstaller($this);
 
         if (!parent::install() || !$installer->install()) {
             return false;
@@ -76,7 +76,7 @@ class Gamification extends Module
      */
     public function uninstall()
     {
-        $installer = new GamificationInstaller($this);
+        $installer = new GamificationsInstaller($this);
 
         if (!$installer->uninstall() || !parent::uninstall()) {
             return false;
@@ -90,7 +90,9 @@ class Gamification extends Module
      */
     public function getContent()
     {
-        return Tools::redirectAdmin($this->context->link->getAdminLink(self::ADMIN_GAMIFICATION_PREFERENCE_CONTROLLER));
+        return Tools::redirectAdmin(
+            $this->context->link->getAdminLink(self::ADMIN_GAMIFICATIONS_PREFERENCE_CONTROLLER)
+        );
     }
 
     /**
@@ -101,5 +103,13 @@ class Gamification extends Module
     public function getEntityManager()
     {
         return $this->em;
+    }
+
+    /**
+     * Require autoloader
+     */
+    private function requireAutoloader()
+    {
+        require_once $this->getLocalPath().'vendor/autoload.php';
     }
 }

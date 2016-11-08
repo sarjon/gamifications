@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Class AdminGamificationRewardController
+ * Class AdminGamificationsRewardController
  */
-class AdminGamificationRewardController extends GamificationAdminController
+class AdminGamificationsRewardController extends GamificationsAdminController
 {
-    /** @var GamificationReward */
+    /** @var GamificationsReward */
     protected $object;
 
     /**
-     * AdminGamificationRewardController constructor.
+     * AdminGamificationsRewardController constructor.
      */
     public function __construct()
     {
-        $this->className = 'GamificationReward';
-        $this->table = GamificationReward::$definition['table'];
-        $this->identifier = GamificationReward::$definition['primary'];
+        $this->className = 'GamificationsReward';
+        $this->table = GamificationsReward::$definition['table'];
+        $this->identifier = GamificationsReward::$definition['primary'];
 
         parent::__construct();
     }
@@ -32,8 +32,8 @@ class AdminGamificationRewardController extends GamificationAdminController
             $query = Tools::getValue('q');
             $limit = (int) Tools::getValue('limit');
 
-            /** @var GamificationProductRepository $productRepository */
-            $productRepository = $this->module->getEntityManager()->getRepository('GamificationProduct');
+            /** @var GamificationsProductRepository $productRepository */
+            $productRepository = $this->module->getEntityManager()->getRepository('GamificationsProduct');
             $products = $productRepository->findAllProductsNamesAndIdsByQuery(
                 $query,
                 $limit,
@@ -59,8 +59,8 @@ class AdminGamificationRewardController extends GamificationAdminController
             $this->addJS($this->module->getPathUri().'views/js/admin/reward.js');
 
             Media::addJsDef([
-                '$gamificationRewardControllerUrl' =>
-                    $this->context->link->getAdminLink(Gamification::ADMIN_GAMIFICATION_REWARD_CONTROLLER),
+                '$gamificationsRewardControllerUrl' =>
+                    $this->context->link->getAdminLink(Gamifications::ADMIN_GAMIFICATIONS_REWARD_CONTROLLER),
             ]);
         }
     }
@@ -99,7 +99,7 @@ class AdminGamificationRewardController extends GamificationAdminController
             return;
         }
 
-        $rewardTypeTranslations = GamificationReward::getRewardsTranslations();
+        $rewardTypeTranslations = GamificationsReward::getRewardsTranslations();
 
         foreach ($this->_list as &$listItem) {
             $listItem['reward_type'] = $rewardTypeTranslations[$listItem['reward_type']];
@@ -112,7 +112,7 @@ class AdminGamificationRewardController extends GamificationAdminController
     protected function initList()
     {
         $this->fields_list = [
-            'id_gamification_reward' => [
+            'id_gamifications_reward' => [
                 'title' => $this->trans('ID'),
                 'width' => 20,
                 'type' => 'text',
@@ -161,19 +161,19 @@ class AdminGamificationRewardController extends GamificationAdminController
                         'name' => 'name',
                         'query' => [
                             [
-                                'id' => GamificationReward::REWARD_TYPE_POINTS,
+                                'id' => GamificationsReward::REWARD_TYPE_POINTS,
                                 'name' => $this->trans('Points'),
                             ],
                             [
-                                'id' => GamificationReward::REWARD_TYPE_DISCOUNT,
+                                'id' => GamificationsReward::REWARD_TYPE_DISCOUNT,
                                 'name' => $this->trans('Discount'),
                             ],
                             [
-                                'id' => GamificationReward::REWARD_TYPE_FREE_SHIPPING,
+                                'id' => GamificationsReward::REWARD_TYPE_FREE_SHIPPING,
                                 'name' => $this->trans('Free shipping'),
                             ],
                             [
-                                'id' => GamificationReward::REWARD_TYPE_PRIZE,
+                                'id' => GamificationsReward::REWARD_TYPE_PRIZE,
                                 'name' => $this->trans('Prize'),
                             ],
                         ],
@@ -211,11 +211,11 @@ class AdminGamificationRewardController extends GamificationAdminController
                         'name' => 'name',
                         'query' => [
                             [
-                                'id' => GamificationReward::DISCOUNT_REDUCTION_PERCENT,
+                                'id' => GamificationsReward::DISCOUNT_REDUCTION_PERCENT,
                                 'name' => $this->trans('Percent (%)'),
                             ],
                             [
-                                'id' => GamificationReward::DISCOUNT_REDUCTION_AMOUNT,
+                                'id' => GamificationsReward::DISCOUNT_REDUCTION_AMOUNT,
                                 'name' => $this->trans('Amount (%currency%)', ['%currency%' => $defaultCurrency->sign]),
                             ],
                         ],
@@ -240,11 +240,11 @@ class AdminGamificationRewardController extends GamificationAdminController
                         'name' => 'name',
                         'query' => [
                             [
-                                'id' => GamificationReward::DISCOUNT_TYPE_AUTOMATICALLY_APPLIED,
+                                'id' => GamificationsReward::DISCOUNT_TYPE_AUTOMATICALLY_APPLIED,
                                 'name' => $this->trans('Automatically'),
                             ],
                             [
-                                'id' => GamificationReward::DISCOUNT_REDUCTION_AMOUNT,
+                                'id' => GamificationsReward::DISCOUNT_REDUCTION_AMOUNT,
                                 'name' => $this->trans('Provide code'),
                             ],
                         ],
@@ -286,7 +286,7 @@ class AdminGamificationRewardController extends GamificationAdminController
      *
      * @param bool $opt
      *
-     * @return false|GamificationReward
+     * @return false|GamificationsReward
      */
     protected function loadObject($opt = false)
     {
