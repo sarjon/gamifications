@@ -45,6 +45,10 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
             return false;
         }
 
+        if (!$this->installConfiguration()) {
+            return false;
+        }
+
         return true;
     }
 
@@ -60,6 +64,10 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
         }
 
         if (!$this->dbInstaller->uninstall()) {
+            return false;
+        }
+
+        if (!$this->uninstallConfiguration()) {
             return false;
         }
 
@@ -90,19 +98,34 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
             ],
             [
-                'name' => $this->module->getTranslator()->trans('Preferences', [], 'Modules.Gamifications'),
-                'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
-                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_PREFERENCE_CONTROLLER,
-            ],
-            [
                 'name' => $this->module->getTranslator()->trans('Rewards', [], 'Modules.Gamifications'),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_REWARD_CONTROLLER,
             ],
             [
+                'name' => $this->module->getTranslator()->trans('Points', [], 'Modules.Gamifications'),
+                'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
+                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_POINT_CONTROLLER,
+            ],
+            [
+                'name' => $this->module->getTranslator()->trans('Activities', [], 'Modules.Gamifications'),
+                'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
+                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER,
+            ],
+            [
+                'name' => $this->module->getTranslator()->trans('Daily rewards', [], 'Modules.Gamifications'),
+                'parent' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER,
+                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_DAILY_REWARDS_CONTROLLER,
+            ],
+            [
                 'name' => $this->module->getTranslator()->trans('Challanges', [], 'Modules.Gamifications'),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_CHALLANGE_CONTROLLER,
+            ],
+            [
+                'name' => $this->module->getTranslator()->trans('Preferences', [], 'Modules.Gamifications'),
+                'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
+                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_PREFERENCE_CONTROLLER,
             ],
         ];
     }
@@ -120,6 +143,42 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
 
         foreach ($hooks as $hookName) {
             if (!$this->module->registerHook($hookName)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Install default configuration
+     *
+     * @return bool
+     */
+    private function installConfiguration()
+    {
+        $configuration = GamificationsConfig::getDefaultConfiguration();
+
+        foreach ($configuration as $name => $value) {
+            if (!Configuration::updateValue($name, $value)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Uninstall configuration
+     *
+     * @return bool
+     */
+    private function uninstallConfiguration()
+    {
+        $configuration = array_keys(GamificationsConfig::getDefaultConfiguration());
+
+        foreach ($configuration as $name) {
+            if (!Configuration::deleteByName($name)) {
                 return false;
             }
         }

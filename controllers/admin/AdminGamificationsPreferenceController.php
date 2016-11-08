@@ -8,6 +8,22 @@ class AdminGamificationsPreferenceController extends GamificationsAdminControlle
     protected function initOptions()
     {
         $this->fields_options = [
+            'general' => [
+                'title' => $this->trans('General preferences'),
+                'fields' => [
+                    GamificationsConfig::DISPLAY_EXPLANATIONS => [
+                        'title' => $this->trans('Display explanations'),
+                        'hint' =>
+                            $this->trans('Choose whether to display various explanations').' '.
+                            $this->trans('about activites, rewards, points & etc. in Back Office'),
+                        'validation' => 'isBool',
+                        'type' => 'bool',
+                    ],
+                ],
+                'submit' => [
+                    'title' => $this->trans('Save'),
+                ],
+            ],
             'challange_preferences' => [
                 'title' => $this->trans('Challange preferences'),
                 'fields' => [
@@ -21,6 +37,20 @@ class AdminGamificationsPreferenceController extends GamificationsAdminControlle
                         'title' => $this->trans('Display rewards'),
                         'hint' =>
                             $this->trans('Display rewards that customer gets after completing challange'),
+                        'validation' => 'isBool',
+                        'type' => 'bool',
+                    ],
+                ],
+                'submit' => [
+                    'title' => $this->trans('Save'),
+                ],
+            ],
+            'daily_rewards' => [
+                'title' => $this->trans('Daily rewards'),
+                'fields' => [
+                    GamificationsConfig::DAILY_DAILY_REWARDS_STATUS => [
+                        'title' => $this->trans('Enable Daily Rewards'),
+                        'hint' => $this->trans('Daily Rewards feature in Front Office'),
                         'validation' => 'isBool',
                         'type' => 'bool',
                     ],

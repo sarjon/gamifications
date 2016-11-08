@@ -18,6 +18,9 @@ class Gamifications extends Module
     const ADMIN_GAMIFICATIONS_PREFERENCE_CONTROLLER = 'AdminGamificationsPreference';
     const ADMIN_GAMIFICATIONS_CHALLANGE_CONTROLLER = 'AdminGamificationsChallange';
     const ADMIN_GAMIFICATIONS_REWARD_CONTROLLER = 'AdminGamificationsReward';
+    const ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER = 'AdminGamificationsActivity';
+    const ADMIN_GAMIFICATIONS_DAILY_REWARDS_CONTROLLER = 'AdminGamificationsDailyRewards';
+    const ADMIN_GAMIFICATIONS_POINT_CONTROLLER = 'AdminGamificationsPoint';
 
     /**
      * @var EntityManager
