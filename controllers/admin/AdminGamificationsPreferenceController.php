@@ -5,6 +5,9 @@
  */
 class AdminGamificationsPreferenceController extends GamificationsAdminController
 {
+    /**
+     * Initalize options
+     */
     protected function initOptions()
     {
         $this->fields_options = [

@@ -72,7 +72,7 @@ class AdminGamificationsRewardController extends GamificationsAdminController
     {
         if (empty($this->display)) {
             $this->page_header_toolbar_btn['new_reward'] = [
-                'href' => self::$currentIndex.'&addgamification_reward&token='.$this->token,
+                'href' => self::$currentIndex.'&addgamifications_reward&token='.$this->token,
                 'desc' => $this->trans('Add new reward'),
                 'icon' => 'process-icon-new',
             ];
@@ -123,7 +123,9 @@ class AdminGamificationsRewardController extends GamificationsAdminController
             ],
             'reward_type' => [
                 'title' => $this->trans('Reward type'),
-                'type' => 'text',
+                'type' => 'select',
+                'list' => GamificationsReward::getRewardsTranslations(),
+                'filter_key' => 'a!reward_type',
             ],
         ];
     }
@@ -290,7 +292,7 @@ class AdminGamificationsRewardController extends GamificationsAdminController
      */
     protected function loadObject($opt = false)
     {
-        $response = parent::loadObject($opt);
+        $parentResponse = parent::loadObject($opt);
 
         if (Validate::isLoadedObject($this->object)) {
 
@@ -309,6 +311,6 @@ class AdminGamificationsRewardController extends GamificationsAdminController
 
         }
 
-        return $response;
+        return $parentResponse;
     }
 }

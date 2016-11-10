@@ -23,6 +23,7 @@ class GamificationsAdminController extends ModuleAdminController
         $this->initOptions();
         $this->initList();
         $this->initForm();
+        $this->initFieldsValue();
 
         parent::init();
     }
@@ -64,5 +65,13 @@ class GamificationsAdminController extends ModuleAdminController
     protected function initForm()
     {
         //@todo: Override to initialize form
+    }
+
+    /**
+     * Init fields value
+     */
+    protected function initFieldsValue()
+    {
+        //@todo: Override to initialize fields value
     }
 }
