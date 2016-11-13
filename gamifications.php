@@ -109,6 +109,16 @@ class Gamifications extends Module
     }
 
     /**
+     * Get context
+     *
+     * @return Context
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
      * Require autoloader
      */
     private function requireAutoloader()

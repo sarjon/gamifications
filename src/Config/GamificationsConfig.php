@@ -13,6 +13,7 @@ class GamificationsConfig
     const DAILY_DAILY_REWARDS_STATUS = 'GAMIFICATIONS_DAILY_REWARDS_STATUS';
 
     const DISPLAY_EXPLANATIONS = 'GAMIFICATIONS_DISPLAY_EXPLANATIONS';
+    const FRONT_OFFICE_TITLE = 'GAMIFICATIONS_FRONT_OFFICE_TITLE';
 
     /**
      * Get default configuration
@@ -26,6 +27,7 @@ class GamificationsConfig
             self::CHALLANGES_DISPLAY_REWARDS => 0,
             self::DAILY_DAILY_REWARDS_STATUS => 1,
             self::DISPLAY_EXPLANATIONS => 1,
+            self::FRONT_OFFICE_TITLE => 'Loyality program',
         ];
     }
 }

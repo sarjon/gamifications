@@ -22,6 +22,15 @@ class AdminGamificationsPreferenceController extends GamificationsAdminControlle
                         'validation' => 'isBool',
                         'type' => 'bool',
                     ],
+                    GamificationsConfig::FRONT_OFFICE_TITLE => [
+                        'title' => $this->trans('Front Office title'),
+                        'hint' =>
+                            $this->trans('Choose whether to display various explanations').' '.
+                            $this->trans('about activites, rewards, points & etc. in Back Office'),
+                        'validation' => 'isGenericName',
+                        'type' => 'textLang',
+                        'class' => 'fixed-width-lg'
+                    ],
                 ],
                 'submit' => [
                     'title' => $this->trans('Save'),

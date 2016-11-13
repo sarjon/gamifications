@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS `PREFIX_gamifications_daily_reward` (
   `id_reward` INT(11) UNSIGNED NOT NULL,
   `boost` INT(11) UNSIGNED NOT NULL,
   `active` TINYINT(1) UNSIGNED NOT NULL,
-  `times_won` INT(11) UNSIGNED NOT NULL DEFAULT 1
+  `times_won` INT(11) UNSIGNED NOT NULL DEFAULT 1,
   PRIMARY KEY (`id_gamifications_daily_reward`, `id_reward`)
 ) ENGINE=ENGINE_TYPE DEFAULT CHARSET=utf8;
 
