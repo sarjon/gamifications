@@ -13,24 +13,9 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
         $this->className = 'GamificationsDailyReward';
         $this->table = GamificationsDailyReward::$definition['table'];
         $this->identifier = GamificationsDailyReward::$definition['primary'];
+        Shop::addTableAssociation(GamificationsDailyReward::$definition['table'], ['type' => 'shop']);
 
         parent::__construct();
-    }
-
-    /**
-     * Add additional content
-     */
-    public function initContent()
-    {
-        $isDisplayExpalanationsOn = (bool) Configuration::get(GamificationsConfig::DISPLAY_EXPLANATIONS);
-
-        if ($isDisplayExpalanationsOn && !in_array($this->display, ['add', 'edit'])) {
-            $this->content .= $this->context->smarty->fetch(
-                $this->module->getLocalPath().'views/templates/admin/daily_rewards_info.tpl'
-            );
-        }
-
-        parent::initContent();
     }
 
     /**
@@ -173,11 +158,11 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
      */
     protected function initForm()
     {
-        /** @var GamificationsDailyRewardRepository $dailyRewardRepository */
+        /** @var GamificationsRewardRepository $dailyRewardRepository */
         $dailyRewardRepository = $this->module->getEntityManager()
-            ->getRepository('GamificationsDailyReward');
+            ->getRepository('GamificationsReward');
         $availableRewards =
-            $dailyRewardRepository->findAllNamesAndIdsByIdLang($this->context->language->id, $this->context->shop->id);
+            $dailyRewardRepository->findAllNamesAndIds($this->context->language->id, $this->context->shop->id);
 
         $this->fields_form = [
             'legend' => [
@@ -264,5 +249,15 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
         foreach ($groups as $group) {
             $this->fields_value['groupBox_'.$group['id_group']] = in_array($group['id_group'], $groupIds);
         }
+    }
+
+    /**
+     * Display help message if setting is enabled
+     */
+    protected function displayHelp()
+    {
+        return $this->context->smarty->fetch(
+            $this->module->getLocalPath().'views/templates/admin/daily_rewards_info.tpl'
+        );
     }
 }

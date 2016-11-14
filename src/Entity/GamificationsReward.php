@@ -145,6 +145,16 @@ class GamificationsReward extends ObjectModel
     ];
 
     /**
+     * Get repository class name
+     *
+     * @return string
+     */
+    public static function getRepositoryClassName()
+    {
+        return 'GamificationsRewardRepository';
+    }
+
+    /**
      * GamificationReward constructor.
      *
      * @param int|null $id

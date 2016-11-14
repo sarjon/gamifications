@@ -1,62 +1,40 @@
 <?php
 
 /**
- * Class GamificationsDailyReward
+ * Class GamificationsPointExchange
  */
-class GamificationsDailyReward extends ObjectModel
+class GamificationsPointExchange extends ObjectModel
 {
+    /**
+     * @var array This is saved into _group table
+     */
+    public $groupBox;
+
     /**
      * @var int
      */
     public $id_reward;
 
     /**
-     * @var float
-     */
-    public $boost = 1;
-
-    /**
-     * @var bool
-     */
-    public $active;
-
-    /**
      * @var int
      */
-    public $times_won;
-
-    /**
-     * @var array
-     */
-    public $groupBox;
+    public $points;
 
     /**
      * @var array
      */
     public static $definition = [
-        'table' => 'gamifications_daily_reward',
-        'primary' => 'id_gamifications_daily_reward',
+        'table' => 'gamifications_point_exchange',
+        'primary' => 'id_gamifications_point_exchange',
         'fields' => [
+            'points' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
             'id_reward' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
-            'boost' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
-            'active' => ['type' => self::TYPE_BOOL, 'required' => false, 'validate' => 'isBool'],
-            'times_won' => ['type' => self::TYPE_INT, 'required' => false, 'validate' => 'isUnsignedInt'],
         ],
         'multishop' => true,
     ];
 
     /**
-     * Get repository class name
-     *
-     * @return string
-     */
-    public static function getRepositoryClassName()
-    {
-        return 'GamificationsDailyRewardRepository';
-    }
-
-    /**
-     * GamificationsDailyReward constructor.
+     * GamificationsPointExchange constructor.
      *
      * @param int|null $id
      * @param int|null $idLang
@@ -109,7 +87,7 @@ class GamificationsDailyReward extends ObjectModel
         $db = Db::getInstance();
         $groupTableName = self::$definition['table'].'_group';
 
-        $db->delete($groupTableName, 'id_gamifications_daily_reward = '.(int) $this->id);
+        $db->delete($groupTableName, self::$definition['primary'].' = '.(int) $this->id);
 
         if (!is_array($this->groupBox) || empty($this->groupBox)) {
             return true;
@@ -118,7 +96,7 @@ class GamificationsDailyReward extends ObjectModel
         $data = [];
         foreach ($this->groupBox as $idGroup) {
             $data[] = [
-                'id_gamifications_daily_reward' => (int) $this->id,
+                self::$definition['primary'] => (int) $this->id,
                 'id_group' => (int) $idGroup,
             ];
         }

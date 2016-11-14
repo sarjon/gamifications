@@ -103,9 +103,9 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_REWARD_CONTROLLER,
             ],
             [
-                'name' => $this->module->getTranslator()->trans('Points', [], 'Modules.Gamifications'),
+                'name' => $this->module->getTranslator()->trans('Points exchange', [], 'Modules.Gamifications'),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
-                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_POINT_CONTROLLER,
+                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_POINT_EXCHANGE_CONTROLLER,
             ],
             [
                 'name' => $this->module->getTranslator()->trans('Activities', [], 'Modules.Gamifications'),

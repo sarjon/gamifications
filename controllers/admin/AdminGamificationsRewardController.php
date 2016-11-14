@@ -18,24 +18,9 @@ class AdminGamificationsRewardController extends GamificationsAdminController
         $this->className = 'GamificationsReward';
         $this->table = GamificationsReward::$definition['table'];
         $this->identifier = GamificationsReward::$definition['primary'];
+        Shop::addTableAssociation(GamificationsReward::$definition['table'], ['type' => 'shop']);
 
         parent::__construct();
-    }
-
-    /**
-     * Add additional content
-     */
-    public function initContent()
-    {
-        $isDisplayExpalanationsOn = (bool) Configuration::get(GamificationsConfig::DISPLAY_EXPLANATIONS);
-
-        if ($isDisplayExpalanationsOn && !in_array($this->display, ['add', 'edit'])) {
-            $this->content .= $this->context->smarty->fetch(
-                $this->module->getLocalPath().'views/templates/admin/rewards_info.tpl'
-            );
-        }
-
-        parent::initContent();
     }
 
     /**
@@ -129,8 +114,12 @@ class AdminGamificationsRewardController extends GamificationsAdminController
      */
     protected function initList()
     {
+        $this->lang = true;
+        $this->addRowAction('edit');
+        $this->addRowAction('delete');
+
         $this->fields_list = [
-            'id_gamifications_reward' => [
+            GamificationsReward::$definition['primary'] => [
                 'title' => $this->trans('ID'),
                 'width' => 20,
                 'type' => 'text',
@@ -153,10 +142,6 @@ class AdminGamificationsRewardController extends GamificationsAdminController
      */
     protected function initForm()
     {
-        $this->lang = true;
-        $this->addRowAction('edit');
-        $this->addRowAction('delete');
-
         $defaultCurrency = Currency::getDefaultCurrency();
 
         $this->fields_form = [
@@ -344,5 +329,13 @@ class AdminGamificationsRewardController extends GamificationsAdminController
         }
 
         return $parentResponse;
+    }
+
+    /**
+     * Display help message if setting is enabled
+     */
+    protected function displayHelp()
+    {
+        return $this->context->smarty->fetch($this->module->getLocalPath().'views/templates/admin/rewards_info.tpl');
     }
 }

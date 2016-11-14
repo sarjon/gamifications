@@ -29,6 +29,20 @@ abstract class GamificationsAdminController extends ModuleAdminController
     }
 
     /**
+     * Display additional data in content
+     */
+    public function initContent()
+    {
+        $isDisplayExpalanationsOn = (bool) Configuration::get(GamificationsConfig::DISPLAY_EXPLANATIONS);
+
+        if ($isDisplayExpalanationsOn && !in_array($this->display, ['add', 'edit'])) {
+            $this->content .= $this->displayHelp();
+        }
+
+        parent::initContent();
+    }
+
+    /**
      * Customized translations with default domain
      *
      * @param string $id
@@ -73,5 +87,15 @@ abstract class GamificationsAdminController extends ModuleAdminController
     protected function initFieldsValue()
     {
         //@todo: Override to initialize fields value
+    }
+
+    /**
+     * Display any kind of information if DISPLAY_EXPLANATIONS option is enabled
+     *
+     * @return string
+     */
+    protected function displayHelp()
+    {
+        return '';
     }
 }
