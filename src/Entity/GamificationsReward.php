@@ -9,6 +9,7 @@ class GamificationsReward extends ObjectModel
      * Reward types
      */
     const REWARD_TYPE_POINTS = 'points';
+    const REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS = 'random_points';
     const REWARD_TYPE_DISCOUNT = 'discount';
     const REWARD_TYPE_FREE_SHIPPING = 'free_shipping';
     const REWARD_TYPE_PRIZE = 'prize';
@@ -34,6 +35,11 @@ class GamificationsReward extends ObjectModel
      * @var string
      */
     public $reward_type;
+
+    /**
+     * @var int
+     */
+    public $radius;
 
     /**
      * @var int
@@ -85,6 +91,11 @@ class GamificationsReward extends ObjectModel
 
             ],
             'points' => [
+                'type' => self::TYPE_INT,
+                'required' => false,
+                'validate' => 'isUnsignedInt',
+            ],
+            'radius' => [
                 'type' => self::TYPE_INT,
                 'required' => false,
                 'validate' => 'isUnsignedInt',
@@ -158,10 +169,12 @@ class GamificationsReward extends ObjectModel
         $translator = Context::getContext()->getTranslator();
 
         $translations = [
-            self::REWARD_TYPE_POINTS => $translator->trans('Points', [], 'Modules.Gamifications'),
+            self::REWARD_TYPE_POINTS => $translator->trans('Fixed points', [], 'Modules.Gamifications'),
             self::REWARD_TYPE_DISCOUNT => $translator->trans('Discount', [], 'Modules.Gamifications'),
             self::REWARD_TYPE_FREE_SHIPPING => $translator->trans('Free shipping', [], 'Modules.Gamifications'),
             self::REWARD_TYPE_PRIZE => $translator->trans('Prize', [], 'Modules.Gamifications'),
+            self::REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS =>
+                $translator->trans('Random amount of points', [], 'Modules.Gamifications'),
         ];
 
         return (null === $rewardType) ? $translations : $translations[$rewardType];

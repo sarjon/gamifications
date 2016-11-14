@@ -3,7 +3,7 @@
 /**
  * Class GamificationsAdminController custom admin controller for module
  */
-class GamificationsAdminController extends ModuleAdminController
+abstract class GamificationsAdminController extends ModuleAdminController
 {
     /**
      * @var Gamifications
@@ -20,12 +20,12 @@ class GamificationsAdminController extends ModuleAdminController
      */
     public function init()
     {
+        parent::init();
+
         $this->initOptions();
         $this->initList();
         $this->initForm();
         $this->initFieldsValue();
-
-        parent::init();
     }
 
     /**

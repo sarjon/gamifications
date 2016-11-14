@@ -4,6 +4,7 @@ $(document).ready(function () {
     var REWARD_TYPE_DISCOUNT = 'discount';
     var REWARD_TYPE_FREE_SHIPPING = 'free_shipping';
     var REWARD_TYPE_PRIZE = 'prize';
+    var REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS = 'random_points';
 
     var $prizeProductInput = $('#prize_name');
     var $prizeHiddenInput = $('#prize');
@@ -54,6 +55,7 @@ $(document).ready(function () {
     var $discountApplyTypeInput = $('#discount_apply_type').closest('div.form-group');
     var $discountValidDaysInput = $('#discount_valid_days').closest('div.form-group');
     var $minimumCartAmountInput = $('#minimum_cart_amount').closest('div.form-group');
+    var $pointsRadiusInput = $('#radius').closest('div.form-group');
 
     $rewardType.on('change', showRewardTypeFields);
 
@@ -74,6 +76,7 @@ $(document).ready(function () {
                 $discountApplyTypeInput.hide();
                 $discountValidDaysInput.hide();
                 $minimumCartAmountInput.hide();
+                $pointsRadiusInput.hide();
                 break;
             case REWARD_TYPE_DISCOUNT:
                 $pointsInput.hide();
@@ -83,6 +86,7 @@ $(document).ready(function () {
                 $discountApplyTypeInput.show();
                 $discountValidDaysInput.show();
                 $minimumCartAmountInput.show();
+                $pointsRadiusInput.hide();
                 break;
             case REWARD_TYPE_FREE_SHIPPING:
                 $pointsInput.hide();
@@ -92,6 +96,7 @@ $(document).ready(function () {
                 $discountApplyTypeInput.hide();
                 $discountValidDaysInput.hide();
                 $minimumCartAmountInput.show();
+                $pointsRadiusInput.hide();
                 break;
             case REWARD_TYPE_PRIZE:
                 $pointsInput.hide();
@@ -101,6 +106,17 @@ $(document).ready(function () {
                 $discountApplyTypeInput.hide();
                 $discountValidDaysInput.hide();
                 $minimumCartAmountInput.hide();
+                $pointsRadiusInput.hide();
+                break;
+            case REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS:
+                $pointsInput.show();
+                $prizeNameInput.hide();
+                $discountReductionTypeInput.hide();
+                $discountValueInput.hide();
+                $discountApplyTypeInput.hide();
+                $discountValidDaysInput.hide();
+                $minimumCartAmountInput.hide();
+                $pointsRadiusInput.show();
                 break;
         }
     }

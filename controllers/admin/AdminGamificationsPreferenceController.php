@@ -15,18 +15,16 @@ class AdminGamificationsPreferenceController extends GamificationsAdminControlle
                 'title' => $this->trans('General preferences'),
                 'fields' => [
                     GamificationsConfig::DISPLAY_EXPLANATIONS => [
-                        'title' => $this->trans('Display explanations'),
+                        'title' => $this->trans('Display help'),
                         'hint' =>
-                            $this->trans('Choose whether to display various explanations').' '.
+                            $this->trans('Choose whether to display various help messages & explanations').' '.
                             $this->trans('about activites, rewards, points & etc. in Back Office'),
                         'validation' => 'isBool',
                         'type' => 'bool',
                     ],
                     GamificationsConfig::FRONT_OFFICE_TITLE => [
                         'title' => $this->trans('Front Office title'),
-                        'hint' =>
-                            $this->trans('Choose whether to display various explanations').' '.
-                            $this->trans('about activites, rewards, points & etc. in Back Office'),
+                        'hint' => $this->trans('Title that are displayed in Front Office account page'),
                         'validation' => 'isGenericName',
                         'type' => 'textLang',
                         'class' => 'fixed-width-lg'

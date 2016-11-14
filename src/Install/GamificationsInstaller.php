@@ -139,6 +139,7 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
     {
         $hooks = [
             'moduleRoutes',
+            'displayCustomerAccount',
         ];
 
         foreach ($hooks as $hookName) {

@@ -5,7 +5,9 @@
  */
 class AdminGamificationsRewardController extends GamificationsAdminController
 {
-    /** @var GamificationsReward */
+    /**
+     * @var GamificationsReward
+     */
     protected $object;
 
     /**
@@ -18,6 +20,22 @@ class AdminGamificationsRewardController extends GamificationsAdminController
         $this->identifier = GamificationsReward::$definition['primary'];
 
         parent::__construct();
+    }
+
+    /**
+     * Add additional content
+     */
+    public function initContent()
+    {
+        $isDisplayExpalanationsOn = (bool) Configuration::get(GamificationsConfig::DISPLAY_EXPLANATIONS);
+
+        if ($isDisplayExpalanationsOn && !in_array($this->display, ['add', 'edit'])) {
+            $this->content .= $this->context->smarty->fetch(
+                $this->module->getLocalPath().'views/templates/admin/rewards_info.tpl'
+            );
+        }
+
+        parent::initContent();
     }
 
     /**
@@ -164,7 +182,11 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                         'query' => [
                             [
                                 'id' => GamificationsReward::REWARD_TYPE_POINTS,
-                                'name' => $this->trans('Points'),
+                                'name' => $this->trans('Fixed amount of points'),
+                            ],
+                            [
+                                'id' => GamificationsReward::REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS,
+                                'name' => $this->trans('Random amount of points'),
                             ],
                             [
                                 'id' => GamificationsReward::REWARD_TYPE_DISCOUNT,
@@ -189,6 +211,16 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                     'class' => 'fixed-width-sm',
                     'suffix' => $this->trans('points'),
 
+                ],
+                [
+                    'label' => $this->trans('Radius'),
+                    'name' => 'radius',
+                    'type' => 'text',
+                    'hint' =>
+                        $this->trans('E.g. if entered 100 points and radius 30,').' '.
+                        $this->trans('then range is 70 - 130 points (+-30 points)'),
+                    'class' => 'fixed-width-sm',
+                    'suffix' => $this->trans('points radius'),
                 ],
                 [
                     // THIS FIELD IS NOT SAVED

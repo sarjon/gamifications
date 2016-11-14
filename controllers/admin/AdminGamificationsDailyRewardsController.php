@@ -5,6 +5,9 @@
  */
 class AdminGamificationsDailyRewardsController extends GamificationsAdminController
 {
+    /**
+     * AdminGamificationsDailyRewardsController constructor.
+     */
     public function __construct()
     {
         $this->className = 'GamificationsDailyReward';
@@ -23,7 +26,7 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
 
         if ($isDisplayExpalanationsOn && !in_array($this->display, ['add', 'edit'])) {
             $this->content .= $this->context->smarty->fetch(
-                $this->module->getLocalPath().'views/templates/admin/DailyRewards/info.tpl'
+                $this->module->getLocalPath().'views/templates/admin/daily_rewards_info.tpl'
             );
         }
 
@@ -95,6 +98,32 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
     }
 
     /**
+     * Update status via AJAX
+     */
+    public function ajaxProcessStatusGamificationsDailyReward()
+    {
+        $idDailyReward = (int) Tools::getValue('id_gamifications_daily_reward');
+
+        $dailyReward = new GamificationsDailyReward($idDailyReward, null, $this->context->shop->id);
+        $dailyReward->active =  !((bool) $dailyReward->active);
+
+        $response = [];
+        $response['success'] = false;
+
+        if (!Validate::isLoadedObject($dailyReward) || !$dailyReward->save()) {
+            $response['error'] = true;
+            $response['text'] = $this->trans('Failed to update');
+
+            die(json_encode($response));
+        }
+
+        $response['success'] = true;
+        $response['text'] = $this->trans('Successful update');
+
+        die(json_encode($response));
+    }
+
+    /**
      * Initialize list
      */
     protected function initList()
@@ -121,10 +150,20 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
             'boost' => [
                 'title' => $this->trans('Boost'),
                 'type' => 'text',
+                'align' => 'center',
+            ],
+            'active' => [
+                'title' => $this->trans('Enabled'),
+                'active' => 'status',
+                'type' => 'bool',
+                'ajax' => true,
+                'orderby' => false,
+                'align' => 'center',
             ],
             'times_won' => [
                 'title' => $this->trans('Times won'),
                 'type' => 'text',
+                'align' => 'center',
             ],
         ];
     }
@@ -179,7 +218,7 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
                             'label' => $this->trans('No', [], 'Admin.Global'),
                         ],
                     ],
-                    'name' => 'boost',
+                    'name' => 'active',
                     'hint' => $this->trans('If disabled then no one will be able to get this reward at Daily Rewards'),
                 ],
                 [
@@ -204,12 +243,26 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
         }
     }
 
+    /**
+     * Init fields form
+     */
     protected function initFieldsValue()
     {
+        if (!in_array($this->display, ['add', 'edit'])) {
+            return;
+        }
+
         $groups = Group::getGroups($this->context->language->id, $this->context->shop->id);
+        $groupIds = [];
+
+        if ('edit' == $this->display) {
+            /** @var GamificationsDailyRewardRepository $dailyRewardRepository */
+            $dailyRewardRepository = $this->module->getEntityManager()->getRepository('GamificationsDailyReward');
+            $groupIds = $dailyRewardRepository->findAllGroupIds($this->object->id, $this->context->shop->id);
+        }
 
         foreach ($groups as $group) {
-            $this->fields_value['groupBox_'.$group['id_group']] = false;
+            $this->fields_value['groupBox_'.$group['id_group']] = in_array($group['id_group'], $groupIds);
         }
     }
 }

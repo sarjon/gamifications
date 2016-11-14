@@ -23,6 +23,11 @@ class Gamifications extends Module
     const ADMIN_GAMIFICATIONS_POINT_CONTROLLER = 'AdminGamificationsPoint';
 
     /**
+     * Module front controllers
+     */
+    const FRONT_LOYALITY_CONTROLLER = 'loyality';
+
+    /**
      * @var EntityManager
      */
     private $em;
@@ -39,6 +44,7 @@ class Gamifications extends Module
         $this->tab = 'front_office_features';
         $this->version = '1.0.0';
         $this->need_instance = 0;
+        $this->controllers = [self::FRONT_LOYALITY_CONTROLLER];
 
         parent::__construct();
 
@@ -93,9 +99,7 @@ class Gamifications extends Module
      */
     public function getContent()
     {
-        return Tools::redirectAdmin(
-            $this->context->link->getAdminLink(self::ADMIN_GAMIFICATIONS_PREFERENCE_CONTROLLER)
-        );
+        Tools::redirectAdmin($this->context->link->getAdminLink(self::ADMIN_GAMIFICATIONS_PREFERENCE_CONTROLLER));
     }
 
     /**
@@ -116,6 +120,41 @@ class Gamifications extends Module
     public function getContext()
     {
         return $this->context;
+    }
+
+    /**
+     * Display gamification page url in my-account page
+     *
+     * @return string
+     */
+    public function hookDisplayCustomerAccount()
+    {
+        $frontOfficeTitle = Configuration::get(GamificationsConfig::FRONT_OFFICE_TITLE, $this->context->language->id);
+
+        $params = [
+            'front_office_title' => $frontOfficeTitle,
+        ];
+
+        return $this->render('hook/displayCustomerAccount.tpl', $params);
+    }
+
+    /**
+     * Render template
+     *
+     * @param string $path
+     * @param array $params
+     *
+     * @return string
+     */
+    protected function render($path, array $params = [])
+    {
+        if (!empty($params)) {
+            $this->context->smarty->assign($params);
+        }
+
+        $tempalte = sprintf('module:%s/views/templates/'.$path, $this->name);
+
+        return $this->context->smarty->fetch($tempalte);
     }
 
     /**
