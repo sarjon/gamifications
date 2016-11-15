@@ -7,3 +7,6 @@ DROP TABLE IF EXISTS `PREFIX_gamifications_reward_shop_group`;
 DROP TABLE IF EXISTS `PREFIX_gamifications_point_exchange`;
 DROP TABLE IF EXISTS `PREFIX_gamifications_point_exchange_shop`;
 DROP TABLE IF EXISTS `PREFIX_gamifications_point_exchange_group`;
+DROP TABLE IF EXISTS `PREFIX_gamifications_player`;
+DROP TABLE IF EXISTS `PREFIX_gamifications_player_shop`;
+DROP TABLE IF EXISTS `PREFIX_gamifications_activity_history`;

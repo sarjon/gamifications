@@ -58,7 +58,7 @@ class AdminGamificationsPreferenceController extends GamificationsAdminControlle
             'daily_rewards' => [
                 'title' => $this->trans('Daily rewards'),
                 'fields' => [
-                    GamificationsConfig::DAILY_DAILY_REWARDS_STATUS => [
+                    GamificationsConfig::DAILY_REWARDS_STATUS => [
                         'title' => $this->trans('Enable Daily Rewards'),
                         'hint' => $this->trans('Daily Rewards feature in Front Office'),
                         'validation' => 'isBool',
