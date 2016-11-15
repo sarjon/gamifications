@@ -1,10 +1,10 @@
 $(document).ready(function () {
 
-    var REWARD_TYPE_POINTS = 'points';
-    var REWARD_TYPE_DISCOUNT = 'discount';
-    var REWARD_TYPE_FREE_SHIPPING = 'free_shipping';
-    var REWARD_TYPE_PRIZE = 'prize';
-    var REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS = 'random_points';
+    var REWARD_TYPE_POINTS = 1;
+    var REWARD_TYPE_DISCOUNT = 3;
+    var REWARD_TYPE_FREE_SHIPPING = 4;
+    var REWARD_TYPE_PRIZE = 5;
+    var REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS = 2;
 
     var $prizeProductInput = $('#prize_name');
     var $prizeHiddenInput = $('#prize');
@@ -67,7 +67,7 @@ $(document).ready(function () {
      */
     function showRewardTypeFields()
     {
-        switch ($rewardType.val()) {
+        switch (parseInt($rewardType.val())) {
             case REWARD_TYPE_POINTS:
                 $pointsInput.show();
                 $prizeNameInput.hide();

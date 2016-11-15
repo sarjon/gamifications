@@ -158,11 +158,10 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
      */
     protected function initForm()
     {
-        /** @var GamificationsRewardRepository $dailyRewardRepository */
-        $dailyRewardRepository = $this->module->getEntityManager()
-            ->getRepository('GamificationsReward');
+        /** @var GamificationsRewardRepository $rewardRepository */
+        $rewardRepository = $this->module->getEntityManager()->getRepository('GamificationsReward');
         $availableRewards =
-            $dailyRewardRepository->findAllNamesAndIds($this->context->language->id, $this->context->shop->id);
+            $rewardRepository->findAllNamesAndIds($this->context->language->id, $this->context->shop->id);
 
         $this->fields_form = [
             'legend' => [

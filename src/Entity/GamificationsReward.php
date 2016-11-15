@@ -8,11 +8,11 @@ class GamificationsReward extends ObjectModel
     /**
      * Reward types
      */
-    const REWARD_TYPE_POINTS = 'points';
-    const REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS = 'random_points';
-    const REWARD_TYPE_DISCOUNT = 'discount';
-    const REWARD_TYPE_FREE_SHIPPING = 'free_shipping';
-    const REWARD_TYPE_PRIZE = 'prize';
+    const REWARD_TYPE_POINTS = 1;
+    const REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS = 2;
+    const REWARD_TYPE_DISCOUNT = 3;
+    const REWARD_TYPE_FREE_SHIPPING = 4;
+    const REWARD_TYPE_PRIZE = 5;
 
     /**
      * Discount reduction types
@@ -32,7 +32,7 @@ class GamificationsReward extends ObjectModel
     public $name;
 
     /**
-     * @var string
+     * @var int
      */
     public $reward_type;
 
@@ -84,10 +84,10 @@ class GamificationsReward extends ObjectModel
         'primary' => 'id_gamifications_reward',
         'fields' => [
             'reward_type' => [
-                'type' => self::TYPE_STRING,
+                'type' => self::TYPE_INT,
                 'size' => 50,
                 'required' => true,
-                'validate' => 'isString',
+                'validate' => 'isUnsignedInt',
 
             ],
             'points' => [

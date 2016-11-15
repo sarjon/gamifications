@@ -21,6 +21,26 @@ class GamificationsPointExchange extends ObjectModel
     public $points;
 
     /**
+     * @var int
+     */
+    public $times_exchanged;
+
+    /**
+     * @var bool
+     */
+    public $active;
+
+    /**
+     * @var DateTime
+     */
+    public $date_add;
+
+    /**
+     * @var DateTime
+     */
+    public $date_upd;
+
+    /**
      * @var array
      */
     public static $definition = [
@@ -29,9 +49,23 @@ class GamificationsPointExchange extends ObjectModel
         'fields' => [
             'points' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
             'id_reward' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
+            'times_exchanged' => ['type' => self::TYPE_INT, 'required' => false, 'validate' => 'isUnsignedInt'],
+            'active' => ['type' => self::TYPE_BOOL, 'required' => false, 'validate' => 'isBool'],
+            'date_add' => ['type' => self::TYPE_DATE, 'required' => false, 'validate' => 'isDate'],
+            'date_upd' => ['type' => self::TYPE_DATE, 'required' => false, 'validate' => 'isDate'],
         ],
         'multishop' => true,
     ];
+
+    /**
+     * Get repository class name
+     *
+     * @return string
+     */
+    public static function getRepositoryClassName()
+    {
+        return 'GamificationsPointExchangeRepository';
+    }
 
     /**
      * GamificationsPointExchange constructor.
