@@ -35,11 +35,6 @@ class GamificationsPlayer extends ObjectModel
     /**
      * @var string
      */
-    public $username;
-
-    /**
-     * @var string
-     */
     public $date_add;
 
     /**
@@ -57,7 +52,6 @@ class GamificationsPlayer extends ObjectModel
             'id_customer' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
             'total_points' => ['type' => self::TYPE_INT, 'required' => false, 'validate' => 'isUnsignedInt'],
             'spent_points' => ['type' => self::TYPE_INT, 'required' => false, 'validate' => 'isUnsignedInt'],
-            'username' => ['type' => self::TYPE_STRING, 'required' => false, 'validate' => 'isGenericName'],
             'date_add' => ['type' => self::TYPE_DATE, 'required' => false, 'validate' => 'isDate'],
             'date_upd' => ['type' => self::TYPE_DATE, 'required' => false, 'validate' => 'isDate'],
         ],

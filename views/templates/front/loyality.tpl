@@ -16,30 +16,15 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="text-primary">{l s='Profile' d='Modules.Gamifications.Shop'}</h1>
-                    <hr>
-                </div>
-                <div class="col-md-12">
-                    <dl class="row">
-                        <dt class="col-sm-3">{l s='Nickname' d='Modules.Gamifications.Shop'}</dt>
-                        <dd class="col-sm-9">{$player->username}</dd>
-                    </dl>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-12">
                     <h1 class="text-primary">{l s='Points' d='Modules.Gamifications.Shop'}</h1>
                     <hr>
                 </div>
             </div>
 
             <div class="row">
+
                 <div class="col-md-6">
-                    <h3>{l s='My points' d='Modules.Gamifications.Shop'}</h3>
+                    <h3>{l s='My current points' d='Modules.Gamifications.Shop'}</h3>
                     <h3 class="display-1 text-primary">{$player->total_points} {l s='pts' d='Modules.Gamifications.Shop'}</h3>
                 </div>
 
@@ -51,11 +36,6 @@
 
                 <div class="col-md-12">
                     <hr>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
                     <h3>{l s='Next available reward' d='Modules.Gamifications.Shop'}</h3>
                     <div class="card card-outline-primary">
                         <div class=" card-block">
@@ -67,6 +47,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
 
