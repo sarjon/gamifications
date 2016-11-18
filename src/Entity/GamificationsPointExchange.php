@@ -118,6 +118,10 @@ class GamificationsPointExchange extends ObjectModel
      */
     protected function updateGroups()
     {
+        if (Tools::isSubmit('ajax')) {
+            return true;
+        }
+
         $db = Db::getInstance();
         $groupTableName = self::$definition['table'].'_group';
 

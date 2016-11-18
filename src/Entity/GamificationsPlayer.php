@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class GamificationsPlayer
+ * Class GamificationsCustomer
  */
-class GamificationsPlayer extends ObjectModel
+class GamificationsCustomer extends ObjectModel
 {
     /**
      * @var int
@@ -46,8 +46,8 @@ class GamificationsPlayer extends ObjectModel
      * @var array
      */
     public static $definition = [
-        'table' => 'gamifications_player',
-        'primary' => 'id_gamifications_player',
+        'table' => 'gamifications_customer',
+        'primary' => 'id_gamifications_customer',
         'fields' => [
             'id_customer' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
             'total_points' => ['type' => self::TYPE_INT, 'required' => false, 'validate' => 'isUnsignedInt'],
@@ -65,11 +65,11 @@ class GamificationsPlayer extends ObjectModel
      */
     public static function getRepositoryClassName()
     {
-        return 'GamificationsPlayerRepository';
+        return 'GamificationsCustomerRepository';
     }
 
     /**
-     * GamificationsPlayer constructor.
+     * GamificationsCustomer constructor.
      *
      * @param int|null $id
      * @param int|null $idLang

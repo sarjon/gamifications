@@ -25,13 +25,13 @@
 
                 <div class="col-md-6">
                     <h3>{l s='My current points' d='Modules.Gamifications.Shop'}</h3>
-                    <h3 class="display-1 text-primary">{$player->total_points} {l s='pts' d='Modules.Gamifications.Shop'}</h3>
+                    <h3 class="display-1 text-primary">{$gamifications_customer->total_points} {l s='pts' d='Modules.Gamifications.Shop'}</h3>
                 </div>
 
 
                 <div class="col-md-6">
                     <h3>{l s='Total points spent' d='Modules.Gamifications.Shop'}</h3>
-                    <h3 class="display-1 text-primary">{$player->spent_points} {l s='pts' d='Modules.Gamifications.Shop'}</h3>
+                    <h3 class="display-1 text-primary">{$gamifications_customer->spent_points} {l s='pts' d='Modules.Gamifications.Shop'}</h3>
                 </div>
 
                 <div class="col-md-12">
@@ -53,7 +53,7 @@
 
     </div>
 
-    {if $activities_status[GamificationsConfig::DAILY_REWARDS_STATUS]}
+    {if $is_daily_rewards_enabled}
         {include file='module:gamifications/views/templates/front/_partials/daily_rewards.tpl'}
     {/if}
 

@@ -73,13 +73,17 @@ class GamificationsDailyReward extends ObjectModel
      *
      * @param bool $autoDate
      * @param bool $nullValues
+     * @param bool $updateGroups
+     *
      * @return bool
      */
-    public function add($autoDate = true, $nullValues = false)
+    public function add($autoDate = true, $nullValues = false, $updateGroups = true)
     {
         $parentReturn = parent::add($autoDate, $nullValues);
 
-        $this->updateGroups();
+        if ($updateGroups) {
+            $this->updateGroups();
+        }
 
         return $parentReturn;
     }
@@ -88,15 +92,35 @@ class GamificationsDailyReward extends ObjectModel
      * Custom update
      *
      * @param bool $nullValues
+     * @param bool $updateGroups
+     *
      * @return bool
      */
-    public function update($nullValues = false)
+    public function update($nullValues = false, $updateGroups = true)
     {
         $parentReturn = parent::update($nullValues);
 
-        $this->updateGroups();
+        if ($updateGroups) {
+            $this->updateGroups();
+        }
 
         return $parentReturn;
+    }
+
+    /**
+     * Save entity
+     *
+     * @param bool $nullValues
+     * @param bool $autoDate
+     * @param bool $updateGroups
+     *
+     * @return bool
+     */
+    public function save($nullValues = false, $autoDate = true, $updateGroups = true)
+    {
+        return (int) $this->id > 0 ?
+            $this->update($nullValues, $updateGroups) :
+            $this->add($autoDate, $nullValues, $updateGroups);
     }
 
     /**

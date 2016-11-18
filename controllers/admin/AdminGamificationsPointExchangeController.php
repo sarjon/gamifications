@@ -43,6 +43,22 @@ class AdminGamificationsPointExchangeController extends GamificationsAdminContro
     }
 
     /**
+     * Add custom links in page header
+     */
+    public function initPageHeaderToolbar()
+    {
+        if (empty($this->display)) {
+            $this->page_header_toolbar_btn['new_reward'] = [
+                'href' => self::$currentIndex.'&addgamifications_point_exchange&token='.$this->token,
+                'desc' => $this->trans('Add new Points Exchange'),
+                'icon' => 'process-icon-new',
+            ];
+        }
+
+        parent::initPageHeaderToolbar();
+    }
+
+    /**
      * Update status via AJAX
      */
     public function ajaxProcessStatusGamificationsPointExchange()
