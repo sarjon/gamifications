@@ -46,11 +46,17 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
         return parent::renderList();
     }
 
+    public function renderDetails()
+    {
+        //@todo: render customer details
+    }
+
     /**
      * Init list
      */
     protected function initList()
     {
+        $this->addRowAction('details');
         $this->list_no_link = true;
 
         $this->fields_list = [
