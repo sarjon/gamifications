@@ -40,7 +40,7 @@ class GamificationsActivityHistory extends ObjectModel
      */
     public static $definition = [
         'table' => 'gamifications_activity_history',
-        'primary' => 'id_gamificatons_activity_history',
+        'primary' => 'id_gamifications_activity_history',
         'fields' => [
             'id_customer' => ['type' => self::TYPE_INT, 'reqired' => true, 'validate' => 'isUnsignedInt'],
             'id_reward' => ['type' => self::TYPE_INT, 'reqired' => true, 'validate' => 'isUnsignedInt'],

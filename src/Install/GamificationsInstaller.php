@@ -123,6 +123,21 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
 //                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_CHALLANGE_CONTROLLER,
 //            ],
             [
+                'name' => $this->module->getTranslator()->trans('Stats', [], 'Modules.Gamifications'),
+                'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
+                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_STATS_CONTROLLER,
+            ],
+            [
+                'name' => $this->module->getTranslator()->trans('Customers', [], 'Modules.Gamifications'),
+                'parent' => Gamifications::ADMIN_GAMIFICATIONS_STATS_CONTROLLER,
+                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_CUSTOMER_CONTROLLER,
+            ],
+            [
+                'name' => $this->module->getTranslator()->trans('Activities history', [], 'Modules.Gamifications'),
+                'parent' => Gamifications::ADMIN_GAMIFICATIONS_STATS_CONTROLLER,
+                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_HISTORY_CONTROLLER,
+            ],
+            [
                 'name' => $this->module->getTranslator()->trans('Preferences', [], 'Modules.Gamifications'),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_PREFERENCE_CONTROLLER,

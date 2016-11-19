@@ -80,4 +80,23 @@ class GamificationsCustomer extends ObjectModel
         parent::__construct($id, $idLang, $idShop);
         Shop::addTableAssociation(self::$definition['table'], ['type' => 'shop']);
     }
+
+    /**
+     * Add points
+     *
+     * @param int $points
+     * @param bool $commitChanges
+     *
+     * @return bool
+     */
+    public function addPoints($points, $commitChanges = true)
+    {
+        $this->total_points = (int) $this->total_points + (int) $points;
+
+        if ($commitChanges) {
+            return $this->save();
+        }
+
+        return true;
+    }
 }

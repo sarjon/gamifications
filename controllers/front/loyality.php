@@ -131,13 +131,7 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
         $dailyReward->times_won = (int) $dailyReward->times_won + 1;
         $dailyReward->save(false, true, false);
 
-        $activityHistory = new GamificationsActivityHistory();
-        $activityHistory->id_customer = (int) $this->context->customer->id;
-        $activityHistory->id_reward = (int) $dailyReward->id_reward;
-        $activityHistory->id_shop = (int) $this->context->shop->id;
-        $activityHistory->activity_type = GamificationsActivity::TYPE_DAILY_REWARD;
-        $activityHistory->save();
-
+        $this->handleDailyReward($dailyReward);
     }
 
     /**
@@ -173,5 +167,38 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
         }
 
         return $isDailyRewardAvailable;
+    }
+
+    /**
+     * Add reward to customer
+     *
+     * @param GamificationsDailyReward $dailyReward
+     */
+    private function handleDailyReward(GamificationsDailyReward $dailyReward)
+    {
+        $activityHistory = new GamificationsActivityHistory();
+        $activityHistory->id_customer = (int) $this->context->customer->id;
+        $activityHistory->id_reward = (int) $dailyReward->id_reward;
+        $activityHistory->id_shop = (int) $this->context->shop->id;
+        $activityHistory->activity_type = GamificationsActivity::TYPE_DAILY_REWARD;
+        $activityHistory->save();
+
+        $reward = new GamificationsReward($dailyReward->id_reward, $this->context->language->id, $this->context->shop->id);
+
+        switch ((int) $reward->reward_type) {
+            case GamificationsReward::REWARD_TYPE_POINTS:
+                $this->gamificationCustomer->addPoints($reward->points);
+                $this->success[] = $this
+                    ->trans('You got %points% points!', ['%points%' => $reward->points], 'Modules.Gamifications.Shop');
+                break;
+            case GamificationsReward::REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS:
+                $min = $reward->points - $reward->radius;
+                $max = $reward->points + $reward->radius;
+                $randomPoints = rand($min, $max);
+                $this->gamificationCustomer->addPoints($randomPoints);
+                $this->success[] = $this
+                    ->trans('You got %points% points!', ['%points%' => $randomPoints], 'Modules.Gamifications.Shop');
+                break;
+        }
     }
 }

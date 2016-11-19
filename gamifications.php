@@ -21,6 +21,9 @@ class Gamifications extends Module
     const ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER = 'AdminGamificationsActivity';
     const ADMIN_GAMIFICATIONS_DAILY_REWARDS_CONTROLLER = 'AdminGamificationsDailyRewards';
     const ADMIN_GAMIFICATIONS_POINT_EXCHANGE_CONTROLLER = 'AdminGamificationsPointExchange';
+    const ADMIN_GAMIFICATIONS_STATS_CONTROLLER = 'AdminGamificationsStats';
+    const ADMIN_GAMIFICATIONS_CUSTOMER_CONTROLLER = 'AdminGamificationsCustomer';
+    const ADMIN_GAMIFICATIONS_ACTIVITY_HISTORY_CONTROLLER = 'AdminGamificationsActivityHistory';
 
     /**
      * Module front controllers
