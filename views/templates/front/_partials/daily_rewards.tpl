@@ -19,7 +19,7 @@
                             </form>
                         {else}
                             <button type="submit" name="get_daily_reward" class="btn btn-primary disabled">
-                                {l s='Your next reward is coming' d='Modules.Gamifications.Shop'}
+                                {l s='Daily Reward is not available yet' d='Modules.Gamifications.Shop'}
                             </button>
                             <p class="card-text">
                                 {l s='Next Daily Reward available at' d='Modules.Gamifications.Shop'}:

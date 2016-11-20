@@ -103,7 +103,7 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
         }
 
         if (!$this->isDailyRewardAvailable()) {
-            $this->errors[] = $this->trans('Wooops, Daily Reward is not available at the moment.');
+            $this->warning[] = $this->trans('Wooops, Daily Reward is not available at the moment.');
             return;
         }
 
@@ -114,24 +114,40 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
         $availableDailyRewards = $dailyRewardsRepository
             ->findAllByCustomerGroups($customerGroupsIds, $this->context->shop->id);
 
-        $dailyRewardsWIthBoost = [];
+        $dailyRewardsWithBoost = [];
         foreach ($availableDailyRewards as $dailyReward) {
             $boost = (int) $dailyReward['boost'];
             $idDailyReward = (int) $dailyReward['id_gamifications_daily_reward'];
 
             $dailyRewardBoost = array_fill(0, $boost, $idDailyReward);
-            $dailyRewardsWIthBoost = array_merge($dailyRewardsWIthBoost, $dailyRewardBoost);
+            $dailyRewardsWithBoost = array_merge($dailyRewardsWithBoost, $dailyRewardBoost);
         }
 
-        shuffle($dailyRewardsWIthBoost);
+        shuffle($dailyRewardsWithBoost);
 
-        $idDailyReward = (int) GamificationsArrayHelper::getRandomValue($dailyRewardsWIthBoost);
+        $idDailyReward = (int) GamificationsArrayHelper::getRandomValue($dailyRewardsWithBoost);
 
         $dailyReward = new GamificationsDailyReward($idDailyReward, null, $this->context->shop->id);
         $dailyReward->times_won = (int) $dailyReward->times_won + 1;
         $dailyReward->save(false, true, false);
 
-        $this->handleDailyReward($dailyReward);
+        $reward = new GamificationsReward(
+            $dailyReward->id_reward,
+            null,
+            $this->context->shop->id
+        );
+
+        $rewardHandler = new GamificationsRewardHandler($this->context);
+        $results = $rewardHandler
+            ->handleCustomerReward($reward, $this->gamificationCustomer, GamificationsActivity::TYPE_DAILY_REWARD);
+
+        if (!$results['success']) {
+            $this->errors[] =
+                $this->trans('Unexpected error occured, you should report it', [], 'Modules.Gamifications.Shop');
+            return;
+        }
+
+        $this->success[] = $this->trans($results['message'], [], 'Modules.Gamifications.Shop');
     }
 
     /**
@@ -167,38 +183,5 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
         }
 
         return $isDailyRewardAvailable;
-    }
-
-    /**
-     * Add reward to customer
-     *
-     * @param GamificationsDailyReward $dailyReward
-     */
-    private function handleDailyReward(GamificationsDailyReward $dailyReward)
-    {
-        $activityHistory = new GamificationsActivityHistory();
-        $activityHistory->id_customer = (int) $this->context->customer->id;
-        $activityHistory->id_reward = (int) $dailyReward->id_reward;
-        $activityHistory->id_shop = (int) $this->context->shop->id;
-        $activityHistory->activity_type = GamificationsActivity::TYPE_DAILY_REWARD;
-        $activityHistory->save();
-
-        $reward = new GamificationsReward($dailyReward->id_reward, $this->context->language->id, $this->context->shop->id);
-
-        switch ((int) $reward->reward_type) {
-            case GamificationsReward::REWARD_TYPE_POINTS:
-                $this->gamificationCustomer->addPoints($reward->points);
-                $this->success[] = $this
-                    ->trans('You got %points% points!', ['%points%' => $reward->points], 'Modules.Gamifications.Shop');
-                break;
-            case GamificationsReward::REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS:
-                $min = $reward->points - $reward->radius;
-                $max = $reward->points + $reward->radius;
-                $randomPoints = rand($min, $max);
-                $this->gamificationCustomer->addPoints($randomPoints);
-                $this->success[] = $this
-                    ->trans('You got %points% points!', ['%points%' => $randomPoints], 'Modules.Gamifications.Shop');
-                break;
-        }
     }
 }

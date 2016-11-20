@@ -43,7 +43,7 @@ class GamificationsActivityHistory extends ObjectModel
     /**
      * @var int
      */
-    public $reward_typpe;
+    public $reward_type;
 
     /**
      * @var array
