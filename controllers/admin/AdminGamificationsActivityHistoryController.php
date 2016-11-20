@@ -65,9 +65,20 @@ class AdminGamificationsActivityHistoryController extends GamificationsAdminCont
         }
 
         $activityTypeTranslations = GamificationsActivity::getActivityTypeTranslations();
+        $rewardsTranslations = GamificationsReward::getRewardsTranslations();
+        $rewardTypePoints = [
+            GamificationsReward::REWARD_TYPE_POINTS,
+            GamificationsReward::REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS,
+        ];
 
         foreach ($this->_list as &$listItem) {
+
+            if (!in_array($listItem['reward_type'], $rewardTypePoints)) {
+                $listItem['points'] = '-';
+            }
+
             $listItem['activity_type'] = $activityTypeTranslations[(int) $listItem['activity_type']];
+            $listItem['reward_type'] = $rewardsTranslations[(int) $listItem['reward_type']];
         }
     }
 
@@ -90,6 +101,15 @@ class AdminGamificationsActivityHistoryController extends GamificationsAdminCont
             ],
             'activity_type' => [
                 'title' => $this->trans('Activity type'),
+                'align' => 'center',
+            ],
+            'reward_type' => [
+                'title' => $this->trans('Reward type'),
+                'align' => 'center',
+            ],
+            'points' => [
+                'title' => $this->trans('Points'),
+                'align' => 'center',
             ],
             'date_add' => [
                 'title' => $this->trans('Activity date'),
