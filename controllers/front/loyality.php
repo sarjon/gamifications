@@ -8,24 +8,6 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
     public $auth = true;
 
     /**
-     * @var array Statuses of each activity
-     */
-    private $activitiesStatus;
-
-    /**
-     * Create or get player object
-     */
-    public function init()
-    {
-        parent::init();
-
-        $activities = [
-            GamificationsConfig::DAILY_REWARDS_STATUS,
-        ];
-        $this->activitiesStatus = Configuration::getMultiple($activities, null, null, $this->context->shop->id);
-    }
-
-    /**
      * Perform all processing here
      */
     public function postProcess()
@@ -44,7 +26,7 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
 
         $this->context->smarty->assign([
             'gamifications_customer' => $this->gamificationCustomer,
-            'is_daily_rewards_enabled' => (bool) $this->activitiesStatus[GamificationsConfig::DAILY_REWARDS_STATUS],
+            'is_daily_rewards_enabled' => (bool) Configuration::get(GamificationsConfig::DAILY_REWARDS_STATUS),
         ]);
 
         $this->setTemplate('module:gamifications/views/templates/front/loyality.tpl');
@@ -76,7 +58,8 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
      */
     protected function initDailyRewardsContent()
     {
-        if (!$this->activitiesStatus[GamificationsConfig::DAILY_REWARDS_STATUS]) {
+        $isDailyRewardsEnabled = (bool) Configuration::get(GamificationsConfig::DAILY_REWARDS_STATUS);
+        if (!$isDailyRewardsEnabled) {
             return;
         }
 
@@ -98,7 +81,8 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
      */
     protected function postProcessDailyRewards()
     {
-        if (!Tools::isSubmit('get_daily_reward')) {
+        $isDailyRewardsEnabled = (bool) Configuration::get(GamificationsConfig::DAILY_REWARDS_STATUS);
+        if (!Tools::isSubmit('get_daily_reward') || !$isDailyRewardsEnabled) {
             return;
         }
 
@@ -113,6 +97,15 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
         $dailyRewardsRepository = $this->module->getEntityManager()->getRepository('GamificationsDailyReward');
         $availableDailyRewards = $dailyRewardsRepository
             ->findAllByCustomerGroups($customerGroupsIds, $this->context->shop->id);
+
+        if (empty($availableDailyRewards)) {
+            $this->warning[] = $this->trans(
+                'No Daily Rewards available at the moment, please check back soon!',
+                [],
+                'Modules.Gamifications.Shop'
+            );
+            return;
+        }
 
         $dailyRewardsWithBoost = [];
         foreach ($availableDailyRewards as $dailyReward) {

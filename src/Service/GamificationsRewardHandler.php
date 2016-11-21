@@ -28,7 +28,7 @@ class GamificationsRewardHandler
 
     public function getDailyReward()
     {
-
+        //@todo: maybe dailyrewardhandler
     }
 
     /**
