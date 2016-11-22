@@ -64,7 +64,8 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
         }
 
         $nextDailyRewardAvailabeAt = null;
-        $canPlayDailyReward = $this->isDailyRewardAvailable($nextDailyRewardAvailabeAt);
+        $dailyRewardActivity = new GamificationsDailyRewardActivity($this->context, $this->module->getEntityManager());
+        $canPlayDailyReward = $dailyRewardActivity->isDailyRewardAvailable($nextDailyRewardAvailabeAt);
 
         if (!$nextDailyRewardAvailabeAt instanceof DateTime) {
             $nextDailyRewardAvailabeAt = new DateTime();
@@ -86,19 +87,16 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
             return;
         }
 
-        if (!$this->isDailyRewardAvailable()) {
+        $dailyRewardActivity = new GamificationsDailyRewardActivity($this->context, $this->module->getEntityManager());
+
+        if (!$dailyRewardActivity->isDailyRewardAvailable()) {
             $this->warning[] = $this->trans('Wooops, Daily Reward is not available at the moment.');
             return;
         }
 
-        $customerGroupsIds = $this->context->customer->getGroups();
+        $reward = $dailyRewardActivity->getDailyReward();
 
-        /** @var GamificationsDailyRewardRepository $dailyRewardsRepository */
-        $dailyRewardsRepository = $this->module->getEntityManager()->getRepository('GamificationsDailyReward');
-        $availableDailyRewards = $dailyRewardsRepository
-            ->findAllByCustomerGroups($customerGroupsIds, $this->context->shop->id);
-
-        if (empty($availableDailyRewards)) {
+        if (null === $reward) {
             $this->warning[] = $this->trans(
                 'No Daily Rewards available at the moment, please check back soon!',
                 [],
@@ -106,29 +104,6 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
             );
             return;
         }
-
-        $dailyRewardsWithBoost = [];
-        foreach ($availableDailyRewards as $dailyReward) {
-            $boost = (int) $dailyReward['boost'];
-            $idDailyReward = (int) $dailyReward['id_gamifications_daily_reward'];
-
-            $dailyRewardBoost = array_fill(0, $boost, $idDailyReward);
-            $dailyRewardsWithBoost = array_merge($dailyRewardsWithBoost, $dailyRewardBoost);
-        }
-
-        shuffle($dailyRewardsWithBoost);
-
-        $idDailyReward = (int) GamificationsArrayHelper::getRandomValue($dailyRewardsWithBoost);
-
-        $dailyReward = new GamificationsDailyReward($idDailyReward, null, $this->context->shop->id);
-        $dailyReward->times_won = (int) $dailyReward->times_won + 1;
-        $dailyReward->save(false, true, false);
-
-        $reward = new GamificationsReward(
-            $dailyReward->id_reward,
-            null,
-            $this->context->shop->id
-        );
 
         $rewardHandler = new GamificationsRewardHandler($this->context);
         $results = $rewardHandler
@@ -141,40 +116,5 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
         }
 
         $this->success[] = $this->trans($results['message'], [], 'Modules.Gamifications.Shop');
-    }
-
-    /**
-     * Check if Daily Reward is available for customer
-     *
-     * @param null|DateTime $nextDailyRewardAvailabe
-     *
-     * @return bool
-     */
-    private function isDailyRewardAvailable(&$nextDailyRewardAvailabe = null)
-    {
-        $nextDailyRewardAvailabe = null;
-
-        $mostRecentDailyRewardActivity = $this->gamificationCustomerRepository->findMostRecentActivity(
-            $this->context->customer->id,
-            GamificationsActivity::TYPE_DAILY_REWARD,
-            $this->context->shop->id
-        );
-
-        $isDailyRewardAvailable = false;
-        if (is_array($mostRecentDailyRewardActivity)) {
-
-            $now = new DateTime();
-            $lastPlayed = new DateTime($mostRecentDailyRewardActivity['date_add']);
-
-            if (1 <= $now->diff($lastPlayed)->d) {
-                $isDailyRewardAvailable = true;
-            }
-
-            $nextDailyRewardAvailabe = $lastPlayed->modify('+1 day');
-        } elseif (null === $mostRecentDailyRewardActivity) {
-            $isDailyRewardAvailable = true;
-        }
-
-        return $isDailyRewardAvailable;
     }
 }

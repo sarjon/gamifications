@@ -20,10 +20,11 @@ abstract class GamificationsAdminController extends ModuleAdminController
      */
     public function init()
     {
+        $this->initList();
+
         parent::init();
 
         $this->initOptions();
-        $this->initList();
         $this->initForm();
         $this->initFieldsValue();
     }

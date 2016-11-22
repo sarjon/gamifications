@@ -24,11 +24,17 @@ class AdminGamificationsActivityHistoryController extends GamificationsAdminCont
      */
     public function renderList()
     {
-        $this->_select = 'c.`email`';
+        $this->_select = 'c.`email`, rl.`name` AS `reward_name`';
 
         $this->_join = '
             LEFT JOIN `'._DB_PREFIX_.'customer` c
                 ON c.`id_customer` = a.`id_customer`
+        ';
+
+        $this->_join .= '
+            LEFT JOIN `'._DB_PREFIX_.'gamifications_reward_lang` rl
+                ON rl.`id_gamifications_reward` = a.`id_reward`
+                    AND rl.`id_lang` = '.(int)$this->context->language->id.'
         ';
 
         $this->_where = 'AND c.`id_shop` = '.(int)$this->context->shop->id;
@@ -88,6 +94,13 @@ class AdminGamificationsActivityHistoryController extends GamificationsAdminCont
     protected function initList()
     {
         $this->list_no_link = true;
+        $this->explicitSelect = true;
+        $this->bulk_actions = [
+            'delete' => [
+                'text' => $this->trans('Delete selected'),
+                'confirm' => $this->trans('Delete selected items?'),
+            ],
+        ];
 
         $this->fields_list = [
             GamificationsActivityHistory::$definition['primary'] => [
@@ -103,6 +116,11 @@ class AdminGamificationsActivityHistoryController extends GamificationsAdminCont
                 'title' => $this->trans('Activity type'),
                 'align' => 'center',
             ],
+            'reward_name' => [
+                'title' => $this->trans('Reward'),
+                'align' => 'center',
+                'filter_key' => 'rl!name',
+            ],
             'reward_type' => [
                 'title' => $this->trans('Reward type'),
                 'align' => 'center',
@@ -114,6 +132,8 @@ class AdminGamificationsActivityHistoryController extends GamificationsAdminCont
             'date_add' => [
                 'title' => $this->trans('Activity date'),
                 'align' => 'center',
+                'type' => 'date',
+                'filter_key' => 'a!date_add',
             ],
         ];
     }

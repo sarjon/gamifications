@@ -26,11 +26,6 @@ class GamificationsRewardHandler
         $this->translator = $context->getTranslator();
     }
 
-    public function getDailyReward()
-    {
-        //@todo: maybe dailyrewardhandler
-    }
-
     /**
      * Handle customer reward (add points, create discount & etc)
      *
@@ -73,14 +68,7 @@ class GamificationsRewardHandler
         }
 
         if ($results['success']) {
-            $activityHistory = new GamificationsActivityHistory();
-            $activityHistory->id_customer = (int) $this->context->customer->id;
-            $activityHistory->id_reward = (int) $reward->id;
-            $activityHistory->id_shop = (int) $this->context->shop->id;
-            $activityHistory->reward_type = (int) $reward->reward_type;
-            $activityHistory->activity_type = (int) $activityType;
-            $activityHistory->points = (int) $points;
-            $activityHistory->save();
+            GamificationsActivityHistory::log($reward, $activityType, $points);
         }
 
         return $results;
