@@ -25,6 +25,7 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
         $this->initDailyRewardsContent();
 
         $this->context->smarty->assign([
+            'controller' => 'loyality',
             'gamifications_customer' => $this->gamificationCustomer,
             'is_daily_rewards_enabled' => (bool) Configuration::get(GamificationsConfig::DAILY_REWARDS_STATUS),
         ]);
