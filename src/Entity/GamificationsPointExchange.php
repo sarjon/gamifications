@@ -41,6 +41,11 @@ class GamificationsPointExchange extends ObjectModel
     public $date_upd;
 
     /**
+     * @var string
+     */
+    public $note;
+
+    /**
      * @var array
      */
     public static $definition = [
@@ -53,6 +58,7 @@ class GamificationsPointExchange extends ObjectModel
             'active' => ['type' => self::TYPE_BOOL, 'required' => false, 'validate' => 'isBool'],
             'date_add' => ['type' => self::TYPE_DATE, 'required' => false, 'validate' => 'isDate'],
             'date_upd' => ['type' => self::TYPE_DATE, 'required' => false, 'validate' => 'isDate'],
+            'note' => ['type' => self::TYPE_STRING, 'required' => false, 'validate' => 'isString'],
         ],
         'multishop' => true,
     ];

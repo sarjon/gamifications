@@ -132,6 +132,11 @@ class AdminGamificationsPointExchangeController extends GamificationsAdminContro
                 'type' => 'text',
                 'align' => 'center',
             ],
+            'note' => [
+                'title' => $this->trans('Note'),
+                'type' => 'text',
+                'align' => 'center',
+            ],
         ];
     }
 
@@ -200,6 +205,19 @@ class AdminGamificationsPointExchangeController extends GamificationsAdminContro
                     'name' => 'groupBox',
                     'values' => Group::getGroups($this->context->language->id, $this->context->shop->id),
                     'hint' => $this->trans('Which customer groups can get this reward by exchanging points'),
+                ],
+                [
+                    'label' => $this->trans('Note'),
+                    'type' => 'text',
+                    'name' => 'note',
+                    'hint' => $this->trans('Private note, only displayed in Back Office list'),
+                    'desc' =>
+                        $this->trans('If you have same reward for different customer groups')
+                        .' '.
+                        $this->trans('you can mark it like: For VIP only.')
+                        .' '.
+                        $this->trans('You can also add anything that help you recognize rewards easier.'),
+                    'class' => 'fixed-width-xxxl'
                 ],
             ],
             'submit' => [
