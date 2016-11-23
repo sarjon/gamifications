@@ -21,7 +21,7 @@
                         {else}
                             <h4>{l s='There\'s always another day!' d='Modules.Gamifications.Shop'}</h4>
                             <button type="submit" name="get_daily_reward" class="btn btn-primary btn-block disabled">
-                                {l s='Daily Reward is not available yet' d='Modules.Gamifications.Shop'}
+                                {l s='Daily Reward is not available at the moment' d='Modules.Gamifications.Shop'}
                             </button>
                             <p class="card-text">
                                 {l s='Next Daily Reward available at' d='Modules.Gamifications.Shop'}

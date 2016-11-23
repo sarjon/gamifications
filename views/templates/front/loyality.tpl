@@ -11,16 +11,12 @@
     <div class="row">
 
         <div class="col-md-12">
-            <br>
+            <hr>
         </div>
 
         <div class="col-md-12">
 
             <div class="row">
-                <div class="col-md-12">
-                    <h1 class="text-primary">{l s='Points' d='Modules.Gamifications.Shop'}</h1>
-                    <hr>
-                </div>
 
                 <div class="col-md-3">
                     <h3>{l s='My current points' d='Modules.Gamifications.Shop'}</h3>
