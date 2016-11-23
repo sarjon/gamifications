@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `PREFIX_gamifications_reward_lang` (
   `id_gamifications_reward` INT(11) UNSIGNED NOT NULL,
   `id_lang` INT(11) UNSIGNED NOT NULL,
   `name` VARCHAR(100) NOT NULL,
+  `description` VARCHAR(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id_gamifications_reward`, `id_lang`)
 ) ENGINE=ENGINE_TYPE DEFAULT CHARSET=utf8;
 

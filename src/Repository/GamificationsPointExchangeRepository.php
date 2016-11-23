@@ -52,7 +52,7 @@ class GamificationsPointExchangeRepository extends EntityRepository
     public function findAllPointExchangeRewards(array $idGroups, $idShop, $idLang)
     {
         $sql = '
-            SELECT pe.`points`, r.`id_gamifications_reward`, r.`reward_type`, rl.`name`
+            SELECT pe.`points`, r.`id_gamifications_reward`, r.`reward_type`, rl.`name`, rl.`description`
             FROM `'.$this->getPrefix().'gamifications_point_exchange` pe
             LEFT JOIN `'.$this->getPrefix().'gamifications_point_exchange_shop` pes
                 ON pes.`id_gamifications_point_exchange` = pe.`id_gamifications_point_exchange`

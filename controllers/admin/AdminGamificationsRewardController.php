@@ -157,6 +157,13 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                     'lang' => true,
                 ],
                 [
+                    'label' => $this->trans('Description'),
+                    'type' => 'textarea',
+                    'name' => 'description',
+                    'lang' => true,
+                    'desc' => $this->trans('Up to 255 characters'),
+                ],
+                [
                     'label' => $this->trans('Reward type'),
                     'type' => 'select',
                     'name' => 'reward_type',

@@ -32,6 +32,11 @@ class GamificationsReward extends ObjectModel
     public $name;
 
     /**
+     * @var string|array
+     */
+    public $description;
+
+    /**
      * @var int
      */
     public $reward_type;
@@ -138,6 +143,12 @@ class GamificationsReward extends ObjectModel
                 'lang' => true,
                 'size' => 100,
                 'validate' => 'isGenericName',
+            ],
+            'description' => [
+                'type' => self::TYPE_STRING,
+                'required' => true,
+                'lang' => true,
+                'size' => 255,
             ],
         ],
         'multishop' => true,
