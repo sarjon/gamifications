@@ -189,4 +189,17 @@ class GamificationsReward extends ObjectModel
 
         return (null === $rewardType) ? $translations : $translations[$rewardType];
     }
+
+    /**
+     * Get all rewards types where type is points
+     *
+     * @return array
+     */
+    public static function getPointsRewardTypes()
+    {
+        return [
+            self::REWARD_TYPE_POINTS,
+            self::REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS,
+        ];
+    }
 }

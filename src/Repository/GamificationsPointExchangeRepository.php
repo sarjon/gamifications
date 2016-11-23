@@ -39,4 +39,41 @@ class GamificationsPointExchangeRepository extends EntityRepository
 
         return $groupIds;
     }
+
+    /**
+     * Find all availabe point exchange rewards for given customer groups
+     *
+     * @param array $idGroups
+     * @param int $idShop
+     * @param int $idLang
+     *
+     * @return array
+     */
+    public function findAllPointExchangeRewards(array $idGroups, $idShop, $idLang)
+    {
+        $sql = '
+            SELECT pe.`points`, r.`id_gamifications_reward`, r.`reward_type`, rl.`name`
+            FROM `'.$this->getPrefix().'gamifications_point_exchange` pe
+            LEFT JOIN `'.$this->getPrefix().'gamifications_point_exchange_shop` pes
+                ON pes.`id_gamifications_point_exchange` = pe.`id_gamifications_point_exchange`
+            LEFT JOIN `'.$this->getPrefix().'gamifications_point_exchange_group` peg
+                ON peg.`id_gamifications_point_exchange` = pe.`id_gamifications_point_exchange`
+            LEFT JOIN `'.$this->getPrefix().'gamifications_reward` r
+                ON r.`id_gamifications_reward` = pe.`id_reward`
+            LEFT JOIN `'.$this->getPrefix().'gamifications_reward_lang` rl
+                ON rl.`id_gamifications_reward` = pe.`id_reward`
+            WHERE pe.`active` = 1
+                AND pes.`id_shop` = '.(int)$idShop.'
+                AND rl.`id_lang` = '.(int)$idLang.'
+                AND peg.`id_group` IN ('.implode(',', array_map('intval', $idGroups)).')
+        ';
+
+        $results = $this->db->select($sql);
+
+        if (!is_array($results)) {
+            return [];
+        }
+
+        return $results;
+    }
 }
