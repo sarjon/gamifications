@@ -9,6 +9,7 @@ class GamificationsActivity
      * Activities types
      */
     const TYPE_DAILY_REWARD = 1;
+    const TYPE_POINT_EXCHANGE = 2;
 
     /**
      * Get activity translations
@@ -24,6 +25,7 @@ class GamificationsActivity
 
         $translations = [
             self::TYPE_DAILY_REWARD => $translator->trans('Daily Rewards', [], 'Modules.Gamifications.Admin'),
+            self::TYPE_POINT_EXCHANGE => $translator->trans('Points Exchange', [], 'Modules.Gamifications.Admin'),
         ];
 
         if (null !== $activityType) {

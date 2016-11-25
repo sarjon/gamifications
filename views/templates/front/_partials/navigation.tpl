@@ -11,16 +11,6 @@
                     {l s='Exchange points' d='Modules.Gamifications.Shop'}
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    {l s='My Rewards' d='Modules.Gamifications.Shop'}
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    {l s='Activity history' d='Modules.Gamifications.Shop'}
-                </a>
-            </li>
         </ul>
     </div>
 </div>

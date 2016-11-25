@@ -62,4 +62,14 @@ abstract class GamificationsFrontController extends ModuleFrontController
 
         return true;
     }
+
+    /**
+     * Get entity manager
+     *
+     * @return \PrestaShop\PrestaShop\Core\Foundation\Database\EntityManager
+     */
+    protected function getEntityManager()
+    {
+        return $this->module->getEntityManager();
+    }
 }

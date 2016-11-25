@@ -47,14 +47,19 @@
                                     {l s='points' d='Modules.Gamifications.Shop'}
                                 </div>
                                 <progress class="progress progress-{$progressColor}" value="{$gamifications_customer.total_points}" max="{$reward.points}"></progress>
-                                <button type="submit"
-                                        class="btn btn-primary pull-xs-right"
-                                        {if $buttonStatus == 'disabled'}disabled{/if}
-                                >
-                                    {l s='Exchange' d='Modules.Gamifications.Shop'}
-                                    {$reward.points}
-                                    {l s='points' d='Modules.Gamifications.Shop'}!
-                                </button>
+                                <form method="post">
+                                    <button type="submit"
+                                            class="btn btn-primary pull-xs-right"
+                                            name="exchange_points"
+                                            {if $buttonStatus == 'disabled'}disabled{/if}
+                                    >
+                                        {l s='Exchange' d='Modules.Gamifications.Shop'}
+                                        {$reward.points}
+                                        {l s='points' d='Modules.Gamifications.Shop'}!
+                                    </button>
+                                    <input type="hidden" name="csrf_token" value="{$csrf_token}">
+                                    <input type="hidden" name="id_point_exchange_reward" value="{$reward.id_gamifications_point_exchange}">
+                                </form>
                                 <div class="clearfix"></div>
                             </div>
                         </div>
@@ -94,14 +99,19 @@
                                     {l s='points' d='Modules.Gamifications.Shop'}
                                 </div>
                                 <progress class="progress progress-{$progressColor}" value="{$gamifications_customer.total_points}" max="{$reward.points}"></progress>
-                                <button type="submit"
-                                        class="btn btn-primary pull-xs-right"
-                                        {if $buttonStatus == 'disabled'}disabled{/if}
-                                >
-                                    {l s='Exchange' d='Modules.Gamifications.Shop'}
-                                    {$reward.points}
-                                    {l s='points' d='Modules.Gamifications.Shop'}!
-                                </button>
+                                <form method="post">
+                                    <button type="submit"
+                                            class="btn btn-primary pull-xs-right"
+                                            name="exchange_points"
+                                            {if $buttonStatus == 'disabled'}disabled{/if}
+                                    >
+                                        {l s='Exchange' d='Modules.Gamifications.Shop'}
+                                        {$reward.points}
+                                        {l s='points' d='Modules.Gamifications.Shop'}!
+                                    </button>
+                                    <input type="hidden" name="csrf_token" value="{$csrf_token}">
+                                    <input type="hidden" name="id_point_exchange_reward" value="{$reward.id_gamifications_point_exchange}">
+                                </form>
                                 <div class="clearfix"></div>
                             </div>
                         </div>

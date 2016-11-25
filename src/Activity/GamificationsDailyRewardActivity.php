@@ -72,6 +72,7 @@ class GamificationsDailyRewardActivity
      * Check if Daily Reward is available
      *
      * @param null $nextDailyRewardAvailabe
+     *
      * @return bool
      */
     public function isDailyRewardAvailable(&$nextDailyRewardAvailabe = null)
