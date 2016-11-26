@@ -20,12 +20,12 @@ class GamificationsDailyRewardActivity
     /**
      * GamificationsDailyRewardActivity constructor.
      *
-     * @param Context $context
      * @param EntityManager $em
      */
-    public function __construct(Context $context, EntityManager $em)
+    public function __construct(EntityManager $em)
     {
-        $this->context = $context;
+
+        $this->context = Context::getContext();
         $this->em = $em;
     }
 

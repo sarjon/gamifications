@@ -65,7 +65,7 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
         }
 
         $nextDailyRewardAvailabeAt = null;
-        $dailyRewardActivity = new GamificationsDailyRewardActivity($this->context, $this->module->getEntityManager());
+        $dailyRewardActivity = new GamificationsDailyRewardActivity($this->module->getEntityManager());
         $canPlayDailyReward = $dailyRewardActivity->isDailyRewardAvailable($nextDailyRewardAvailabeAt);
 
         if (!$nextDailyRewardAvailabeAt instanceof DateTime) {
@@ -88,7 +88,7 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
             return;
         }
 
-        $dailyRewardActivity = new GamificationsDailyRewardActivity($this->context, $this->module->getEntityManager());
+        $dailyRewardActivity = new GamificationsDailyRewardActivity($this->module->getEntityManager());
 
         if (!$dailyRewardActivity->isDailyRewardAvailable()) {
             $this->warning[] = $this->trans('Wooops, Daily Reward is not available at the moment.');

@@ -17,11 +17,11 @@ class GamificationsRewardHandler
 
     /**
      * GamificationsRewardHandler constructor.
-     * 
-     * @param Context $context
      */
-    public function __construct(Context $context)
+    public function __construct()
     {
+        $context = Context::getContext();
+
         $this->context = $context;
         $this->translator = $context->getTranslator();
     }
