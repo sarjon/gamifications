@@ -189,8 +189,8 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                                 'name' => $this->trans('Free shipping'),
                             ],
                             [
-                                'id' => GamificationsReward::REWARD_TYPE_PRIZE,
-                                'name' => $this->trans('Prize'),
+                                'id' => GamificationsReward::REWARD_TYPE_GIFT,
+                                'name' => $this->trans('Gift'),
                             ],
                         ],
                     ],
@@ -216,8 +216,8 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                 ],
                 [
                     // THIS FIELD IS NOT SAVED
-                    'label' => $this->trans('Product as a prize'),
-                    'name' => 'prize_name',
+                    'label' => $this->trans('Product'),
+                    'name' => 'product_name',
                     'type' => 'text',
                     'hint' => $this->trans('Enter product name and available products will show up'),
                     'class' => 'fixed-width-xxl',
@@ -225,7 +225,7 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                 ],
                 [
                     'label' => '',
-                    'name' => 'prize',
+                    'name' => 'id_product',
                     'type' => 'hidden',
                 ],
                 [
@@ -256,7 +256,7 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                     'class' => 'fixed-width-sm',
                 ],
                 [
-                    'label' => $this->trans('Discount apply type'),
+                    'label' => $this->trans('Apply type'),
                     'type' => 'select',
                     'name' => 'discount_apply_type',
                     'hint' =>
@@ -267,7 +267,7 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                         'query' => [
                             [
                                 'id' => GamificationsReward::DISCOUNT_TYPE_AUTOMATICALLY_APPLIED,
-                                'name' => $this->trans('Automatically'),
+                                'name' => $this->trans('Automatically in cart'),
                             ],
                             [
                                 'id' => GamificationsReward::DISCOUNT_REDUCTION_AMOUNT,
@@ -277,7 +277,7 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                     ],
                 ],
                 [
-                    'label' => $this->trans('Discount valid days'),
+                    'label' => $this->trans('Valid days'),
                     'type' => 'text',
                     'name' => 'discount_valid_days',
                     'hitn' => $this->trans('How many days discount will be valid after earning it'),
@@ -320,16 +320,16 @@ class AdminGamificationsRewardController extends GamificationsAdminController
 
         if (Validate::isLoadedObject($this->object)) {
 
-            if ($this->object->prize) {
+            if ($this->object->id_product) {
                 $product = new Product(
-                    $this->object->prize,
+                    $this->object->id_product,
                     false,
                     $this->context->language->id,
                     $this->context->shop->id
                 );
 
                 if (Validate::isLoadedObject($product)) {
-                    $this->object->prize_name = $product->name;
+                    $this->object->product_name = $product->name;
                 }
             }
 

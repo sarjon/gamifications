@@ -99,4 +99,42 @@ class GamificationsCustomer extends ObjectModel
 
         return true;
     }
+
+    /**
+     * Remove points
+     *
+     * @param int $points
+     *
+     * @return GamificationsCustomer
+     */
+    public function removePoints($points)
+    {
+        $this->total_points = (int) $this->total_points - $points;
+
+        return $this;
+    }
+
+    /**
+     * @param int $points
+     *
+     * @return GamificationsCustomer
+     */
+    public function addSpentPoints($points)
+    {
+        $this->spent_points = (int) $this->spent_points + $points;
+
+        return $this;
+    }
+
+    /**
+     * Check if customer can exchange points into
+     *
+     * @param GamificationsPointExchange $pointsExchangeReward
+     *
+     * @return bool
+     */
+    public function checkExchangePoints(GamificationsPointExchange $pointsExchangeReward)
+    {
+        return $pointsExchangeReward->points <= $this->total_points;
+    }
 }

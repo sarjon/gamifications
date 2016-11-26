@@ -12,7 +12,7 @@ class GamificationsReward extends ObjectModel
     const REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS = 2;
     const REWARD_TYPE_DISCOUNT = 3;
     const REWARD_TYPE_FREE_SHIPPING = 4;
-    const REWARD_TYPE_PRIZE = 5;
+    const REWARD_TYPE_GIFT = 5;
 
     /**
      * Discount reduction types
@@ -79,7 +79,7 @@ class GamificationsReward extends ObjectModel
     /**
      * @var string id_product
      */
-    public $prize;
+    public $id_product;
 
     /**
      * @var array
@@ -105,7 +105,7 @@ class GamificationsReward extends ObjectModel
                 'required' => false,
                 'validate' => 'isUnsignedInt',
             ],
-            'prize' => [
+            'id_product' => [
                 'type' => self::TYPE_INT,
                 'required' => false,
                 'validate' => 'isUnsignedInt',
@@ -193,7 +193,7 @@ class GamificationsReward extends ObjectModel
             self::REWARD_TYPE_POINTS => $translator->trans('Fixed points', [], 'Modules.Gamifications'),
             self::REWARD_TYPE_DISCOUNT => $translator->trans('Discount', [], 'Modules.Gamifications'),
             self::REWARD_TYPE_FREE_SHIPPING => $translator->trans('Free shipping', [], 'Modules.Gamifications'),
-            self::REWARD_TYPE_PRIZE => $translator->trans('Prize', [], 'Modules.Gamifications'),
+            self::REWARD_TYPE_GIFT => $translator->trans('Gift', [], 'Modules.Gamifications'),
             self::REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS =>
                 $translator->trans('Random amount of points', [], 'Modules.Gamifications'),
         ];

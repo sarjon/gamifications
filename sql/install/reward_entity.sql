@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS `PREFIX_gamifications_reward` (
   `reward_type` VARCHAR(50) NOT NULL,
   `points` INT(11) UNSIGNED NOT NULL DEFAULT 0,
   `radius` INT(11) UNSIGNED NOT NULL DEFAULT 0,
-  `prize` VARCHAR(20) NOT NULL DEFAULT 0,
+  `id_product` INT(11) NOT NULL DEFAULT 0,
   `minimum_cart_amount` INT(11) UNSIGNED NOT NULL DEFAULT 0,
   `discount_reduction_type` VARCHAR(50) NOT NULL DEFAULT '',
   `discount_apply_type` VARCHAR(50) NOT NULL DEFAULT '',

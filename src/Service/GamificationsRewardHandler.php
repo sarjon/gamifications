@@ -60,7 +60,9 @@ class GamificationsRewardHandler
                 $results['success'] = true;
                 break;
             case GamificationsReward::REWARD_TYPE_DISCOUNT:
-                $this->createDiscount($reward);
+            case GamificationsReward::REWARD_TYPE_FREE_SHIPPING:
+            case GamificationsReward::REWARD_TYPE_GIFT:
+                $this->createVoucher($reward);
                 $results['message'] = $this->translator->trans('You got', [], 'Modules.Gamifications.Shop');
                 $results['message'] .= ' '.$reward->name[$this->context->language->id];
                 $results['success'] = true;
@@ -81,41 +83,87 @@ class GamificationsRewardHandler
      *
      * @return bool
      */
-    protected function createDiscount(GamificationsReward $reward)
+    protected function createVoucher(GamificationsReward $reward)
     {
         $defaultCurrencyId = (int) Configuration::get('PS_CURRENCY_DEFAULT');
         $validFrom = new DateTime();
-        $validTo = new DateTime();;
+        $validTo = new DateTime();
         $validTo = $validTo->add(new DateInterval(sprintf('P%dD', (int) $reward->discount_valid_days)));
 
-        $discount = new CartRule();
+        $voucher = new CartRule();
 
-        $discount->id_customer = $this->context->customer->id;
-        $discount->active = true;
-        $discount->date_from = $validFrom->format('Y-m-d H:i:s');
-        $discount->date_to = $validTo->format('Y-m-d H:i:s');
-        $discount->name = $reward->name;
-        $discount->partial_use = false;
-        $discount->priority = 1;
-        $discount->quantity_per_user = 1;
-        $discount->quantity = 1;
-        $discount->minimum_amount = $reward->minimum_cart_amount;
-        $discount->minimum_amount_currency = $defaultCurrencyId;
+        $voucher->id_customer = $this->context->customer->id;
+        $voucher->active = true;
+        $voucher->date_from = $validFrom->format('Y-m-d H:i:s');
+        $voucher->date_to = $validTo->format('Y-m-d H:i:s');
+        $voucher->name = $reward->name;
+        $voucher->partial_use = false;
+        $voucher->highlight = false;
+        $voucher->priority = 1;
+        $voucher->quantity_per_user = 1;
+        $voucher->quantity = 1;
+        $voucher->minimum_amount = $reward->minimum_cart_amount;
+        $voucher->minimum_amount_currency = $defaultCurrencyId;
+
+        if ($reward->discount_apply_type = GamificationsReward::DISCOUNT_TYPE_CODE) {
+            $voucher->code = Tools::passwdGen();
+        }
+
+        $rewardType = (int) $reward->reward_type;
+
+        if (GamificationsReward::REWARD_TYPE_DISCOUNT == $rewardType) {
+            $this->configureDiscount($voucher, $reward);
+        } elseif (GamificationsReward::REWARD_TYPE_FREE_SHIPPING == $rewardType) {
+            $this->configureFreeShipping($voucher, $reward);
+        } elseif (GamificationsReward::REWARD_TYPE_GIFT == $rewardType) {
+            $this->configureGift($voucher, $reward);
+        }
+
+        return $voucher->save();
+    }
+
+    /**
+     * Configure discount data from reward
+     *
+     * @param CartRule $voucher
+     * @param GamificationsReward $reward
+     */
+    protected function configureDiscount(CartRule &$voucher, GamificationsReward $reward)
+    {
+        $voucher->reduction_tax = true;
+        $voucher->reduction_currency = $voucher->minimum_amount_currency;
 
         switch ($reward->discount_reduction_type) {
             case GamificationsReward::DISCOUNT_REDUCTION_AMOUNT:
-                $discount->reduction_amount = $reward->discount_value;
-                $discount->reduction_currency = $defaultCurrencyId;
-                $discount->reduction_tax = false;
+                $voucher->reduction_amount = $reward->discount_value;
                 break;
             case GamificationsReward::DISCOUNT_REDUCTION_PERCENT:
-                $discount->reduction_percent = $reward->discount_value;
+                $voucher->reduction_percent = $reward->discount_value;
         }
+    }
 
-        if ($reward->discount_apply_type = GamificationsReward::DISCOUNT_TYPE_CODE) {
-            $discount->code = Tools::passwdGen();
-        }
+    /**
+     * Configure free shipping data from reward
+     *
+     * @param CartRule $voucher
+     * @param GamificationsReward $reward
+     */
+    protected function configureFreeShipping(CartRule &$voucher, GamificationsReward $reward)
+    {
+        $voucher->free_shipping = true;
+    }
 
-        return $discount->save();
+    /**
+     * Configure discount data from reward
+     *
+     * @param CartRule $voucher
+     * @param GamificationsReward $reward
+     */
+    protected function configureGift(CartRule &$voucher, GamificationsReward $reward)
+    {
+        $product = new Product($reward->id_product);
+
+        $voucher->gift_product = $product->id;
+        $voucher->gift_product_attribute = $product->getDefaultIdProductAttribute();
     }
 }

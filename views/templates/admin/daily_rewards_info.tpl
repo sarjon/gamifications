@@ -7,7 +7,7 @@
             {l s='Daily Rewards allows you as a merchant attract more customers to your shop every day by giving them random rewards.' d='Modules.Gamifications.Admin'}
         </p>
         <p>
-            {l s='All that customer has to do is visit your store and claim their daily reward! Reward is usually random amount of points, but can also be discount, free shipping or prize.' d='Modules.Gamifications.Admin'}
+            {l s='All that customer has to do is visit your store and claim their daily reward! Reward is usually random amount of points, but can also be discount, free shipping or gift.' d='Modules.Gamifications.Admin'}
         </p>
         <p>
             <strong>{l s='How Daily Rewards increase sales?' d='Modules.Gamifications.Admin'}</strong>

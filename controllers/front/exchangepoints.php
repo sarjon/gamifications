@@ -57,7 +57,7 @@ class GamificationsExchangePointsModuleFrontController extends GamificationsFron
             return;
         }
 
-        if ($pointsExchangeReward->points > $this->gamificationCustomer->total_points) {
+        if (!$this->gamificationCustomer->checkExchangePoints($pointsExchangeReward)) {
             $missingPoints = (int) $pointsExchangeReward->points - (int) $this->gamificationCustomer->total_points;
             $this->warning[] = $this->trans(
                 'You still need %points% more points to get selected reward',
@@ -75,8 +75,8 @@ class GamificationsExchangePointsModuleFrontController extends GamificationsFron
             return;
         }
 
-        $this->gamificationCustomer->total_points -= (int) $pointsExchangeReward->points;
-        $this->gamificationCustomer->spent_points += (int) $pointsExchangeReward->points;
+        $this->gamificationCustomer->removePoints($pointsExchangeReward->points);
+        $this->gamificationCustomer->addSpentPoints($pointsExchangeReward->points);
         $this->gamificationCustomer->save();
 
         $rewardHandler = new GamificationsRewardHandler($this->context);
@@ -93,7 +93,7 @@ class GamificationsExchangePointsModuleFrontController extends GamificationsFron
         }
 
         $this->success[] = $this->trans(
-            'You have successfully exchanged %points% into %reward_title%!',
+            'You have successfully exchanged %points% points into %reward_title%!',
             [
                 '%points%' => $pointsExchangeReward->points,
                 '%reward_title%' => $reward->name[$this->context->language->id],

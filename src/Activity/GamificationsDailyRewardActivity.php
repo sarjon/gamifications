@@ -1,4 +1,5 @@
 <?php
+
 use PrestaShop\PrestaShop\Core\Foundation\Database\EntityManager;
 
 /**

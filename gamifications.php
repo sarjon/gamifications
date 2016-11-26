@@ -29,6 +29,7 @@ class Gamifications extends Module
      * Module front controllers
      */
     const FRONT_LOYALITY_CONTROLLER = 'loyality';
+    const FRONT_EXCHANGE_POINTS_CONTROLLER = 'exchangepoints';
 
     /**
      * @var EntityManager
@@ -47,7 +48,7 @@ class Gamifications extends Module
         $this->tab = 'front_office_features';
         $this->version = '1.0.0';
         $this->need_instance = 0;
-        $this->controllers = [self::FRONT_LOYALITY_CONTROLLER];
+        $this->controllers = [self::FRONT_LOYALITY_CONTROLLER, self::FRONT_EXCHANGE_POINTS_CONTROLLER];
 
         parent::__construct();
 
@@ -57,7 +58,7 @@ class Gamifications extends Module
         $this->displayName = $this->trans('Gamification', [], 'Modules.Gamifications');
         $this->description = $this->trans(
             'Increase customers loyality by adding various activities to your shop! 
-             Daily rewards, challanges, ranks, points and prizes',
+             Daily rewards, challanges, points, gifts & more!',
             [],
             'Modules.Gamifications'
         );
@@ -155,9 +156,9 @@ class Gamifications extends Module
             $this->context->smarty->assign($params);
         }
 
-        $tempalte = sprintf('module:%s/views/templates/'.$path, $this->name);
+        $template = sprintf('module:%s/views/templates/'.$path, $this->name);
 
-        return $this->context->smarty->fetch($tempalte);
+        return $this->context->smarty->fetch($template);
     }
 
     /**
