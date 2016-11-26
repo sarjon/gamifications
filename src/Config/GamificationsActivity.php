@@ -6,6 +6,12 @@
 class GamificationsActivity
 {
     /**
+     * Refferal reward time
+     */
+    const REFERRAL_REWARD_ON_NEW_CUSTOMER_REGISTRATION = 1;
+    const REFERRAL_REWARD_ON_NEW_CUSTOMER_ORDER = 2;
+
+    /**
      * Activities types
      */
     const TYPE_DAILY_REWARD = 1;

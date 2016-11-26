@@ -117,11 +117,11 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_DAILY_REWARDS_CONTROLLER,
             ],
-//            [
-//                'name' => $this->module->getTranslator()->trans('Challanges', [], 'Modules.Gamifications'),
-//                'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
-//                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_CHALLANGE_CONTROLLER,
-//            ],
+            [
+                'name' => $this->module->getTranslator()->trans('Referral program', [], 'Modules.Gamifications'),
+                'parent' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER,
+                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_REFERRAL_CONTROLLER,
+            ],
             [
                 'name' => $this->module->getTranslator()->trans('Stats', [], 'Modules.Gamifications'),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
@@ -155,6 +155,7 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
         $hooks = [
             'moduleRoutes',
             'displayCustomerAccount',
+            'actionObjectCustomerAddAfter',
         ];
 
         foreach ($hooks as $hookName) {

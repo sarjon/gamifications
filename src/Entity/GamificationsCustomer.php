@@ -35,6 +35,11 @@ class GamificationsCustomer extends ObjectModel
     /**
      * @var string
      */
+    public $referral_code;
+
+    /**
+     * @var string
+     */
     public $date_add;
 
     /**
@@ -52,6 +57,7 @@ class GamificationsCustomer extends ObjectModel
             'id_customer' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
             'total_points' => ['type' => self::TYPE_INT, 'required' => false, 'validate' => 'isUnsignedInt'],
             'spent_points' => ['type' => self::TYPE_INT, 'required' => false, 'validate' => 'isUnsignedInt'],
+            'referral_code' => ['type' => self::TYPE_STRING, 'required' => false, 'validate' => 'isString'],
             'date_add' => ['type' => self::TYPE_DATE, 'required' => false, 'validate' => 'isDate'],
             'date_upd' => ['type' => self::TYPE_DATE, 'required' => false, 'validate' => 'isDate'],
         ],

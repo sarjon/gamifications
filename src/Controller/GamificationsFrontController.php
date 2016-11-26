@@ -40,25 +40,25 @@ abstract class GamificationsFrontController extends ModuleFrontController
      */
     private function loadGamificationsCustomerObject()
     {
-        /** @var GamificationsCustomerRepository $playerRepository */
-        $playerRepository = $this->module->getEntityManager()->getRepository('GamificationsCustomer');
-        $idGamificationsCustomer =
-            $playerRepository->findIdByCustomerId($this->context->customer->id, $this->context->shop->id);
+        /** @var GamificationsCustomerRepository $customerRepository */
+        $customerRepository = $this->module->getEntityManager()->getRepository('GamificationsCustomer');
+        $id = $customerRepository->findIdByCustomerId($this->context->customer->id, $this->context->shop->id);
 
-        $player = new GamificationsCustomer((int) $idGamificationsCustomer, null, $this->context->shop->id);
+        $gamificationsCustomer = new GamificationsCustomer((int) $id, null, $this->context->shop->id);
 
-        if (null === $idGamificationsCustomer && !Validate::isLoadedObject($player)) {
-            $player->id_customer = (int) $this->context->customer->id;
-            $player->total_points = 0;
-            $player->spent_points = 0;
+        if (null === $id && !Validate::isLoadedObject($gamificationsCustomer)) {
+            $gamificationsCustomer->id_customer = (int) $this->context->customer->id;
+            $gamificationsCustomer->total_points = 0;
+            $gamificationsCustomer->spent_points = 0;
+            $gamificationsCustomer->referral_code = strtolower(Tools::passwdGen(16));
 
-            if (!$player->save()) {
+            if (!$gamificationsCustomer->save()) {
                 return false;
             }
         }
 
-        $this->gamificationCustomer = $player;
-        $this->gamificationCustomerRepository = $playerRepository;
+        $this->gamificationCustomer = $gamificationsCustomer;
+        $this->gamificationCustomerRepository = $customerRepository;
 
         return true;
     }
