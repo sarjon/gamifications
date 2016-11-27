@@ -23,6 +23,27 @@ class GamificationsExchangePointsModuleFrontController extends GamificationsFron
 
         $pointExchangeRewards = $pointExcahngeRepository->findAllPointExchangeRewards($idGroups, $idShop, $idLang);
 
+        $imageType = ImageType::getFormattedName('small');
+
+        foreach ($pointExchangeRewards as &$pointExchangeReward) {
+            if (GamificationsReward::REWARD_TYPE_GIFT != $pointExchangeReward['reward_type']) {
+                continue;
+            }
+
+            $reward = new GamificationsReward((int) $pointExchangeReward['id_gamifications_reward']);
+            $product = new Product($reward->id_product, false, $this->context->language->id);
+
+            $coverImage = Image::getCover($product->id);
+            $idProductAndIdImage = sprintf('%s-%s', $product->id, (int) $coverImage['id_image']);
+
+            if (!Validate::isLoadedObject($product)) {
+                continue;
+            }
+
+            $pointExchangeReward['image_link'] =
+                $this->context->link->getImageLink($product->link_rewrite, $idProductAndIdImage, $imageType);
+        }
+
         $this->context->smarty->assign([
             'point_exchange_rewards' => $pointExchangeRewards,
             'gamifications_customer' => (array) $this->gamificationCustomer,
