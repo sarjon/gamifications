@@ -156,6 +156,8 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
             'moduleRoutes',
             'displayCustomerAccount',
             'actionObjectCustomerAddAfter',
+            'actionObjectOrderAddAfter',
+            'actionObjectOrderUpdateAfter',
         ];
 
         foreach ($hooks as $hookName) {

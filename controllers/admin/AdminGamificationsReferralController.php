@@ -6,49 +6,181 @@
 class AdminGamificationsReferralController extends GamificationsAdminController
 {
     /**
-     * Initialize options
+     * Init custom content
      */
-    protected function initOptions()
+    public function initContent()
     {
-        $this->fields_options = [
-            'general' => [
+        $this->initReferralOptions();
+
+        parent::initContent();
+    }
+
+    public function setMedia()
+    {
+        parent::setMedia();
+
+        $referralProgramJsUri = $this->module->getPathUri().'views/js/admin/referral_program.js';
+
+        $this->addJS($referralProgramJsUri);
+    }
+
+    /**
+     * Custom form processing
+     */
+    public function postProcess()
+    {
+        if (!Tools::isSubmit('submitAddconfiguration')) {
+            return;
+        }
+
+        $configurations = [];
+
+        $configurations[GamificationsConfig::REFERRAL_REWARD_TIME] =
+            (int) Tools::getValue(GamificationsConfig::REFERRAL_REWARD_TIME);
+        $configurations[GamificationsConfig::REFERRAL_REWARD] =
+            (int) Tools::getValue(GamificationsConfig::REFERRAL_REWARD);
+        $configurations[GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD_ENABLED] =
+            (int) Tools::getValue(GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD_ENABLED);
+        $configurations[GamificationsConfig::REFERRAL_NEW_CUSTOMER_ORDER_STATES] =
+            json_encode(Tools::getValue(GamificationsConfig::REFERRAL_NEW_CUSTOMER_ORDER_STATES.'_selected', []));
+        $configurations[GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD] =
+            (int) Tools::getValue(GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD);
+
+        $idShopGroup = (int) $this->context->shop->id_shop_group;
+        $idShop = (int) $this->context->shop->id;
+
+        $success = true;
+        foreach ($configurations as $name => $value) {
+            $success &= Configuration::updateValue($name, $value, false, $idShopGroup, $idShop);
+        }
+
+        if (!$success) {
+            $this->errors[] = $this->trans('Failed update', [], 'Modules.Gamifications.Admin');
+        }
+
+        $this->confirmations[] = $this->trans('Succesful update', [], 'Modules.Gamifications.Admin');
+    }
+
+    /**
+     * Init free input type values
+     */
+    protected function initReferralOptions()
+    {
+        $referralOptionsForm = new HelperForm();
+
+        $fieldsForm[0]['form'] = $this->fields_form;
+
+        $referralOptionsForm->tpl_vars = [
+            'fields_value' => [
+                GamificationsConfig::REFERRAL_REWARD_TIME =>
+                    (int) Configuration::get(GamificationsConfig::REFERRAL_REWARD_TIME),
+                GamificationsConfig::REFERRAL_REWARD =>
+                    (int) Configuration::get(GamificationsConfig::REFERRAL_REWARD),
+                GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD_ENABLED =>
+                    (int) Configuration::get(GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD_ENABLED),
+                GamificationsConfig::REFERRAL_NEW_CUSTOMER_ORDER_STATES =>
+                    json_decode(Configuration::get(GamificationsConfig::REFERRAL_NEW_CUSTOMER_ORDER_STATES)),
+                GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD =>
+                    (int) json_decode(Configuration::get(GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD)),
+            ],
+        ];
+
+        $this->content .= $referralOptionsForm->generateForm($fieldsForm);
+    }
+
+    /**
+     * Init fields form
+     * Used for henerating referral options
+     */
+    protected function initForm()
+    {
+        $this->fields_form = [
+            'legend' => [
                 'title' => $this->trans('Referral program settings', [], 'Modules.Gamifications.Admin'),
-                'fields' => [
-                    GamificationsConfig::REFERRAL_REWARD_TIME => [
-                        'title' => $this->trans('Referrer reward time', [], 'Modules.Gamifications.Admin'),
-                        'hint' =>
-                            $this->trans('Time when referrer gets reward', [], 'Modules.Gamifications.Admin'),
-                        'cast' => 'intval',
-                        'type' => 'radio',
-                        'validation' => 'isUnsignedInt',
-                        'choices' => [
-                            GamificationsActivity::REFERRAL_REWARD_ON_NEW_CUSTOMER_REGISTRATION =>
-                                $this->trans('On new customer registration', [], 'Modules.Gamifications.Admin'),
-                            GamificationsActivity::REFERRAL_REWARD_ON_NEW_CUSTOMER_ORDER =>
-                                $this->trans('On new customer order', [], 'Modules.Gamifications.Admin'),
+            ],
+            'input' => [
+                [
+                    'name' => GamificationsConfig::REFERRAL_REWARD,
+                    'label' => $this->trans('Referrer reward', [], 'Modules.Gamifications.Admin'),
+                    'hint' => $this->trans('Reward that referrer will get', [], 'Modules.Gamifications.Admin'),
+                    'type' => 'select',
+                    'options' => [
+                        'query' => $this->getRewardsSelect(),
+                        'id' => 'id_gamifications_reward',
+                        'name' => 'name',
+                    ],
+                ],
+                [
+                    'name' => GamificationsConfig::REFERRAL_REWARD_TIME,
+                    'label' => $this->trans('Reward referrer when', [], 'Modules.Gamifications.Admin'),
+                    'hint' => $this->trans(
+                        'Time when referrer customer gets reward for inviting new customer',
+                        [],
+                        'Modules.Gamifications.Admin'
+                    ),
+                    'type' => 'radio',
+                    'values' => [
+                        [
+                            'id' => GamificationsConfig::REFERRAL_REWARD_TIME.'_on_registration',
+                            'value' => GamificationsActivity::REFERRAL_REWARD_ON_NEW_CUSTOMER_REGISTRATION,
+                            'label' => $this->trans('new customer registers', [], 'Modules.Gamifications.Admin'),
+                        ],
+                        [
+                            'id' => GamificationsConfig::REFERRAL_REWARD_TIME.'_on_order',
+                            'value' => GamificationsActivity::REFERRAL_REWARD_ON_NEW_CUSTOMER_ORDER,
+                            'label' => $this->trans('new customer places order', [], 'Modules.Gamifications.Admin'),
                         ],
                     ],
-                    GamificationsConfig::REFERRAL_ORDER_STATE => [
-                        'title' => $this->trans('New customer order states', [], 'Modules.Gamifications.Admin'),
-                        'type' => 'free',
-                        'hint' => $this->trans(
-                            'Order states after which referrer will get reward',
-                            [],
-                            'Modules.Gamifications.Admin'
-                        ),
-                    ],
-                    GamificationsConfig::REFERRAL_REWARD => [
-                        'title' => $this->trans('Referrer customer reward', [], 'Modules.Gamifications.Admin'),
-                        'validation' => 'isUnsignedInt',
-                        'cast' => 'intval',
-                        'type' => 'select',
-                        'list' => $this->getRewardsSelect(),
-                        'identifier' => 'id_gamifications_reward',
+                ],
+                [
+                    'type' => 'swap',
+                    'label' => $this->trans('New customer order state', [], 'Modules.Gamifications.Admin'),
+                    'hint' => $this->trans(
+                        'Reward referrer customer when new customer\'s order state is one of selected',
+                        [],
+                        'Modules.Gamifications.Admin'
+                    ),
+                    'name' => GamificationsConfig::REFERRAL_NEW_CUSTOMER_ORDER_STATES,
+                    'multiple' => true,
+                    'options' => [
+                        'query' => OrderState::getOrderStates($this->context->language->id),
+                        'id' => 'id_order_state',
+                        'name' => 'name'
                     ],
                 ],
-                'submit' => [
-                    'title' => $this->trans('Save'),
+                [
+                    'name' => GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD_ENABLED,
+                    'label' => $this->trans('Reward new customer', [], 'Modules.Gamifications.Admin'),
+                    'hint' =>
+                        $this->trans('Enabled if you want to reward new customer', [], 'Modules.Gamifications.Admin'),
+                    'type' => 'switch',
+                    'values' => [
+                        [
+                            'id' => 'active_on',
+                            'value' => 1,
+                            'label' => $this->trans('Yes', [], 'Admin.Global'),
+                        ],
+                        [
+                            'id' => 'active_off',
+                            'value' => 0,
+                            'label' => $this->trans('No', [], 'Admin.Global'),
+                        ],
+                    ],
                 ],
+                [
+                    'name' => GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD,
+                    'label' => $this->trans('New customer reward', [], 'Modules.Gamifications.Admin'),
+                    'hint' => $this->trans('Reward that referrer will get', [], 'Modules.Gamifications.Admin'),
+                    'type' => 'select',
+                    'options' => [
+                        'query' => $this->getRewardsSelect(),
+                        'id' => 'id_gamifications_reward',
+                        'name' => 'name',
+                    ],
+                ],
+            ],
+            'submit' => [
+                'title' => $this->trans('Save', [], 'Modules.Gamifications.Admin'),
             ],
         ];
     }

@@ -146,7 +146,7 @@ class GamificationsReward extends ObjectModel
             ],
             'description' => [
                 'type' => self::TYPE_STRING,
-                'required' => true,
+                'required' => false,
                 'lang' => true,
                 'size' => 255,
             ],
