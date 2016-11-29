@@ -63,14 +63,17 @@ class GamificationsRewardHandler
             case GamificationsReward::REWARD_TYPE_FREE_SHIPPING:
             case GamificationsReward::REWARD_TYPE_GIFT:
                 $this->createVoucher($reward);
-                $results['message'] = $this->translator->trans('You got', [], 'Modules.Gamifications.Shop');
-                $results['message'] .= ' '.$reward->name[$this->context->language->id];
+                $results['message'] = $this->translator->trans(
+                    'You got %rewrd_name%!',
+                    ['%rewrd_name%' => $reward->name[$this->context->language->id]],
+                    'Modules.Gamifications.Shop'
+                );
                 $results['success'] = true;
                 break;
         }
 
         if ($results['success']) {
-            GamificationsActivityHistory::log($reward, $activityType, $points);
+            GamificationsActivityHistory::log($reward, $gamificationsCustomer->id_customer, $activityType, $points);
         }
 
         return $results;

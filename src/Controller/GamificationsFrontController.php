@@ -47,12 +47,7 @@ abstract class GamificationsFrontController extends ModuleFrontController
         $gamificationsCustomer = new GamificationsCustomer((int) $id, null, $this->context->shop->id);
 
         if (null === $id && !Validate::isLoadedObject($gamificationsCustomer)) {
-            $gamificationsCustomer->id_customer = (int) $this->context->customer->id;
-            $gamificationsCustomer->total_points = 0;
-            $gamificationsCustomer->spent_points = 0;
-            $gamificationsCustomer->referral_code = strtolower(Tools::passwdGen(16));
-
-            if (!$gamificationsCustomer->save()) {
+            if (!GamificationsCustomer::create($this->context->customer)) {
                 return false;
             }
         }

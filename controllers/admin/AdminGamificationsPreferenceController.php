@@ -5,11 +5,22 @@
  */
 class AdminGamificationsPreferenceController extends GamificationsAdminController
 {
+    public function init()
+    {
+        $this->initOptions();
+
+        parent::init();
+    }
+
     /**
      * Initalize options
      */
     protected function initOptions()
     {
+        if (!empty($this->fields_options)) {
+            return;
+        }
+
         $this->fields_options = [
             'general' => [
                 'title' => $this->trans('General preferences', [], 'Modules.Gamifications.Admin'),

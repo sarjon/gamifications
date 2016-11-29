@@ -23,11 +23,13 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
         parent::initContent();
 
         $this->initDailyRewardsContent();
+        $this->initReferralContent();
 
         $this->context->smarty->assign([
             'controller' => 'loyality',
             'gamifications_customer' => $this->gamificationCustomer,
             'is_daily_rewards_enabled' => (bool) Configuration::get(GamificationsConfig::DAILY_REWARDS_STATUS),
+            'is_referral_program_enabled' => (bool) Configuration::get(GamificationsConfig::REFERRAL_PROGRAM_STATUS),
         ]);
 
         $this->setTemplate('module:gamifications/views/templates/front/loyality.tpl');
@@ -117,5 +119,27 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
         }
 
         $this->success[] = $this->trans($results['message'], [], 'Modules.Gamifications.Shop');
+    }
+
+    /**
+     * Initialize referral program content
+     */
+    protected function initReferralContent()
+    {
+        $isReferralProgramEnabled = (bool) Configuration::get(GamificationsConfig::REFERRAL_PROGRAM_STATUS);
+
+        if (!$isReferralProgramEnabled) {
+            return;
+        }
+
+        $referralUrl = sprintf('%s?', $this->context->link->getPageLink('authentication'));
+        $referralUrl .= http_build_query([
+            'create_account' => 1,
+            'referral_code' => $this->gamificationCustomer->referral_code,
+        ]);
+
+        $this->context->smarty->assign([
+            'referral_url' => $referralUrl,
+        ]);
     }
 }

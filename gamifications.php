@@ -143,6 +143,32 @@ class Gamifications extends Module
     }
 
     /**
+     * Handle customer referral
+     *
+     * @param array $params
+     */
+    public function hookActionObjectCustomerAddAfter(array $params)
+    {
+        /** @var Customer $invitedCustomer */
+        $invitedCustomer = $params['object'];
+
+        if (!Tools::isSubmit('referral_code')) {
+            return;
+        }
+
+        $isReferralProgramEnabled = (bool) Configuration::get(GamificationsConfig::REFERRAL_PROGRAM_STATUS);
+
+        if (!$isReferralProgramEnabled) {
+            return;
+        }
+
+        $referralCode = Tools::getValue('referral_code');
+
+        $referralProgramActivity = new GamificationsReferralProgramActivity($this->getEntityManager());
+        $referralProgramActivity->play($invitedCustomer, $referralCode);
+    }
+
+    /**
      * Render template
      *
      * @param string $path

@@ -51,4 +51,8 @@
         {include file='module:gamifications/views/templates/front/_partials/daily_rewards.tpl'}
     {/if}
 
+    {if $is_referral_program_enabled}
+        {include file='module:gamifications/views/templates/front/_partials/referral_program.tpl'}
+    {/if}
+
 {/block}

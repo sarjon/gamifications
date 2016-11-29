@@ -65,4 +65,33 @@ class GamificationsCustomerRepository extends EntityRepository
 
         return $results[0];
     }
+
+    /**
+     * Find gamifications customer data by referral code
+     *
+     * @param string $referralCode
+     * @param int $idShop
+     *
+     * @return array|null
+     */
+    public function findByReferralCode($referralCode, $idShop)
+    {
+        $sql = '
+            SELECT gc.`id_gamifications_customer`, gc.`id_customer`
+            FROM `'.$this->getPrefix().'gamifications_customer` gc
+            LEFT JOIN `'.$this->getPrefix().'gamifications_customer_shop` gcs
+                ON gcs.`id_gamifications_customer` = gc.`id_gamifications_customer`
+            WHERE gc.`referral_code` = "'.$this->db->escape($referralCode).'"
+                AND gcs.`id_shop` = '.(int)$idShop.'
+            LIMIT 1
+        ';
+
+        $results = $this->db->select($sql);
+
+        if (!$results || !isset($results[0])) {
+            return null;
+        }
+
+        return $results[0];
+    }
 }

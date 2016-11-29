@@ -75,13 +75,39 @@ class GamificationsCustomer extends ObjectModel
     }
 
     /**
+     * Create gamifications customer
+     *
+     * @param Customer $customer
+     * @param bool $returnObject
+     *
+     * @return bool|GamificationsCustomer
+     */
+    public static function create(Customer $customer, $returnObject = false)
+    {
+        $gamificationsCustomer = new GamificationsCustomer();
+        $gamificationsCustomer->total_points = 0;
+        $gamificationsCustomer->spent_points = 0;
+        $gamificationsCustomer->id_customer = (int) $customer->id;
+        $gamificationsCustomer->active = true;
+        $gamificationsCustomer->referral_code = strtolower(Tools::passwdGen(16));
+
+        $created = $gamificationsCustomer->save();
+
+        if ($returnObject) {
+            return $gamificationsCustomer;
+        }
+
+        return $created;
+    }
+
+    /**
      * GamificationsCustomer constructor.
      *
      * @param int|null $id
      * @param int|null $idLang
      * @param int|null $idShop
      */
-    public function __construct($id, $idLang = null, $idShop = null)
+    public function __construct($id = null, $idLang = null, $idShop = null)
     {
         parent::__construct($id, $idLang, $idShop);
         Shop::addTableAssociation(self::$definition['table'], ['type' => 'shop']);

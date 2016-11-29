@@ -67,17 +67,18 @@ class GamificationsActivityHistory extends ObjectModel
      * Log activity history
      *
      * @param GamificationsReward $reward
+     * @param int $idCustomer
      * @param int $activityType
      * @param int|null $points
      *
      * @return bool
      */
-    public static function log(GamificationsReward $reward, $activityType, $points = null)
+    public static function log(GamificationsReward $reward, $idCustomer, $activityType, $points = null)
     {
         $context = Context::getContext();
 
         $activityHistory = new GamificationsActivityHistory();
-        $activityHistory->id_customer = (int) $context->customer->id;
+        $activityHistory->id_customer = (int) $idCustomer;
         $activityHistory->id_reward = (int) $reward->id;
         $activityHistory->id_shop = (int) $context->shop->id;
         $activityHistory->reward_type = (int) $reward->reward_type;
