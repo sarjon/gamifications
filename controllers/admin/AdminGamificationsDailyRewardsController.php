@@ -230,7 +230,7 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
     /**
      * Init fields form
      */
-    protected function initFieldsValue()
+    protected function initFormFieldsValue()
     {
         if (!in_array($this->display, ['add', 'edit'])) {
             return;

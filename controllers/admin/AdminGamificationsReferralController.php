@@ -68,6 +68,7 @@ class AdminGamificationsReferralController extends GamificationsAdminController
     {
         $referralOptionsForm = new HelperForm();
 
+        $this->initForm();
         $fieldsForm[0]['form'] = $this->fields_form;
 
         $referralOptionsForm->tpl_vars = [

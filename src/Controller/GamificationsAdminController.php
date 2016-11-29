@@ -16,17 +16,41 @@ abstract class GamificationsAdminController extends ModuleAdminController
     public $bootstrap = true;
 
     /**
-     * Initialize with custom methods
+     * Init list before rendering
+     *
+     * @return false|string
      */
-    public function init()
+    public function renderList()
     {
         $this->initList();
 
-        parent::init();
+        return parent::renderList();
+    }
 
+
+    /**
+     * Init options before rendering
+     *
+     * @return string
+     */
+    public function renderOptions()
+    {
         $this->initOptions();
+
+        return parent::renderOptions();
+    }
+
+    /**
+     * Init form before rendering
+     *
+     * @return string
+     */
+    public function renderForm()
+    {
         $this->initForm();
-        $this->initFieldsValue();
+        $this->initFormFieldsValue();
+
+        return parent::renderForm();
     }
 
     /**
@@ -85,7 +109,7 @@ abstract class GamificationsAdminController extends ModuleAdminController
     /**
      * Init fields value
      */
-    protected function initFieldsValue()
+    protected function initFormFieldsValue()
     {
         //@todo: Override to initialize fields value
     }
