@@ -50,4 +50,14 @@ class GamificationsReferral extends ObjectModel
             'date_upd' => ['type' => self::TYPE_DATE, 'required' => false, 'validate' => 'isDate'],
         ],
     ];
+
+    /**
+     * Get repository class name
+     *
+     * @return string
+     */
+    public static function getRepositoryClassName()
+    {
+        return 'GamificationsReferralRepository';
+    }
 }

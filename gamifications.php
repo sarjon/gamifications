@@ -169,6 +169,44 @@ class Gamifications extends Module
     }
 
     /**
+     * Reward referral if order is valid
+     *
+     * @param array $params
+     */
+    public function hookActionObjectOrderAddAfter(array $params)
+    {
+        /** @var Order $order */
+        $order = $params['object'];
+
+        $isReferralProgramEnabled = (bool) Configuration::get(GamificationsConfig::REFERRAL_PROGRAM_STATUS);
+
+        if ($isReferralProgramEnabled) {
+            $referralProgramActivity = new GamificationsReferralProgramActivity($this->getEntityManager());
+            $referralProgramActivity->rewardReferralCustomer($order);
+        }
+
+
+    }
+
+    /**
+     * Reward referral if order is valid
+     *
+     * @param array $params
+     */
+    public function hookActionObjectOrderUpdateAfter(array $params)
+    {
+        /** @var Order $order */
+        $order = $params['object'];
+
+        $isReferralProgramEnabled = (bool) Configuration::get(GamificationsConfig::REFERRAL_PROGRAM_STATUS);
+
+        if ($isReferralProgramEnabled) {
+
+        }
+
+    }
+
+    /**
      * Render template
      *
      * @param string $path

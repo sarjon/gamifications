@@ -55,6 +55,52 @@ class GamificationsReferralProgramActivity
     }
 
     /**
+     * Reward referral customer when new customer reaches configured order state
+     *
+     * @param Order $order
+     */
+    public function rewardReferralCustomer(Order $order)
+    {
+        //@todo: test
+        $referralRewardTime = (int) Configuration::get(GamificationsConfig::REFERRAL_REWARD_TIME);
+
+        if (GamificationsActivity::REFERRAL_REWARD_ON_NEW_CUSTOMER_REGISTRATION != $referralRewardTime) {
+            return;
+        }
+
+        $newCustomerOrderStates = Configuration::get(GamificationsConfig::REFERRAL_NEW_CUSTOMER_ORDER_STATES);
+        $newCustomerOrderStates = json_decode($newCustomerOrderStates);
+
+        if (!in_array($order->current_state, $newCustomerOrderStates)) {
+            return;
+        }
+
+        $context = Context::getContext();
+        $idNewCustomer = (int) $order->id_customer;
+
+        /** @var GamificationsReferralRepository $referralRepository */
+        $referralRepository = $this->em->getRepository('GamificationsReferral');
+        $idReferralCustomer = $referralRepository->findReferralCustomerId($idNewCustomer, $context->shop->id);
+
+        if (null === $idReferralCustomer) {
+            return;
+        }
+
+        /** @var GamificationsCustomerRepository $customerRepository */
+        $customerRepository = $this->em->getRepository('GamificationsCustomer');
+        $idGamificationsCustomer = $customerRepository->findIdByCustomerId($idReferralCustomer, $context->shop->id);
+
+        $gamificationsCustomer = new GamificationsCustomer($idGamificationsCustomer);
+
+        $idReferralReward = (int) Configuration::get(GamificationsConfig::REFERRAL_REWARD);
+        $reward = new GamificationsReward($idReferralReward);
+
+        $rewardHandler = new GamificationsRewardHandler();
+        $rewardHandler
+            ->handleCustomerReward($reward, $gamificationsCustomer, GamificationsActivity::TYPE_REFERRAL_PROGRAM);
+    }
+    
+    /**
      * Reward invited customer
      *
      * @param GamificationsCustomer $customer
@@ -79,9 +125,13 @@ class GamificationsReferralProgramActivity
         $rewardHandler->handleCustomerReward($reward, $customer, GamificationsActivity::TYPE_REFERRAL_PROGRAM);
 
         $context = Context::getContext();
+        $translator = $context->getTranslator();
 
-        //@todo: fix message and add translation
-        $context->controller->success[] = 'You got Referral program reward! Check your account now!';
+        $context->controller->success[] = $translator->trans(
+            'You received a referral program reward! To check it out, go to your account page',
+            [],
+            'Modules.Gamifications.Shop'
+        );
     }
 
     /**
