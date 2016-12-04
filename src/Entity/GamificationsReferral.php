@@ -40,7 +40,7 @@ class GamificationsReferral extends ObjectModel
      */
     public static $definition = [
         'table' => 'gamifications_referral',
-        'primary' => 'id_gamifications_referal',
+        'primary' => 'id_gamifications_referral',
         'fields' => [
             'id_invited_customer' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
             'id_referral_customer' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],

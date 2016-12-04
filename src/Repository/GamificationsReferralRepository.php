@@ -34,4 +34,32 @@ class GamificationsReferralRepository extends EntityRepository
 
         return (int) $results[0]['id_referral_customer'];
     }
+
+    /**
+     * Find referral object id by new customer id
+     *
+     * @param int $idNewCustomer
+     * @param int $idShop
+     *
+     * @return int|null
+     */
+    public function findReferralObjectIdByNewCustomerId($idNewCustomer, $idShop)
+    {
+        $sql = '
+            SELECT `id_gamifications_referral`
+            FROM `'.$this->getPrefix().'gamifications_referral`
+            WHERE `id_invited_customer` = '.(int)$idNewCustomer.'
+                AND `id_shop` = '.(int)$idShop.'
+                AND `active` = 1
+            LIMIT 1
+        ';
+
+        $results = $this->db->select($sql);
+
+        if (!is_array($results) || !isset($results[0]['id_gamifications_referral'])) {
+            return null;
+        }
+
+        return (int) $results[0]['id_gamifications_referral'];
+    }
 }

@@ -74,9 +74,31 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
             $nextDailyRewardAvailabeAt = new DateTime();
         }
 
+        $now = new DateTime();
+
+        if ($now->format('Y-m-d') === $nextDailyRewardAvailabeAt->format('Y-m-d')) {
+            $nextDailyRewardText = $this->trans(
+                'today at %time%',
+                [
+                    '%time%' => $nextDailyRewardAvailabeAt->format('H:i'),
+                ],
+                'Modules.Gamifications.Shop'
+            );
+        } elseif ($now->modify('+1 day')->format('Y-m-d') === $nextDailyRewardAvailabeAt->format('Y-m-d')) {
+            $nextDailyRewardText = $this->trans(
+                'tomorrow at %time%',
+                [
+                    '%time%' => $nextDailyRewardAvailabeAt->format('H:i'),
+                ],
+                'Modules.Gamifications.Shop'
+            );
+        } else {
+            $nextDailyRewardText = $nextDailyRewardAvailabeAt->format('Y-m-d H:i');
+        }
+
         $this->context->smarty->assign([
             'can_play_daily_reward' => (bool) $canPlayDailyReward,
-            'next_daily_reward_availabe_at' => $nextDailyRewardAvailabeAt->format('Y-m-d H:i'),
+            'next_daily_reward_availabe_at' => $nextDailyRewardText,
         ]);
     }
 

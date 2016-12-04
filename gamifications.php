@@ -165,7 +165,7 @@ class Gamifications extends Module
         $referralCode = Tools::getValue('referral_code');
 
         $referralProgramActivity = new GamificationsReferralProgramActivity($this->getEntityManager());
-        $referralProgramActivity->play($invitedCustomer, $referralCode);
+        $referralProgramActivity->processReferralProgram($invitedCustomer, $referralCode);
     }
 
     /**
@@ -178,14 +178,7 @@ class Gamifications extends Module
         /** @var Order $order */
         $order = $params['object'];
 
-        $isReferralProgramEnabled = (bool) Configuration::get(GamificationsConfig::REFERRAL_PROGRAM_STATUS);
-
-        if ($isReferralProgramEnabled) {
-            $referralProgramActivity = new GamificationsReferralProgramActivity($this->getEntityManager());
-            $referralProgramActivity->rewardReferralCustomer($order);
-        }
-
-
+        $this->processReferralProgramActivity($order);
     }
 
     /**
@@ -198,12 +191,22 @@ class Gamifications extends Module
         /** @var Order $order */
         $order = $params['object'];
 
+        $this->processReferralProgramActivity($order);
+    }
+
+    /**
+     * Process referral program activity
+     *
+     * @param Order $order
+     */
+    protected function processReferralProgramActivity(Order $order)
+    {
         $isReferralProgramEnabled = (bool) Configuration::get(GamificationsConfig::REFERRAL_PROGRAM_STATUS);
 
         if ($isReferralProgramEnabled) {
-
+            $referralProgramActivity = new GamificationsReferralProgramActivity($this->getEntityManager());
+            $referralProgramActivity->processReferralCustomerReward($order);
         }
-
     }
 
     /**

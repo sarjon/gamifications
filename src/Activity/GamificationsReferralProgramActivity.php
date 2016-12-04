@@ -27,7 +27,7 @@ class GamificationsReferralProgramActivity
      * @param Customer $invitedCustomer
      * @param string $referralCode
      */
-    public function play(Customer $invitedCustomer, $referralCode)
+    public function processReferralProgram(Customer $invitedCustomer, $referralCode)
     {
         $context = Context::getContext();
 
@@ -48,10 +48,21 @@ class GamificationsReferralProgramActivity
         $referral->id_shop = (int) $context->shop->id;
         $referral->active = true;
 
-        $referral->save();
+        $referralRewardTime = (int) Configuration::get(GamificationsConfig::REFERRAL_REWARD_TIME);
+        $isInvitedCustomerRewardEnabled =
+            (bool) Configuration::get(GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD_ENABLED);
 
-        $this->handleInvitedCustomerReward($invitedGamificationsCustomer);
-        $this->handleReferalCustomerReward($referralGamificationsCustomer);
+        if ($isInvitedCustomerRewardEnabled) {
+            $this->handleInvitedCustomerReward($invitedGamificationsCustomer);
+        }
+
+        if (GamificationsActivity::REFERRAL_REWARD_ON_NEW_CUSTOMER_REGISTRATION == $referralRewardTime) {
+            $this->handleReferralCustomerReward($referralGamificationsCustomer);
+
+            $referral->active = false;
+        }
+
+        $referral->save();
     }
 
     /**
@@ -59,12 +70,11 @@ class GamificationsReferralProgramActivity
      *
      * @param Order $order
      */
-    public function rewardReferralCustomer(Order $order)
+    public function processReferralCustomerReward(Order $order)
     {
-        //@todo: test
         $referralRewardTime = (int) Configuration::get(GamificationsConfig::REFERRAL_REWARD_TIME);
 
-        if (GamificationsActivity::REFERRAL_REWARD_ON_NEW_CUSTOMER_REGISTRATION != $referralRewardTime) {
+        if (GamificationsActivity::REFERRAL_REWARD_ON_NEW_CUSTOMER_ORDER != $referralRewardTime) {
             return;
         }
 
@@ -80,49 +90,54 @@ class GamificationsReferralProgramActivity
 
         /** @var GamificationsReferralRepository $referralRepository */
         $referralRepository = $this->em->getRepository('GamificationsReferral');
-        $idReferralCustomer = $referralRepository->findReferralCustomerId($idNewCustomer, $context->shop->id);
 
-        if (null === $idReferralCustomer) {
+        $idReferralObject =
+            $referralRepository->findReferralObjectIdByNewCustomerId($idNewCustomer, $context->shop->id);
+
+        if (null === $idReferralObject) {
             return;
         }
 
+        $referral = new GamificationsReferral($idReferralObject);
+
         /** @var GamificationsCustomerRepository $customerRepository */
         $customerRepository = $this->em->getRepository('GamificationsCustomer');
-        $idGamificationsCustomer = $customerRepository->findIdByCustomerId($idReferralCustomer, $context->shop->id);
+        $idGamificationsCustomer =
+            $customerRepository->findIdByCustomerId($referral->id_referral_customer, $context->shop->id);
 
         $gamificationsCustomer = new GamificationsCustomer($idGamificationsCustomer);
 
-        $idReferralReward = (int) Configuration::get(GamificationsConfig::REFERRAL_REWARD);
-        $reward = new GamificationsReward($idReferralReward);
+        if (!$this->handleReferralCustomerReward($gamificationsCustomer)) {
+            return;
+        }
 
-        $rewardHandler = new GamificationsRewardHandler();
-        $rewardHandler
-            ->handleCustomerReward($reward, $gamificationsCustomer, GamificationsActivity::TYPE_REFERRAL_PROGRAM);
+        $referral->active = false;
+        $referral->save();
     }
     
     /**
      * Reward invited customer
      *
      * @param GamificationsCustomer $customer
+     *
+     * @return bool
      */
     protected function handleInvitedCustomerReward(GamificationsCustomer $customer)
     {
-        $isInvitedCustomerRewardEnabled =
-            (bool) Configuration::get(GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD_ENABLED);
-
-        if (!$isInvitedCustomerRewardEnabled) {
-            return;
-        }
-
         $idInvitedCustomerReward = (int) Configuration::get(GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD);
         $reward = new GamificationsReward($idInvitedCustomerReward);
 
         if (!Validate::isLoadedObject($reward)) {
-            return;
+            return false;
         }
 
         $rewardHandler = new GamificationsRewardHandler();
-        $rewardHandler->handleCustomerReward($reward, $customer, GamificationsActivity::TYPE_REFERRAL_PROGRAM);
+        $response =
+            $rewardHandler->handleCustomerReward($reward, $customer, GamificationsActivity::TYPE_REFERRAL_PROGRAM);
+
+        if (!$response['success']) {
+            return false;
+        }
 
         $context = Context::getContext();
         $translator = $context->getTranslator();
@@ -132,29 +147,30 @@ class GamificationsReferralProgramActivity
             [],
             'Modules.Gamifications.Shop'
         );
+
+        return true;
     }
 
     /**
      * Reward referral customer
      *
      * @param GamificationsCustomer $customer
+     *
+     * @return bool
      */
-    protected function handleReferalCustomerReward(GamificationsCustomer $customer)
+    protected function handleReferralCustomerReward(GamificationsCustomer $customer)
     {
-        $referralRewardTime = (int) Configuration::get(GamificationsConfig::REFERRAL_REWARD_TIME);
-
-        if (GamificationsActivity::REFERRAL_REWARD_ON_NEW_CUSTOMER_REGISTRATION != $referralRewardTime) {
-            return;
-        }
-
         $idReferralCustomerReward = (int) Configuration::get(GamificationsConfig::REFERRAL_REWARD);
         $reward = new GamificationsReward($idReferralCustomerReward);
 
         if (!Validate::isLoadedObject($reward)) {
-            return;
+            return false;
         }
 
         $rewardHandler = new GamificationsRewardHandler();
-        $rewardHandler->handleCustomerReward($reward, $customer, GamificationsActivity::TYPE_REFERRAL_PROGRAM);
+        $response =
+            $rewardHandler->handleCustomerReward($reward, $customer, GamificationsActivity::TYPE_REFERRAL_PROGRAM);
+
+        return (bool) $response['success'];
     }
 }

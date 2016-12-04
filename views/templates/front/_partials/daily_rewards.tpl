@@ -24,8 +24,8 @@
                                 {l s='Daily Reward is not available at the moment' d='Modules.Gamifications.Shop'}
                             </button>
                             <p class="card-text">
-                                {l s='Next Daily Reward available at' d='Modules.Gamifications.Shop'}
-                                <em>{$next_daily_reward_availabe_at}</em>
+                                {l s='Next Daily Reward available' d='Modules.Gamifications.Shop'}
+                                {$next_daily_reward_availabe_at}
                             </p>
                         {/if}
                         <br class="hidden-md-up">

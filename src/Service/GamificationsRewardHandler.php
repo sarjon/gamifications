@@ -62,7 +62,7 @@ class GamificationsRewardHandler
             case GamificationsReward::REWARD_TYPE_DISCOUNT:
             case GamificationsReward::REWARD_TYPE_FREE_SHIPPING:
             case GamificationsReward::REWARD_TYPE_GIFT:
-                $this->createVoucher($reward);
+                $this->createVoucher($reward, $gamificationsCustomer);
                 $results['message'] = $this->translator->trans(
                     'You got %rewrd_name%!',
                     ['%rewrd_name%' => $reward->name[$this->context->language->id]],
@@ -83,11 +83,13 @@ class GamificationsRewardHandler
      * Create discount for customer
      *
      * @param GamificationsReward $reward
+     * @param GamificationsCustomer $gamificationsCustomer
      *
      * @return bool
      */
-    protected function createVoucher(GamificationsReward $reward)
+    protected function createVoucher(GamificationsReward $reward, GamificationsCustomer $gamificationsCustomer)
     {
+        $customer = new Customer($gamificationsCustomer->id_customer);
         $defaultCurrencyId = (int) Configuration::get('PS_CURRENCY_DEFAULT');
         $validFrom = new DateTime();
         $validTo = new DateTime();
@@ -95,7 +97,7 @@ class GamificationsRewardHandler
 
         $voucher = new CartRule();
 
-        $voucher->id_customer = $this->context->customer->id;
+        $voucher->id_customer = (int) $customer->id;
         $voucher->active = true;
         $voucher->date_from = $validFrom->format('Y-m-d H:i:s');
         $voucher->date_to = $validTo->format('Y-m-d H:i:s');
