@@ -32,7 +32,7 @@ class AdminGamificationsPreferenceController extends GamificationsAdminControlle
             'general' => [
                 'title' => $this->trans('General preferences', [], 'Modules.Gamifications.Admin'),
                 'fields' => [
-                    GamificationsConfig::DISPLAY_EXPLANATIONS => [
+                    GamificationsConfig::DISPLAY_HELP => [
                         'title' => $this->trans('Back Office help', [], 'Modules.Gamifications.Admin'),
                         'hint' => $this->trans(
                             'Choose whether to display various help messages & explanations about gamifications module',

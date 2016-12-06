@@ -23,6 +23,11 @@ abstract class GamificationsAdminController extends ModuleAdminController
     public $bootstrap = true;
 
     /**
+     * @var bool If true, then help will be display in forms
+     */
+    protected $displayHelpInForm = false;
+
+    /**
      * Custom init
      */
     public function init()
@@ -51,9 +56,9 @@ abstract class GamificationsAdminController extends ModuleAdminController
      */
     public function initContent()
     {
-        $isDisplayExpalanationsOn = (bool) Configuration::get(GamificationsConfig::DISPLAY_EXPLANATIONS);
+        $isDisplayExpalanationsOn = (bool) Configuration::get(GamificationsConfig::DISPLAY_HELP);
 
-        if ($isDisplayExpalanationsOn && !in_array($this->display, ['add', 'edit'])) {
+        if ($isDisplayExpalanationsOn && (!in_array($this->display, ['add', 'edit']) || $this->displayHelpInForm)) {
             $this->content .= $this->displayHelp();
         }
 
@@ -108,7 +113,7 @@ abstract class GamificationsAdminController extends ModuleAdminController
     }
 
     /**
-     * Display any kind of information if DISPLAY_EXPLANATIONS option is enabled
+     * Display any kind of information if DISPLAY_HELP option is enabled
      *
      * @return string
      */

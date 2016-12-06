@@ -23,7 +23,7 @@ class GamificationsConfig
     const REFERRAL_NEW_CUSTOMER_REWARD = 'GAMIFICATIONS_REFERRAL_NEW_CUSTOMER_REWARD';
     const DAILY_REWARDS_STATUS = 'GAMIFICATIONS_DAILY_REWARDS_STATUS';
 
-    const DISPLAY_EXPLANATIONS = 'GAMIFICATIONS_DISPLAY_EXPLANATIONS';
+    const DISPLAY_HELP = 'GAMIFICATIONS_DISPLAY_HELP';
     const FRONT_OFFICE_TITLE = 'GAMIFICATIONS_FRONT_OFFICE_TITLE';
 
     /**
@@ -41,7 +41,7 @@ class GamificationsConfig
 
         return [
             self::DAILY_REWARDS_STATUS => 0,
-            self::DISPLAY_EXPLANATIONS => 1,
+            self::DISPLAY_HELP => 1,
             self::FRONT_OFFICE_TITLE => $frontOfficeTitle,
             self::REFERRAL_PROGRAM_STATUS => 0,
             self::REFERRAL_REWARD_TIME => GamificationsActivity::REFERRAL_REWARD_ON_NEW_CUSTOMER_REGISTRATION,

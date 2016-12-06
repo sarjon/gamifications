@@ -15,6 +15,9 @@
             {l s='Rewards are something that customer will get after completing or accomplishing some kind of task/challange.' d='Modules.Gamifications.Admin'}
         </p>
         <p>
+            {l s='All rewards (except points) will be provided in form of voucher.' d='Modules.Gamifications.Admin'}
+        </p>
+        <p>
             <strong>{l s='How to use rewards?' d='Modules.Gamifications.Admin'}</strong>
         </p>
         <p>

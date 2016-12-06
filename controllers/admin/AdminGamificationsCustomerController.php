@@ -68,32 +68,32 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
 
         $this->fields_list = [
             GamificationsCustomer::$definition['primary'] => [
-                'title' => $this->trans('ID'),
+                'title' => $this->trans('ID', [], 'Modules.Gamifications.Admin'),
                 'width' => 20,
                 'align' => 'center',
             ],
             'id_customer' => [
-                'title' => $this->trans('ID Customer'),
+                'title' => $this->trans('ID Customer', [], 'Modules.Gamifications.Admin'),
                 'align' => 'center',
             ],
             'email' => [
-                'title' => $this->trans('Email'),
+                'title' => $this->trans('Email', [], 'Modules.Gamifications.Admin'),
                 'filter_key' => 'c!email',
             ],
             'firstname' => [
-                'title' => $this->trans('Email'),
+                'title' => $this->trans('First name', [], 'Modules.Gamifications.Admin'),
                 'filter_key' => 'c!firstname',
             ],
             'lastname' => [
-                'title' => $this->trans('Email'),
+                'title' => $this->trans('Last name', [], 'Modules.Gamifications.Admin'),
                 'filter_key' => 'c!lastname',
             ],
             'total_points' => [
-                'title' => $this->trans('Total points'),
+                'title' => $this->trans('Total points', [], 'Modules.Gamifications.Admin'),
                 'align' => 'center',
             ],
             'spent_points' => [
-                'title' => $this->trans('Spent points'),
+                'title' => $this->trans('Spent points', [], 'Modules.Gamifications.Admin'),
                 'align' => 'center',
             ],
         ];

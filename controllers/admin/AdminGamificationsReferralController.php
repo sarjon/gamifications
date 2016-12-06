@@ -12,14 +12,18 @@
  */
 class AdminGamificationsReferralController extends GamificationsAdminController
 {
+    protected $displayHelpInForm = true;
+
     /**
      * Init custom content
      */
     public function initContent()
     {
-        $this->initReferralOptions();
-
         parent::initContent();
+
+        $this->content .= $this->initReferralOptions();
+
+        $this->context->smarty->assign('content', $this->content);
     }
 
     public function setMedia()
@@ -209,5 +213,15 @@ class AdminGamificationsReferralController extends GamificationsAdminController
         $rewards = $rewardRepository->findAllNamesAndIds($idLang, $idShop);
 
         return $rewards;
+    }
+
+    /**
+     * Display help panel
+     */
+    protected function displayHelp()
+    {
+        return $this->context->smarty->fetch(
+            $this->module->getLocalPath().'views/templates/admin/referral_program_info.tpl'
+        );
     }
 }
