@@ -1,4 +1,11 @@
 <?php
+/**
+ * This file is part of the Gamifications module.
+ *
+ * @author    Sarunas Jonusas, <jonusas.sarunas@gmail.com>
+ * @copyright Copyright (c) permanent, Sarunas Jonusas
+ * @license   Addons PrestaShop license limitation
+ */
 
 use PrestaShop\PrestaShop\Core\Foundation\Database\EntityRepository;
 
@@ -43,12 +50,12 @@ class GamificationsDailyRewardRepository extends EntityRepository
     /**
      * Find all daily rewards by customer groups
      *
-     * @param array $groupIds
      * @param int $idShop
+     * @param array $groupIds
      *
      * @return array
      */
-    public function findAllByCustomerGroups(array $groupIds = [], $idShop)
+    public function findAllByCustomerGroups($idShop, array $groupIds = [])
     {
         $sql = '
             SELECT gdr.`id_gamifications_daily_reward`, gdr.`id_reward`, gdr.`boost`

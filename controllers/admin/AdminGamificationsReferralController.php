@@ -1,4 +1,11 @@
 <?php
+/**
+ * This file is part of the Gamifications module.
+ *
+ * @author    Sarunas Jonusas, <jonusas.sarunas@gmail.com>
+ * @copyright Copyright (c) permanent, Sarunas Jonusas
+ * @license   Addons PrestaShop license limitation
+ */
 
 /**
  * Class AdminGamificationsReferralController
@@ -69,6 +76,7 @@ class AdminGamificationsReferralController extends GamificationsAdminController
         $referralOptionsForm = new HelperForm();
 
         $this->initForm();
+        $fieldsForm = [];
         $fieldsForm[0]['form'] = $this->fields_form;
 
         $referralOptionsForm->tpl_vars = [

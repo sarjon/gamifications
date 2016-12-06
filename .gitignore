@@ -1,2 +1,4 @@
 *.xml
-/vendor/
+vendor/*
+!vendor/index.php
+!vendor/composer/index.php

@@ -1,3 +1,0 @@
-<select name="GAMIFICATIONS_REFERRAL_ORDER_STATE" id="GAMIFICATIONS_REFERRAL_ORDER_STATE" multiple>
-    {foreach
-</select>

@@ -1,4 +1,11 @@
 <?php
+/**
+ * This file is part of the Gamifications module.
+ *
+ * @author    Sarunas Jonusas, <jonusas.sarunas@gmail.com>
+ * @copyright Copyright (c) permanent, Sarunas Jonusas
+ * @license   Addons PrestaShop license limitation
+ */
 
 use PrestaShop\PrestaShop\Core\Foundation\Database\EntityManager;
 
@@ -41,7 +48,7 @@ class GamificationsDailyRewardActivity
         /** @var GamificationsDailyRewardRepository $dailyRewardsRepository */
         $dailyRewardsRepository = $this->em->getRepository('GamificationsDailyReward');
         $availableDailyRewards = $dailyRewardsRepository
-            ->findAllByCustomerGroups($customerGroupsIds, $this->context->shop->id);
+            ->findAllByCustomerGroups($this->context->shop->id, $customerGroupsIds);
 
         if (empty($availableDailyRewards)) {
             return null;

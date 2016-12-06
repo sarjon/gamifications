@@ -1,4 +1,11 @@
 <?php
+/**
+ * This file is part of the Gamifications module.
+ *
+ * @author    Sarunas Jonusas, <jonusas.sarunas@gmail.com>
+ * @copyright Copyright (c) permanent, Sarunas Jonusas
+ * @license   Addons PrestaShop license limitation
+ */
 
 /**
  * Class AdminGamificationsPreferenceController
@@ -55,7 +62,7 @@ class AdminGamificationsPreferenceController extends GamificationsAdminControlle
                 'title' => $this->trans('Activity preferences', [], 'Modules.Gamifications.Admin'),
                 'description' => $this->trans(
                     'Configure activity before enabling it to avoid customers dissatisfaction',
-                    [] ,
+                    [],
                     'Modules.Gamifications.Admin'
                 ),
                 'fields' => [
