@@ -124,6 +124,10 @@ class AdminGamificationsActivityHistoryController extends GamificationsAdminCont
             'reward_type' => [
                 'title' => $this->trans('Reward type'),
                 'align' => 'center',
+                'type' => 'select',
+                'list' => GamificationsReward::getRewardsTranslations(),
+                'filter_key' => 'a!reward_type',
+                'filter_type' => 'int',
             ],
             'points' => [
                 'title' => $this->trans('Points'),

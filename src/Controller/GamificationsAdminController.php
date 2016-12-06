@@ -16,28 +16,14 @@ abstract class GamificationsAdminController extends ModuleAdminController
     public $bootstrap = true;
 
     /**
-     * Init list before rendering
-     *
-     * @return false|string
+     * Custom init
      */
-    public function renderList()
+    public function init()
     {
         $this->initList();
-
-        return parent::renderList();
-    }
-
-
-    /**
-     * Init options before rendering
-     *
-     * @return string
-     */
-    public function renderOptions()
-    {
         $this->initOptions();
 
-        return parent::renderOptions();
+        parent::init();
     }
 
     /**
