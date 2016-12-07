@@ -76,6 +76,11 @@ class AdminGamificationsPreferenceController extends GamificationsAdminControlle
                         'validation' => 'isBool',
                         'type' => 'bool',
                     ],
+                    GamificationsConfig::SHOPPING_POINTS_STATUS => [
+                        'title' => $this->trans('Enable Shopping points', [], 'Modules.Gamifications.Admin'),
+                        'validation' => 'isBool',
+                        'type' => 'bool',
+                    ],
                 ],
                 'submit' => [
                     'title' => $this->trans('Save', [], 'Modules.Gamifications.Admin'),

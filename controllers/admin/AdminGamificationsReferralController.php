@@ -21,7 +21,7 @@ class AdminGamificationsReferralController extends GamificationsAdminController
     {
         parent::initContent();
 
-        $this->content .= $this->initReferralOptions();
+        $this->content .= $this->renderReferralOptions();
 
         $this->context->smarty->assign('content', $this->content);
     }
@@ -69,13 +69,13 @@ class AdminGamificationsReferralController extends GamificationsAdminController
             $this->errors[] = $this->trans('Failed update', [], 'Modules.Gamifications.Admin');
         }
 
-        $this->confirmations[] = $this->trans('Succesful update', [], 'Modules.Gamifications.Admin');
+        $this->confirmations[] = $this->trans('Successful update', [], 'Modules.Gamifications.Admin');
     }
 
     /**
      * Init free input type values
      */
-    protected function initReferralOptions()
+    protected function renderReferralOptions()
     {
         $referralOptionsForm = new HelperForm();
 
