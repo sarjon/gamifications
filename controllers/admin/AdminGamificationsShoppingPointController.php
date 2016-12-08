@@ -70,7 +70,7 @@ class AdminGamificationsShoppingPointController extends GamificationsAdminContro
             'fields_value' => [
                 GamificationsConfig::SHOPPING_POINTS_RATIO =>
                     (int) Configuration::get(GamificationsConfig::SHOPPING_POINTS_RATIO),
-                GamificationsConfig::SHOPPING_POINTS_ORDER_STATES => 
+                GamificationsConfig::SHOPPING_POINTS_ORDER_STATES =>
                     json_decode(Configuration::get(GamificationsConfig::SHOPPING_POINTS_ORDER_STATES)),
             ],
         ];

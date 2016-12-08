@@ -183,6 +183,7 @@ class Gamifications extends Module
         $order = $params['object'];
 
         $this->processReferralProgramActivity($order);
+        $this->processShoppingPoints($order, true);
     }
 
     /**
@@ -196,6 +197,7 @@ class Gamifications extends Module
         $order = $params['object'];
 
         $this->processReferralProgramActivity($order);
+        $this->processShoppingPoints($order);
     }
 
     /**
@@ -207,10 +209,30 @@ class Gamifications extends Module
     {
         $isReferralProgramEnabled = (bool) Configuration::get(GamificationsConfig::REFERRAL_PROGRAM_STATUS);
 
-        if ($isReferralProgramEnabled) {
-            $referralProgramActivity = new GamificationsReferralProgramActivity($this->getEntityManager());
-            $referralProgramActivity->processReferralCustomerReward($order);
+        if (!$isReferralProgramEnabled) {
+            return;
         }
+
+        $referralProgramActivity = new GamificationsReferralProgramActivity($this->getEntityManager());
+        $referralProgramActivity->processReferralCustomerReward($order);
+    }
+
+    /**
+     * Process Shopping Points activity
+     *
+     * @param Order $order
+     * @param bool $createObject
+     */
+    protected function processShoppingPoints(Order $order, $createObject = false)
+    {
+        $isShoppingPointsEnabled = (bool) Configuration::get(GamificationsConfig::SHOPPING_POINTS_STATUS);
+
+        if (!$isShoppingPointsEnabled) {
+            return;
+        }
+
+        $shoppingPointActivity = new GamificationsShoppingPointActivity($this->getEntityManager());
+        $shoppingPointActivity->processOrder($order, $createObject);
     }
 
     /**

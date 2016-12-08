@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS `PREFIX_gamifications_activity_history` (
   `points` INT(11) UNSIGNED NOT NULL DEFAULT 0,
   `date_add` DATETIME NOT NULL,
   `date_upd` DATETIME NOT NULL,
-  PRIMARY KEY (`id_gamifications_activity_history`, `id_customer`, `id_reward`, `id_shop`)
+  PRIMARY KEY (`id_gamifications_activity_history`)
 ) ENGINE=ENGINE_TYPE DEFAULT CHARSET=utf8;
