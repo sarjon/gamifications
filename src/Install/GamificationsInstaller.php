@@ -170,6 +170,7 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
             'actionObjectCustomerAddAfter',
             'actionObjectOrderAddAfter',
             'actionObjectOrderUpdateAfter',
+            'displayReassurance',
         ];
 
         foreach ($hooks as $hookName) {

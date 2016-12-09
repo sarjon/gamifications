@@ -39,6 +39,8 @@ class AdminGamificationsShoppingPointController extends GamificationsAdminContro
             (int) Tools::getValue(GamificationsConfig::SHOPPING_POINTS_RATIO);
         $configurations[GamificationsConfig::SHOPPING_POINTS_ORDER_STATES] =
             json_encode(Tools::getValue(GamificationsConfig::SHOPPING_POINTS_ORDER_STATES.'_selected', []));
+        $configurations[GamificationsConfig::SHOPPING_POINTS_INCLUDE_SHIPPNG_PRICE] =
+            (int) Tools::getValue(GamificationsConfig::SHOPPING_POINTS_INCLUDE_SHIPPNG_PRICE);
 
         $success = true;
         foreach ($configurations as $name => $value) {
@@ -69,6 +71,8 @@ class AdminGamificationsShoppingPointController extends GamificationsAdminContro
                     (int) Configuration::get(GamificationsConfig::SHOPPING_POINTS_RATIO),
                 GamificationsConfig::SHOPPING_POINTS_ORDER_STATES =>
                     json_decode(Configuration::get(GamificationsConfig::SHOPPING_POINTS_ORDER_STATES), true),
+                GamificationsConfig::SHOPPING_POINTS_INCLUDE_SHIPPNG_PRICE =>
+                    (int) Configuration::get(GamificationsConfig::SHOPPING_POINTS_INCLUDE_SHIPPNG_PRICE),
             ],
         ];
 
@@ -118,6 +122,27 @@ class AdminGamificationsShoppingPointController extends GamificationsAdminContro
                         'query' => OrderState::getOrderStates($this->context->language->id),
                         'id' => 'id_order_state',
                         'name' => 'name'
+                    ],
+                ],
+                [
+                    'type' => 'switch',
+                    'label' => $this->trans('Include shipping price', [], 'Modules.Gamifications.Admin'),
+                    'name' => GamificationsConfig::SHOPPING_POINTS_INCLUDE_SHIPPNG_PRICE,
+                    'hint' => $this->trans(
+                        'Enabled to include shipping price when calculating points',
+                        [],
+                        'Modules.Gamifications.Admin'
+                    ),
+                    'is_bool' => true,
+                    'values' => [
+                        [
+                            'id' => 'shopping_point_shipping_price_on',
+                            'value' => 1,
+                        ],
+                        [
+                            'id' => 'shopping_point_shipping_price_off',
+                            'value' => 0,
+                        ],
                     ],
                 ],
             ],

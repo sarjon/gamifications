@@ -244,6 +244,38 @@ class Gamifications extends Module
     }
 
     /**
+     * Display how many points will be earned
+     *
+     * @return string
+     */
+    public function hookDisplayReassurance()
+    {
+        $isShoppingPointsEnabled = (bool) Configuration::get(GamificationsConfig::SHOPPING_POINTS_STATUS);
+
+        if (!$isShoppingPointsEnabled) {
+            return '';
+        }
+
+        $orderTotalPrice = $this->context->cart->getOrderTotal();
+
+        $includeShippingPrice = (bool) Configuration::get(GamificationsConfig::SHOPPING_POINTS_INCLUDE_SHIPPNG_PRICE);
+
+        if (!$includeShippingPrice) {
+            $shippingPrice = $this->context->cart->getTotalShippingCost();
+            $orderTotalPrice -= $shippingPrice;
+        }
+
+        $convertedPrice = Tools::convertPrice($orderTotalPrice, $this->context->currency, false);
+        $convertedPrice  = floor($convertedPrice);
+
+        $shoppingPointPointsRatio = (int) Configuration::get(GamificationsConfig::SHOPPING_POINTS_RATIO);
+
+        $possiblePoints = $shoppingPointPointsRatio * $convertedPrice;
+
+        return $this->render('hook/displayReassurance.tpl', ['possible_points' => $possiblePoints]);
+    }
+
+    /**
      * Render template
      *
      * @param string $path
