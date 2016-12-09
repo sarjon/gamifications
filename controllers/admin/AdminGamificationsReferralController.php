@@ -57,12 +57,9 @@ class AdminGamificationsReferralController extends GamificationsAdminController
         $configurations[GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD] =
             (int) Tools::getValue(GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD);
 
-        $idShopGroup = (int) $this->context->shop->id_shop_group;
-        $idShop = (int) $this->context->shop->id;
-
         $success = true;
         foreach ($configurations as $name => $value) {
-            $success &= Configuration::updateValue($name, $value, false, $idShopGroup, $idShop);
+            $success &= Configuration::updateValue($name, $value);
         }
 
         if (!$success) {

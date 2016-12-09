@@ -37,9 +37,9 @@ class GamificationsShoppingPointActivity
      */
     public function processOrder(Order $order, $createObject)
     {
-        $shopingPoint = null;
+        $shoppingPoint = null;
         if ($createObject) {
-            $shopingPoint = GamificationsShoppingPoint::create($order, true);
+            $shoppingPoint = GamificationsShoppingPoint::create($order, true);
         }
 
         $shoppingPointOrderStates = Configuration::get(GamificationsConfig::SHOPPING_POINTS_ORDER_STATES);
@@ -52,22 +52,69 @@ class GamificationsShoppingPointActivity
             return;
         }
 
-        if (!Validate::isLoadedObject($shopingPoint)) {
-            //@todo: get shopping point object
+        if (!Validate::isLoadedObject($shoppingPoint)) {
+            $idCustomer = (int) $order->id_customer;
+            $idOrder = (int) $order->id;
+            $idShop = (int) $order->id_shop;
+
+            /** @var GamificationsShoppingPointRepository $shoppingPointRepository */
+            $shoppingPointRepository = $this->em->getRepository('GamificationsShoppingPoint');
+            $idShoppingPoint =
+                $shoppingPointRepository->findShoppingPointIdByCustomerIdAndOrderId($idCustomer, $idOrder, $idShop);
+            $shoppingPoint = new GamificationsShoppingPoint($idShoppingPoint);
+            if (null === $idShoppingPoint || !Validate::isLoadedObject($shoppingPoint)) {
+                return;
+            }
         }
 
-        $context = Context::getContext();
-        $customer = new Customer($order->id_customer);
+        $this->rewardCustomer($shoppingPoint, $order);
+    }
+
+    /**
+     * Reward customer
+     *
+     * @param GamificationsShoppingPoint $shoppingPoint
+     * @param Order $order
+     */
+    protected function rewardCustomer(GamificationsShoppingPoint $shoppingPoint, Order $order)
+    {
+        $shoppingPointPointsRatio = (int) Configuration::get(GamificationsConfig::SHOPPING_POINTS_RATIO);
+
+        $idDefaultCurrency = (int) Configuration::get('PS_CURRENCY_DEFAULT');
+        $defaultCurrency = new Currency($idDefaultCurrency);
+
+        $totalPaid = $order->getTotalPaid($defaultCurrency);
+        $totalPaid = floor($totalPaid);
+
+        $earnedPoints = $shoppingPointPointsRatio * $totalPaid;
+
+        if (0 >= $earnedPoints) {
+            return;
+        }
 
         /** @var GamificationsCustomerRepository $customerRepository */
         $customerRepository = $this->em->getRepository('GamificationsCustomer');
-
-        $idGamificationsCustomer = $customerRepository->findIdByCustomerId($order->id_customer, $context->shop->id);
+        $idGamificationsCustomer = $customerRepository->findIdByCustomerId($order->id_customer, $order->id_shop);
 
         if (null === $idGamificationsCustomer) {
+            $customer = new Customer($shoppingPoint->id_customer);
             $gamificationsCustomer = GamificationsCustomer::create($customer, true);
         } else {
             $gamificationsCustomer = new GamificationsCustomer($idGamificationsCustomer);
+        }
+
+        if ($gamificationsCustomer->addPoints($earnedPoints)) {
+            $shoppingPoint->active = false;
+            $shoppingPoint->save();
+
+            $reward = new GamificationsReward();
+            $reward->reward_type = GamificationsReward::REWARD_TYPE_POINTS;
+            $reward->points = $earnedPoints;
+            GamificationsActivityHistory::log(
+                $reward,
+                $shoppingPoint->id_customer,
+                GamificationsActivity::TYPE_SHOPPING_POINT
+            );
         }
     }
 }

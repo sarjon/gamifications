@@ -82,4 +82,14 @@ class GamificationsShoppingPoint extends ObjectModel
 
         return $created;
     }
+
+    /**
+     * Get repository name
+     *
+     * @return string
+     */
+    public static function getRepositoryClassName()
+    {
+        return 'GamificationsShoppingPointRepository';
+    }
 }

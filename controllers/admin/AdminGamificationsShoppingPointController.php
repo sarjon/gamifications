@@ -40,12 +40,9 @@ class AdminGamificationsShoppingPointController extends GamificationsAdminContro
         $configurations[GamificationsConfig::SHOPPING_POINTS_ORDER_STATES] =
             json_encode(Tools::getValue(GamificationsConfig::SHOPPING_POINTS_ORDER_STATES.'_selected', []));
 
-        $idShopGroup = (int) $this->context->shop->id_shop_group;
-        $idShop = (int) $this->context->shop->id;
-
         $success = true;
         foreach ($configurations as $name => $value) {
-            $success &= Configuration::updateValue($name, $value, false, $idShopGroup, $idShop);
+            $success &= Configuration::updateValue($name, $value);
         }
 
         if (!$success) {
@@ -71,7 +68,7 @@ class AdminGamificationsShoppingPointController extends GamificationsAdminContro
                 GamificationsConfig::SHOPPING_POINTS_RATIO =>
                     (int) Configuration::get(GamificationsConfig::SHOPPING_POINTS_RATIO),
                 GamificationsConfig::SHOPPING_POINTS_ORDER_STATES =>
-                    json_decode(Configuration::get(GamificationsConfig::SHOPPING_POINTS_ORDER_STATES)),
+                    json_decode(Configuration::get(GamificationsConfig::SHOPPING_POINTS_ORDER_STATES), true),
             ],
         ];
 

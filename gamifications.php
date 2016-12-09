@@ -225,6 +225,12 @@ class Gamifications extends Module
      */
     protected function processShoppingPoints(Order $order, $createObject = false)
     {
+        static $hasProcessed;
+
+        if ($hasProcessed) {
+            return;
+        }
+
         $isShoppingPointsEnabled = (bool) Configuration::get(GamificationsConfig::SHOPPING_POINTS_STATUS);
 
         if (!$isShoppingPointsEnabled) {
@@ -233,6 +239,8 @@ class Gamifications extends Module
 
         $shoppingPointActivity = new GamificationsShoppingPointActivity($this->getEntityManager());
         $shoppingPointActivity->processOrder($order, $createObject);
+
+        $hasProcessed = true;
     }
 
     /**
