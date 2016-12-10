@@ -13,6 +13,11 @@
 class AdminGamificationsCustomerController extends GamificationsAdminController
 {
     /**
+     * @var GamificationsCustomer
+     */
+    protected $object;
+
+    /**
      * AdminGamificationsCustomerController constructor.
      */
     public function __construct()
@@ -44,7 +49,7 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
         $this->_select = 'c.`email`, c.`firstname`, c.`lastname`';
 
         $this->_join = '
-            LEFT JOIN `'._DB_PREFIX_.'customer` c
+            INNER JOIN `'._DB_PREFIX_.'customer` c
                 ON c.`id_customer` = a.`id_customer`
         ';
 
@@ -54,10 +59,27 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
     }
 
     /**
+     * @return string
+     */
+    public function renderForm()
+    {
+        $customer = new Customer($this->object->id_customer);
+
+        if (!Validate::isLoadedObject($customer)) {
+            Tools::redirectAdmin(
+                $this->context->link->getAdminLink(Gamifications::ADMIN_GAMIFICATIONS_CUSTOMER_CONTROLLER)
+            );
+        }
+
+        return parent::renderForm();
+    }
+
+    /**
      * Init list
      */
     protected function initList()
     {
+        $this->addRowAction('edit');
         $this->list_no_link = true;
 
         $this->fields_list = [
@@ -90,6 +112,73 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
                 'title' => $this->trans('Spent points', [], 'Modules.Gamifications.Admin'),
                 'align' => 'center',
             ],
+        ];
+    }
+
+    /**
+     * Init form
+     */
+    protected function initForm()
+    {
+        $this->fields_form = [
+            'legend' => [
+                'title' => $this->trans('Edit', [], 'Modules.Gamifications.Admin'),
+            ],
+            'description' => $this->trans(
+                'Some fields are disabled, they only provide you information about customer and cannot be changed.',
+                [],
+                'Modules.Gamifications.Admin'
+            ),
+            'input' => [
+                [
+                    'label' => $this->trans('Email', [], 'Modules.Gamifications.Admin'),
+                    'type' => 'text',
+                    'name' => 'email',
+                    'disabled' => true,
+                ],
+                [
+                    'label' => $this->trans('First name', [], 'Modules.Gamifications.Admin'),
+                    'type' => 'text',
+                    'name' => 'first_name',
+                    'disabled' => true,
+                ],
+                [
+                    'label' => $this->trans('Last name', [], 'Modules.Gamifications.Admin'),
+                    'type' => 'text',
+                    'name' => 'last_name',
+                    'disabled' => true,
+                ],
+                [
+                    'label' => $this->trans('Spent points', [], 'Modules.Gamifications.Admin'),
+                    'name' => 'spent_points',
+                    'type' => 'text',
+                    'disabled' => true,
+                ],
+                [
+                    'label' => $this->trans('Customer points', [], 'Modules.Gamifications.Admin'),
+                    'name' => 'total_points',
+                    'type' => 'text',
+                    'class' => 'fixed-width-lg',
+                    'hint' => $this->trans('You can add or remove customer points', [], 'Modules.Gamifications.Admin'),
+                ],
+            ],
+            'submit' => [
+                'title' => $this->trans('Save', [], 'Modules.Gamifications.Admin'),
+            ],
+        ];
+    }
+
+    /**
+     * Init form fields
+     */
+    protected function initFormFieldsValue()
+    {
+        $customer = new Customer($this->object->id_customer);
+
+        $this->fields_value = [
+            'email' => $customer->email,
+            'first_name' => $customer->firstname,
+            'last_name' => $customer->lastname,
         ];
     }
 }
