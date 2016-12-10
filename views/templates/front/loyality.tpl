@@ -9,18 +9,11 @@
 {extends file='page.tpl'}
 
 {block name='page_title'}
-    {l s='Overview' d='Shop.Theme.CustomerAccount'}
+    {$front_office_title}
 {/block}
 
 {block name="page_content"}
-
-    {include file='module:gamifications/views/templates/front/_partials/navigation.tpl'}
-
     <div class="row">
-
-        <div class="col-md-12">
-            <hr>
-        </div>
 
         <div class="col-md-12">
 

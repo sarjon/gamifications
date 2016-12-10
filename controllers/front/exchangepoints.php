@@ -141,11 +141,12 @@ class GamificationsExchangePointsModuleFrontController extends GamificationsFron
 
         $breadcrumb['links'][] = $this->addMyAccountToBreadcrumb();
 
-        $frontOfficeTitle = Configuration::get(GamificationsConfig::FRONT_OFFICE_TITLE, $this->context->language->id);
-
         $breadcrumb['links'][] = [
-            'title' => $frontOfficeTitle,
-            'url' => $this->context->link->getModuleLink($this->module->name, Gamifications::FRONT_LOYALITY_CONTROLLER),
+            'title' => $this->trans('Exchange points', [], 'Modules.Gamifications.Shop'),
+            'url' => $this->context->link->getModuleLink(
+                $this->module->name,
+                Gamifications::FRONT_EXCHANGE_POINTS_CONTROLLER
+            ),
         ];
 
         return $breadcrumb;

@@ -26,12 +26,12 @@ class GamificationsCustomer extends ObjectModel
     /**
      * @var int
      */
-    public $total_points;
+    public $total_points = 0;
 
     /**
      * @var int
      */
-    public $spent_points;
+    public $spent_points = 0;
 
     //@todo: implement active
     /**

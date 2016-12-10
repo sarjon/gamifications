@@ -9,21 +9,13 @@
 {extends file='page.tpl'}
 
 {block name='page_title'}
-    {l s='Exchange points' d='Shop.Theme.CustomerAccount'}
+    {l s='Exchange points' d='Modules.Gamifications.Shop'}
 {/block}
 
 {block name="page_content"}
-
-    {include file='module:gamifications/views/templates/front/_partials/navigation.tpl'}
-
-    <div class="row">
-        <div class="col-md-12">
-            <hr>
-        </div>
-    </div>
-
     <div class="row">
 
+        {if isset($point_exchange_rewards) && !empty($point_exchange_rewards)}
         <div class="col-md-6">
             <div class="row">
                 {foreach from=$point_exchange_rewards key=key item=reward}
@@ -130,6 +122,13 @@
                 {/foreach}
             </div>
         </div>
+        {else}
+            <article class="alert alert-info" role="alert" data-alert="info">
+                <ul>
+                    <li>{l s='Theres no rewards at the moment, please check back soon!' d='Modules.Gamifications.Shop'}</li>
+                </ul>
+            </article>
+        {/if}
 
     </div>
 

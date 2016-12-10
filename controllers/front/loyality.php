@@ -37,6 +37,8 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
             'gamifications_customer' => $this->gamificationCustomer,
             'is_daily_rewards_enabled' => (bool) Configuration::get(GamificationsConfig::DAILY_REWARDS_STATUS),
             'is_referral_program_enabled' => (bool) Configuration::get(GamificationsConfig::REFERRAL_PROGRAM_STATUS),
+            'front_office_title' =>
+                Configuration::get(GamificationsConfig::FRONT_OFFICE_TITLE, $this->context->language->id),
         ]);
 
         $this->setTemplate('module:gamifications/views/templates/front/loyality.tpl');
