@@ -1,4 +1,5 @@
 *.xml
 vendor/*
 !vendor/index.php
+!vendor/.htaccess
 !vendor/composer/index.php
