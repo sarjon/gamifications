@@ -19,7 +19,7 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
     {
         $this->className = 'GamificationsCustomer';
         $this->table = GamificationsCustomer::$definition['table'];
-        $this->identifier = GamificationsCustomer::$definition['primary'];
+        $this->identifier = GamificationsCustomer::$definition['primary'];;
 
         parent::__construct();
     }
@@ -53,17 +53,11 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
         return parent::renderList();
     }
 
-    public function renderDetails()
-    {
-        //@todo: render customer details
-    }
-
     /**
      * Init list
      */
     protected function initList()
     {
-        $this->addRowAction('details');
         $this->list_no_link = true;
 
         $this->fields_list = [
@@ -73,7 +67,7 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
                 'align' => 'center',
             ],
             'id_customer' => [
-                'title' => $this->trans('ID Customer', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->trans('Customer ID', [], 'Modules.Gamifications.Admin'),
                 'align' => 'center',
             ],
             'email' => [
