@@ -26,6 +26,11 @@ class GamificationsCustomer extends ObjectModel
     /**
      * @var int
      */
+    public $id_shop;
+
+    /**
+     * @var int
+     */
     public $total_points = 0;
 
     /**
@@ -62,6 +67,7 @@ class GamificationsCustomer extends ObjectModel
         'primary' => 'id_gamifications_customer',
         'fields' => [
             'id_customer' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
+            'id_shop' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
             'total_points' => ['type' => self::TYPE_INT, 'required' => false, 'validate' => 'isUnsignedInt'],
             'spent_points' => ['type' => self::TYPE_INT, 'required' => false, 'validate' => 'isUnsignedInt'],
             'referral_code' => ['type' => self::TYPE_STRING, 'required' => false, 'validate' => 'isString'],
@@ -91,12 +97,15 @@ class GamificationsCustomer extends ObjectModel
      */
     public static function create(Customer $customer, $returnObject = false)
     {
+        $context = Context::getContext();
+
         $gamificationsCustomer = new GamificationsCustomer();
         $gamificationsCustomer->total_points = 0;
         $gamificationsCustomer->spent_points = 0;
         $gamificationsCustomer->id_customer = (int) $customer->id;
         $gamificationsCustomer->active = true;
         $gamificationsCustomer->referral_code = strtolower(Tools::passwdGen(16));
+        $gamificationsCustomer->id_shop = (int) $context->shop->id;
 
         $created = $gamificationsCustomer->save();
 

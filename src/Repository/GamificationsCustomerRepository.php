@@ -25,12 +25,10 @@ class GamificationsCustomerRepository extends EntityRepository
     public function findIdByCustomerId($idCustomer, $idShop)
     {
         $sql = '
-            SELECT gp.`id_gamifications_customer`
-            FROM `'.$this->getPrefix().'gamifications_customer` gp
-            LEFT JOIN `'.$this->getPrefix().'gamifications_customer_shop` gps
-                ON gps.`id_gamifications_customer` = gp.`id_gamifications_customer`
-            WHERE gp.`id_customer` = '.(int)$idCustomer.'
-                AND gps.`id_shop` = '.(int)$idShop.'
+            SELECT gc.`id_gamifications_customer`
+            FROM `'.$this->getPrefix().'gamifications_customer` gc
+            WHERE gc.`id_customer` = '.(int)$idCustomer.'
+                AND gc.`id_shop` = '.(int)$idShop.'
             LIMIT 1
         ';
 

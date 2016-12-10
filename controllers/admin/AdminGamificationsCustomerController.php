@@ -54,6 +54,7 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
         ';
 
         $this->_where = 'AND c.`id_shop` = '.(int)$this->context->shop->id;
+        $this->_where .= ' AND a.`id_shop` = '.(int)$this->context->shop->id;
 
         return parent::renderList();
     }
