@@ -104,23 +104,23 @@ class AdminGamificationsActivityHistoryController extends GamificationsAdminCont
         $this->explicitSelect = true;
         $this->bulk_actions = [
             'delete' => [
-                'text' => $this->trans('Delete selected'),
-                'confirm' => $this->trans('Delete selected items?'),
+                'text' => $this->trans('Delete selected', [], 'Modules.Gamifications.Admin'),
+                'confirm' => $this->trans('Delete selected items?', [], 'Modules.Gamifications.Admin'),
             ],
         ];
 
         $this->fields_list = [
             GamificationsActivityHistory::$definition['primary'] => [
-                'title' => $this->trans('ID'),
+                'title' => $this->trans('ID', [], 'Modules.Gamifications.Admin'),
                 'width' => 20,
                 'align' => 'center',
             ],
             'email' => [
-                'title' => $this->trans('Email'),
+                'title' => $this->trans('Email', [], 'Modules.Gamifications.Admin'),
                 'align' => 'center',
             ],
             'activity_type' => [
-                'title' => $this->trans('Activity type'),
+                'title' => $this->trans('Activity type', [], 'Modules.Gamifications.Admin'),
                 'align' => 'center',
                 'type' => 'select',
                 'list' => GamificationsActivity::getActivityTypeTranslations(),
@@ -128,12 +128,12 @@ class AdminGamificationsActivityHistoryController extends GamificationsAdminCont
                 'filter_type' => 'int',
             ],
             'reward_name' => [
-                'title' => $this->trans('Reward'),
+                'title' => $this->trans('Reward', [], 'Modules.Gamifications.Admin'),
                 'align' => 'center',
                 'filter_key' => 'rl!name',
             ],
             'reward_type' => [
-                'title' => $this->trans('Reward type'),
+                'title' => $this->trans('Reward type', [], 'Modules.Gamifications.Admin'),
                 'align' => 'center',
                 'type' => 'select',
                 'list' => GamificationsReward::getRewardsTranslations(),
@@ -141,11 +141,11 @@ class AdminGamificationsActivityHistoryController extends GamificationsAdminCont
                 'filter_type' => 'int',
             ],
             'points' => [
-                'title' => $this->trans('Points'),
+                'title' => $this->trans('Points', [], 'Modules.Gamifications.Admin'),
                 'align' => 'center',
             ],
             'date_add' => [
-                'title' => $this->trans('Activity date'),
+                'title' => $this->trans('Activity date', [], 'Modules.Gamifications.Admin'),
                 'align' => 'center',
                 'type' => 'date',
                 'filter_key' => 'a!date_add',

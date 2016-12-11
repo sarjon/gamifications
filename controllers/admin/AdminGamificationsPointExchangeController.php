@@ -80,13 +80,13 @@ class AdminGamificationsPointExchangeController extends GamificationsAdminContro
 
         if (!Validate::isLoadedObject($pointExchange) || !$pointExchange->save()) {
             $response['error'] = true;
-            $response['text'] = $this->trans('Failed to update');
+            $response['text'] = $this->trans('Failed to update', [], 'Modules.Gamifications.Admin');
 
             die(json_encode($response));
         }
 
         $response['success'] = true;
-        $response['text'] = $this->trans('Successful update');
+        $response['text'] = $this->trans('Successful update', [], 'Modules.Gamifications.Admin');
 
         die(json_encode($response));
     }
@@ -113,21 +113,21 @@ class AdminGamificationsPointExchangeController extends GamificationsAdminContro
 
         $this->fields_list = [
             GamificationsPointExchange::$definition['primary'] => [
-                'title' => $this->trans('ID'),
+                'title' => $this->trans('ID', [], 'Modules.Gamifications.Admin'),
                 'width' => 20,
                 'type' => 'text',
             ],
             'points' => [
-                'title' => $this->trans('Points'),
+                'title' => $this->trans('Points', [], 'Modules.Gamifications.Admin'),
                 'type' => 'text',
             ],
             'name' => [
-                'title' => $this->trans('Reward name'),
+                'title' => $this->trans('Reward name', [], 'Modules.Gamifications.Admin'),
                 'type' => 'text',
                 'filter_key' => 'grl!name',
             ],
             'active' => [
-                'title' => $this->trans('Enabled'),
+                'title' => $this->trans('Enabled', [], 'Modules.Gamifications.Admin'),
                 'active' => 'status',
                 'type' => 'bool',
                 'ajax' => true,
@@ -135,7 +135,7 @@ class AdminGamificationsPointExchangeController extends GamificationsAdminContro
                 'align' => 'center',
             ],
             'times_exchanged' => [
-                'title' => $this->trans('Times exchanged'),
+                'title' => $this->trans('Times exchanged', [], 'Modules.Gamifications.Admin'),
                 'type' => 'text',
                 'align' => 'center',
             ],
@@ -159,23 +159,28 @@ class AdminGamificationsPointExchangeController extends GamificationsAdminContro
 
         $this->fields_form = [
             'legend' => [
-                'title' => $this->trans('Points exchange'),
+                'title' => $this->trans('Points exchange', [], 'Modules.Gamifications.Admin'),
             ],
             'input' => [
                 [
-                    'label' => $this->trans('Points needed'),
+                    'label' => $this->trans('Points needed', [], 'Modules.Gamifications.Admin'),
                     'type' => 'text',
                     'name' => 'points',
-                    'hint' => $this->trans('Points needed to exchange it into reward'),
+                    'hint' =>
+                        $this->trans('Points needed to exchange it into reward', [], 'Modules.Gamifications.Admin'),
                     'class' => 'fixed-width-xl',
-                    'suffix' => $this->trans('points'),
+                    'suffix' => $this->trans('points', [], 'Modules.Gamifications.Admin'),
                     'required' => true,
                 ],
                 [
-                    'label' => $this->trans('Choose reward'),
+                    'label' => $this->trans('Choose reward', [], 'Modules.Gamifications.Admin'),
                     'type' => 'select',
                     'name' => 'id_reward',
-                    'hint' => $this->trans('List of availabhe rewards. NOTE: You cannot exchange points into points.'),
+                    'hint' => $this->trans(
+                        'List of availabhe rewards. NOTE: You cannot exchange points into points.',
+                        [],
+                        'Modules.Gamifications.Admin'
+                    ),
                     'required' => true,
                     'options' => [
                         'id' => 'id_gamifications_reward',
@@ -184,7 +189,7 @@ class AdminGamificationsPointExchangeController extends GamificationsAdminContro
                     ],
                 ],
                 [
-                    'label' => $this->trans('Enabled'),
+                    'label' => $this->trans('Enabled', [], 'Modules.Gamifications.Admin'),
                     'type' => 'switch',
                     'values' => [
                         [
@@ -199,25 +204,33 @@ class AdminGamificationsPointExchangeController extends GamificationsAdminContro
                         ],
                     ],
                     'name' => 'active',
-                    'hint' => $this->trans('If disabled then customers will not be able to use this exchange'),
+                    'hint' => $this->trans(
+                        'If disabled then customers will not be able to use this exchange',
+                        [],
+                        'Modules.Gamifications.Admin'
+                    ),
                 ],
                 [
-                    'label' => $this->trans('Groups', [], 'Admin.Catalog.Feature'),
+                    'label' => $this->trans('Groups', [], 'Modules.Gamifications.Admin'),
                     'type' => 'group',
                     'name' => 'groupBox',
                     'values' => Group::getGroups($this->context->language->id, $this->context->shop->id),
-                    'hint' => $this->trans('Which customer groups can get this reward by exchanging points'),
+                    'hint' => $this->trans(
+                        'Which customer groups can get this reward by exchanging points',
+                        [],
+                        'Modules.Gamifications.Admin'
+                    ),
                 ],
             ],
             'submit' => [
-                'title' => $this->trans('Save'),
+                'title' => $this->trans('Save', [], 'Modules.Gamifications.Admin'),
             ],
         ];
 
         if (Shop::isFeatureActive()) {
             $this->fields_form['input'][] = [
                 'type' => 'shop',
-                'label' => $this->trans('Shop association'),
+                'label' => $this->trans('Shop association', [], 'Modules.Gamifications.Admin'),
                 'name' => 'checkBoxShopAsso',
             ];
         }

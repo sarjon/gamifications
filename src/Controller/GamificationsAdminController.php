@@ -66,21 +66,6 @@ abstract class GamificationsAdminController extends ModuleAdminController
     }
 
     /**
-     * Customized translations with default domain
-     *
-     * @param string $id
-     * @param array $parameters
-     * @param string|null $domain
-     * @param string|null $locale
-     *
-     * @return string
-     */
-    protected function trans($id, array $parameters = [], $domain = 'Modules.Gamifications', $locale = null)
-    {
-        return parent::trans($id, $parameters, $domain, $locale);
-    }
-
-    /**
      * Init options
      */
     protected function initOptions()

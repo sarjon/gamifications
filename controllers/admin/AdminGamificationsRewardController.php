@@ -132,11 +132,11 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                 'type' => 'text',
             ],
             'name' => [
-                'title' => $this->trans('Reward name'),
+                'title' => $this->trans('Reward name', [], 'Modules.Gamifications.Admin'),
                 'type' => 'text',
             ],
             'reward_type' => [
-                'title' => $this->trans('Reward type'),
+                'title' => $this->trans('Reward type', [], 'Modules.Gamifications.Admin'),
                 'type' => 'select',
                 'list' => GamificationsReward::getRewardsTranslations(),
                 'filter_key' => 'a!reward_type',
@@ -153,25 +153,25 @@ class AdminGamificationsRewardController extends GamificationsAdminController
 
         $this->fields_form = [
             'legend' => [
-                'title' => $this->trans('Reward'),
+                'title' => $this->trans('Reward', [], 'Modules.Gamifications.Admin'),
             ],
             'input' => [
                 [
-                    'label' => $this->trans('Reward name'),
+                    'label' => $this->trans('Reward name', [], 'Modules.Gamifications.Admin'),
                     'type' => 'text',
                     'name' => 'name',
                     'required' => true,
                     'lang' => true,
                 ],
                 [
-                    'label' => $this->trans('Description'),
+                    'label' => $this->trans('Description', [], 'Modules.Gamifications.Admin'),
                     'type' => 'textarea',
                     'name' => 'description',
                     'lang' => true,
-                    'desc' => $this->trans('Up to 255 characters'),
+                    'desc' => $this->trans('Up to 255 characters', [], 'Modules.Gamifications.Admin'),
                 ],
                 [
-                    'label' => $this->trans('Reward type'),
+                    'label' => $this->trans('Reward type', [], 'Modules.Gamifications.Admin'),
                     'type' => 'select',
                     'name' => 'reward_type',
                     'required' => true,
@@ -181,52 +181,61 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                         'query' => [
                             [
                                 'id' => GamificationsReward::REWARD_TYPE_POINTS,
-                                'name' => $this->trans('Fixed amount of points'),
+                                'name' => $this->trans('Fixed amount of points', [], 'Modules.Gamifications.Admin'),
                             ],
                             [
                                 'id' => GamificationsReward::REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS,
-                                'name' => $this->trans('Random amount of points'),
+                                'name' => $this->trans('Random amount of points', [], 'Modules.Gamifications.Admin'),
                             ],
                             [
                                 'id' => GamificationsReward::REWARD_TYPE_DISCOUNT,
-                                'name' => $this->trans('Discount'),
+                                'name' => $this->trans('Discount', [], 'Modules.Gamifications.Admin'),
                             ],
                             [
                                 'id' => GamificationsReward::REWARD_TYPE_FREE_SHIPPING,
-                                'name' => $this->trans('Free shipping'),
+                                'name' => $this->trans('Free shipping', [], 'Modules.Gamifications.Admin'),
                             ],
                             [
                                 'id' => GamificationsReward::REWARD_TYPE_GIFT,
-                                'name' => $this->trans('Gift'),
+                                'name' => $this->trans('Gift', [], 'Modules.Gamifications.Admin'),
                             ],
                         ],
                     ],
                 ],
                 [
-                    'label' => $this->trans('Points'),
+                    'label' => $this->trans('Points', [], 'Modules.Gamifications.Admin'),
                     'name' => 'points',
                     'type' => 'text',
-                    'hint' => $this->trans('Number of points that customer will get'),
+                    'hint' =>
+                        $this->trans('Number of points that customer will get', [], 'Modules.Gamifications.Admin'),
                     'class' => 'fixed-width-sm',
-                    'suffix' => $this->trans('points'),
+                    'suffix' => $this->trans('points', [], 'Modules.Gamifications.Admin'),
 
                 ],
                 [
-                    'label' => $this->trans('Radius'),
+                    'label' => $this->trans('Radius', [], 'Modules.Gamifications.Admin'),
                     'name' => 'radius',
                     'type' => 'text',
                     'hint' =>
-                        $this->trans('E.g. if entered 100 points and radius 30,').' '.
-                        $this->trans('then range is 70 - 130 points (+-30 points)'),
+                        $this->trans(
+                            'E.g. if entered 100 points and radius 30,',
+                            [],
+                            'Modules.Gamifications.Admin'
+                        ).' '.
+                        $this->trans('then range is 70 - 130 points (+-30 points)', [], 'Modules.Gamifications.Admin'),
                     'class' => 'fixed-width-sm',
                     'suffix' => $this->trans('points radius'),
                 ],
                 [
                     // THIS FIELD IS NOT SAVED
-                    'label' => $this->trans('Product'),
+                    'label' => $this->trans('Product', [], 'Modules.Gamifications.Admin'),
                     'name' => 'product_name',
                     'type' => 'text',
-                    'hint' => $this->trans('Enter product name and available products will show up'),
+                    'hint' => $this->trans(
+                        'Enter product name and available products will show up',
+                        [],
+                        'Modules.Gamifications.Admin'
+                    ),
                     'class' => 'fixed-width-xxl',
 
                 ],
@@ -236,7 +245,7 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                     'type' => 'hidden',
                 ],
                 [
-                    'label' => $this->trans('Discount type'),
+                    'label' => $this->trans('Discount type', [], 'Modules.Gamifications.Admin'),
                     'type' => 'select',
                     'name' => 'discount_reduction_type',
                     'options' => [
@@ -245,70 +254,88 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                         'query' => [
                             [
                                 'id' => GamificationsReward::DISCOUNT_REDUCTION_PERCENT,
-                                'name' => $this->trans('Percent (%)'),
+                                'name' => $this->trans('Percent (%)', [], 'Modules.Gamifications.Admin'),
                             ],
                             [
                                 'id' => GamificationsReward::DISCOUNT_REDUCTION_AMOUNT,
-                                'name' => $this->trans('Amount (%currency%)', ['%currency%' => $defaultCurrency->sign]),
+                                'name' => $this->trans(
+                                    'Amount (%currency%)',
+                                    ['%currency%' => $defaultCurrency->sign],
+                                    'Modules.Gamifications.Admin'
+                                ),
                             ],
                         ],
                     ],
                 ],
                 [
-                    'label' => $this->trans('Discount value'),
+                    'label' => $this->trans('Discount value', [], 'Modules.Gamifications.Admin'),
                     'type' => 'text',
                     'name' => 'discount_value',
-                    'hint' =>
-                        $this->trans('Percent (%) or amount (%currency%)', ['%currency%' => $defaultCurrency->sign]),
+                    'hint' => $this->trans(
+                        'Percent (%) or amount (%currency%)',
+                        ['%currency%' => $defaultCurrency->sign],
+                        'Modules.Gamifications.Admin'
+                    ),
                     'class' => 'fixed-width-sm',
                 ],
                 [
-                    'label' => $this->trans('Apply type'),
+                    'label' => $this->trans('Apply type', [], 'Modules.Gamifications.Admin'),
                     'type' => 'select',
                     'name' => 'discount_apply_type',
-                    'hint' =>
-                        $this->trans('Whether to apply discount automatically to cart or give customer discount code'),
+                    'hint' => $this->trans(
+                        'Whether to apply discount automatically to cart or give customer discount code',
+                        [],
+                        'Modules.Gamifications.Admin'
+                    ),
                     'options' => [
                         'id' => 'id',
                         'name' => 'name',
                         'query' => [
                             [
                                 'id' => GamificationsReward::DISCOUNT_TYPE_AUTOMATICALLY_APPLIED,
-                                'name' => $this->trans('Automatically in cart'),
+                                'name' => $this->trans('Automatically in cart', [], 'Modules.Gamifications.Admin'),
                             ],
                             [
                                 'id' => GamificationsReward::DISCOUNT_REDUCTION_AMOUNT,
-                                'name' => $this->trans('Provide code'),
+                                'name' => $this->trans('Provide code', [], 'Modules.Gamifications.Admin'),
                             ],
                         ],
                     ],
                 ],
                 [
-                    'label' => $this->trans('Valid days'),
+                    'label' => $this->trans('Valid days', [], 'Modules.Gamifications.Admin'),
                     'type' => 'text',
                     'name' => 'discount_valid_days',
-                    'hitn' => $this->trans('How many days discount will be valid after earning it'),
-                    'suffix' => $this->trans('days'),
+                    'hitn' => $this->trans(
+                        'How many days discount will be valid after earning it',
+                        [],
+                        'Modules.Gamifications.Admin'
+                    ),
+                    'suffix' => $this->trans('days', [], 'Modules.Gamifications.Admin'),
                     'class' => 'fixed-width-sm',
                 ],
                 [
-                    'label' => $this->trans('Minimum cart amount'),
+                    'label' => $this->trans('Minimum cart amount', [], 'Modules.Gamifications.Admin'),
                     'type' => 'text',
                     'name' => 'minimum_cart_amount',
-                    'hint' => $this->trans('Minimum cart amount that discount or free shipping apply'),
+                    'hint' => $this->trans(
+                        'Minimum cart amount that discount or free shipping apply',
+                        [],
+                        'Modules.Gamifications.Admin'
+                    ),
                     'class' => 'fixed-width-sm',
                     'suffix' =>  $defaultCurrency->sign,
                 ],
             ],
             'submit' => [
-                'title' => $this->trans('Save'),
+                'title' => $this->trans('Save', [], 'Modules.Gamifications.Admin'),
             ],
         ];
 
         if (Shop::isFeatureActive()) {
             $this->fields_form['input'][] = [
                 'type' => 'shop',
-                'label' => $this->trans('Shop association'),
+                'label' => $this->trans('Shop association', [], 'Modules.Gamifications.Admin'),
                 'name' => 'checkBoxShopAsso',
             ];
         }
