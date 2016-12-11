@@ -97,7 +97,7 @@ class AdminGamificationsShoppingPointController extends GamificationsAdminContro
                     'type' => 'text',
                     'label' => $this->trans('Points ratio', [], 'Modules.Gamifications.Admin'),
                     'hint' => $this->trans(
-                        'Give X points for every spent %money%.',
+                        'Give X points for every spent %money%. Points are calculated by default currency.',
                         ['%money%' => $currency->iso_code],
                         'Modules.Gamifications.Admin'
                     ),
@@ -106,6 +106,7 @@ class AdminGamificationsShoppingPointController extends GamificationsAdminContro
                         ['%money%' => $currency->iso_code],
                         'Modules.Gamifications.Admin'
                     ),
+                    'prefix' => $this->trans('Give customer', [], 'Modules.Gamifications.Admin'),
                     'class' => 'fixed-width-lg',
                 ],
                 [

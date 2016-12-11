@@ -64,7 +64,7 @@ class AdminGamificationsRewardController extends GamificationsAdminController
     {
         parent::setMedia();
 
-        if (in_array($this->display, ['add', 'edit'])) {
+        if (in_array($this->display, ['add', 'edit', 'list'])) {
             $this->addJqueryPlugin('autocomplete');
             $this->addJS($this->module->getPathUri().'views/js/admin/reward.js');
 
@@ -335,7 +335,7 @@ class AdminGamificationsRewardController extends GamificationsAdminController
         if (Shop::isFeatureActive()) {
             $this->fields_form['input'][] = [
                 'type' => 'shop',
-                'label' => $this->trans('Shop association', [], 'Modules.Gamifications.Admin'),
+                'label' => $this->trans('Shop association'),
                 'name' => 'checkBoxShopAsso',
             ];
         }
