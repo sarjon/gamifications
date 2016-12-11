@@ -64,7 +64,7 @@ class GamificationsActivityHistory extends ObjectModel
             'id_shop' => ['type' => self::TYPE_INT, 'reqired' => true, 'validate' => 'isUnsignedInt'],
             'activity_type' => ['type' => self::TYPE_INT, 'reqired' => true, 'validate' => 'isUnsignedInt'],
             'reward_type' => ['type' => self::TYPE_INT, 'reqired' => true, 'validate' => 'isUnsignedInt'],
-            'points' => ['type' => self::TYPE_INT, 'reqired' => false, 'validate' => 'isUnsignedInt'],
+            'points' => ['type' => self::TYPE_INT, 'reqired' => false, 'validate' => 'isInt'],
             'date_add' => ['type' => self::TYPE_DATE, 'required' => false, 'validate' => 'isDate'],
             'date_upd' => ['type' => self::TYPE_DATE, 'required' => false, 'validate' => 'isDate'],
         ],

@@ -98,61 +98,68 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
      */
     protected function tabs()
     {
+        $translator = $this->module->getTranslator();
+
         return [
             [
-                'name' => $this->module->getTranslator()->trans('Gamification', [], 'Modules.Gamifications'),
+                'name' => $translator->trans('Gamification', [], 'Modules.Gamifications.Admin'),
                 'parent' => 'IMPROVE',
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
             ],
             [
-                'name' => $this->module->getTranslator()->trans('Rewards', [], 'Modules.Gamifications'),
+                'name' => $translator->trans('Rewards', [], 'Modules.Gamifications.Admin'),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_REWARD_CONTROLLER,
             ],
             [
-                'name' => $this->module->getTranslator()->trans('Points exchange', [], 'Modules.Gamifications'),
+                'name' => $translator->trans('Points exchange', [], 'Modules.Gamifications.Admin'),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_POINT_EXCHANGE_CONTROLLER,
             ],
             [
-                'name' => $this->module->getTranslator()->trans('Activities', [], 'Modules.Gamifications'),
+                'name' => $translator->trans('Activities', [], 'Modules.Gamifications.Admin'),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER,
             ],
             [
-                'name' => $this->module->getTranslator()->trans('Daily rewards', [], 'Modules.Gamifications'),
+                'name' => $translator->trans('Daily rewards', [], 'Modules.Gamifications.Admin'),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_DAILY_REWARDS_CONTROLLER,
             ],
             [
-                'name' => $this->module->getTranslator()->trans('Referral program', [], 'Modules.Gamifications'),
+                'name' => $translator->trans('Referral program', [], 'Modules.Gamifications.Admin'),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_REFERRAL_CONTROLLER,
             ],
             [
-                'name' => $this->module->getTranslator()->trans('Shopping points', [], 'Modules.Gamifications'),
+                'name' => $translator->trans('Shopping points', [], 'Modules.Gamifications.Admin'),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_SHOPPING_POINT_CONTROLLER,
             ],
             [
-                'name' => $this->module->getTranslator()->trans('Stats', [], 'Modules.Gamifications'),
+                'name' => $translator->trans('Stats', [], 'Modules.Gamifications.Admin'),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_STATS_CONTROLLER,
             ],
             [
-                'name' => $this->module->getTranslator()->trans('Customers', [], 'Modules.Gamifications'),
+                'name' => $translator->trans('Customers', [], 'Modules.Gamifications.Admin'),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_STATS_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_CUSTOMER_CONTROLLER,
             ],
             [
-                'name' => $this->module->getTranslator()->trans('Activities history', [], 'Modules.Gamifications'),
+                'name' => $translator->trans('Activities history', [], 'Modules.Gamifications.Admin'),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_STATS_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_HISTORY_CONTROLLER,
             ],
             [
-                'name' => $this->module->getTranslator()->trans('Preferences', [], 'Modules.Gamifications'),
+                'name' => $translator->trans('Preferences', [], 'Modules.Gamifications.Admin'),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_PREFERENCE_CONTROLLER,
+            ],
+            [
+                'name' => $translator->trans('About', [], 'Modules.Gamifications.Admin'),
+                'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
+                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_ABOUT_CONTROLLER,
             ],
         ];
     }
@@ -171,6 +178,7 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
             'actionObjectOrderAddAfter',
             'actionObjectOrderUpdateAfter',
             'displayReassurance',
+            'actionObjectCustomerDeleteAfter',
         ];
 
         foreach ($hooks as $hookName) {

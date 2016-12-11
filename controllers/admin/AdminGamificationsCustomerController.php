@@ -76,12 +76,43 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
     }
 
     /**
+     * Log message if points where changed
+     *
+     * @return false|ObjectModel|void
+     */
+    public function processUpdate()
+    {
+        $pointsBeforeUpdate = (int) $this->object->total_points;
+
+        $parentReturn = parent::processUpdate();
+
+        if (!$parentReturn instanceof GamificationsCustomer) {
+            return $parentReturn;
+        }
+
+        $pointsAfterUpdate = (int) $parentReturn->total_points;
+
+        if ($pointsBeforeUpdate != $pointsAfterUpdate) {
+            $reward = new GamificationsReward();
+            $reward->reward_type = GamificationsReward::REWARD_TYPE_POINTS;
+            $addedPoints = $pointsAfterUpdate - $pointsBeforeUpdate;
+            GamificationsActivityHistory::log(
+                $reward,
+                $this->object->id_customer,
+                GamificationsActivity::TYPE_MANUALLY_ADDED_POINTS,
+                $addedPoints
+            );
+        }
+
+        return $parentReturn;
+    }
+
+    /**
      * Init list
      */
     protected function initList()
     {
         $this->addRowAction('edit');
-        $this->list_no_link = true;
 
         $this->fields_list = [
             GamificationsCustomer::$definition['primary'] => [

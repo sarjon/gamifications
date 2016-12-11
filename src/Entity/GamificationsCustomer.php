@@ -117,19 +117,6 @@ class GamificationsCustomer extends ObjectModel
     }
 
     /**
-     * GamificationsCustomer constructor.
-     *
-     * @param int|null $id
-     * @param int|null $idLang
-     * @param int|null $idShop
-     */
-    public function __construct($id = null, $idLang = null, $idShop = null)
-    {
-        parent::__construct($id, $idLang, $idShop);
-        Shop::addTableAssociation(self::$definition['table'], ['type' => 'shop']);
-    }
-
-    /**
      * Add points
      *
      * @param int $points
