@@ -96,6 +96,9 @@
                         <div class="card card-outline-primary">
                             <div class=" card-block">
                                 <h3 class="card-title">{$reward.name}</h3>
+                                {if GamificationsReward::REWARD_TYPE_GIFT == $reward.reward_type}
+                                    <img src="{$reward.image_link}" alt="{$reward.name}">
+                                {/if}
                                 <p>{$reward.description}</p>
                                 <div class="text-xs-center text-muted" id="example-caption-1">
                                     {$gamifications_customer.total_points}/{$reward.points}

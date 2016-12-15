@@ -21,27 +21,46 @@
 
                 <div class="col-md-3">
                     <h3>{l s='My current points' d='Modules.Gamifications.Shop'}</h3>
-                    <h3 class="display-1 text-primary">{$gamifications_customer->total_points} {l s='pts' d='Modules.Gamifications.Shop'}</h3>
+                    <h3 class="display-1 text-primary">{$gamifications_customer.total_points} {l s='pts' d='Modules.Gamifications.Shop'}</h3>
                 </div>
 
 
                 <div class="col-md-3">
                     <h3>{l s='Total points spent' d='Modules.Gamifications.Shop'}</h3>
-                    <h3 class="display-1 text-primary">{$gamifications_customer->spent_points} {l s='pts' d='Modules.Gamifications.Shop'}</h3>
+                    <h3 class="display-1 text-primary">{$gamifications_customer.spent_points} {l s='pts' d='Modules.Gamifications.Shop'}</h3>
                 </div>
 
-                <div class="col-md-6">
-                    <h3>{l s='Next available reward' d='Modules.Gamifications.Shop'}</h3>
-                    <div class="card card-outline-primary">
-                        <div class=" card-block">
-                            <h3 class="card-title">10% Discount to cart over 50$!</h3>
-                            <div class="text-xs-center text-muted" id="example-caption-1">98/150 points</div>
-                            <progress class="progress progress-info" value="98" max="150"></progress>
-                            <a class="d-inline pull-xs-right" href="#">Check out all rewards</a>
-                            <div class="clearfix"></div>
+                {if isset($next_reward) && !is_null($next_reward)}
+                    {if $point_exchange.points <= $gamifications_customer.total_points}
+                        {assign var="progressColor" value="success"}
+                    {elseif $point_exchange.points * 0.2 > $gamifications_customer.total_points}
+                        {assign var="progressColor" value="warning"}
+                    {else}
+                        {assign var="progressColor" value="primary"}
+                    {/if}
+
+                    <div class="col-md-6">
+                        <h3>{l s='Next available reward' d='Modules.Gamifications.Shop'}</h3>
+                        <div class="card card-outline-primary">
+                            <div class=" card-block">
+                                <h3 class="card-title">{$next_reward.name}</h3>
+                                {if GamificationsReward::REWARD_TYPE_GIFT == $next_reward.reward_type}
+                                    <img src="{$next_reward.image_link}" alt="{$next_reward.name}">
+                                {/if}
+                                <p>{$next_reward.description}</p>
+                                <div class="text-xs-center text-muted" id="example-caption-1">
+                                    {$gamifications_customer.total_points}/{$point_exchange.points}
+                                    {l s='points' d='Modules.Gamifications.Shop'}
+                                </div>
+                                <progress class="progress progress-{$progressColor}" value="{$gamifications_customer.total_points}" max="{$point_exchange.points}"></progress>
+                                <a class="pull-xs-right" href="{url entity='module' name='gamifications' controller='exchangepoints'}">
+                                    {l s='See all rewards' d='Modules.Gamifications.Shop'}
+                                </a>
+                                <div class="clearfix"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                {/if}
             </div>
 
         </div>

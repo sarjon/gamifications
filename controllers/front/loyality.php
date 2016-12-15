@@ -2,7 +2,7 @@
 /**
  * This file is part of the Gamifications module.
  *
- * @author    Sarunas Jonusas, <jonusas.sarunas@gmail.com>
+ * @author    Sarunas Jonusas <jonusas.sarunas@gmail.com>
  * @copyright Copyright (c) permanent, Sarunas Jonusas
  * @license   Addons PrestaShop license limitation
  */
@@ -31,10 +31,11 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
 
         $this->initDailyRewardsContent();
         $this->initReferralContent();
+        $this->initNextAvailableReward();
 
         $this->context->smarty->assign([
             'controller' => 'loyality',
-            'gamifications_customer' => $this->gamificationCustomer,
+            'gamifications_customer' => (array) $this->gamificationCustomer,
             'is_daily_rewards_enabled' => (bool) Configuration::get(GamificationsConfig::DAILY_REWARDS_STATUS),
             'is_referral_program_enabled' => (bool) Configuration::get(GamificationsConfig::REFERRAL_PROGRAM_STATUS),
             'front_office_title' =>
@@ -171,6 +172,48 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
 
         $this->context->smarty->assign([
             'referral_url' => $referralUrl,
+        ]);
+    }
+
+    /**
+     * Initialize next available reward
+     */
+    private function initNextAvailableReward()
+    {
+        $customerPoints = $this->gamificationCustomer->total_points;
+        $customerGroups = $this->context->customer->getGroups();
+        $idShop = $this->context->shop->id;
+
+        /** @var GamificationsPointExchangeRepository $pointExchangeRepo */
+        $pointExchangeRepo = $this->getEntityManager()->getRepository('GamificationsPointExchange');
+        $idPointExchange =
+            $pointExchangeRepo->findClosestPointExchangeRewardByPoints($customerPoints, $customerGroups, $idShop);
+
+        $reward = null;
+        $pointExchange = null;
+        if (null !== $idPointExchange) {
+            $pointExchange = new GamificationsPointExchange($idPointExchange);
+
+            $reward = new GamificationsReward($pointExchange->id_reward, $this->context->language->id);
+
+            if (GamificationsReward::REWARD_TYPE_GIFT == $reward->reward_type) {
+                $product = new Product($reward->id_product, false, $this->context->language->id);
+
+                $coverImage = Image::getCover($product->id);
+                $idProductAndIdImage = sprintf('%s-%s', $product->id, (int) $coverImage['id_image']);
+
+                if (Validate::isLoadedObject($product)) {
+                    $imageType = ImageType::getFormattedName('small');
+
+                    $reward->image_link =
+                        $this->context->link->getImageLink($product->link_rewrite, $idProductAndIdImage, $imageType);
+                }
+            }
+        }
+
+        $this->context->smarty->assign([
+            'next_reward' => (array) $reward,
+            'point_exchange' => (array) $pointExchange,
         ]);
     }
 }

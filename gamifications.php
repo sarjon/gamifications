@@ -17,18 +17,18 @@ class Gamifications extends Module
     /**
      * Module admin controllers
      */
-    const ADMIN_GAMIFICATIONS_MODULE_CONTROLLER = 'AdminGamificationsModule';
-    const ADMIN_GAMIFICATIONS_PREFERENCE_CONTROLLER = 'AdminGamificationsPreference';
-    const ADMIN_GAMIFICATIONS_REWARD_CONTROLLER = 'AdminGamificationsReward';
-    const ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER = 'AdminGamificationsActivity';
-    const ADMIN_GAMIFICATIONS_DAILY_REWARDS_CONTROLLER = 'AdminGamificationsDailyRewards';
-    const ADMIN_GAMIFICATIONS_POINT_EXCHANGE_CONTROLLER = 'AdminGamificationsPointExchange';
-    const ADMIN_GAMIFICATIONS_STATS_CONTROLLER = 'AdminGamificationsStats';
-    const ADMIN_GAMIFICATIONS_CUSTOMER_CONTROLLER = 'AdminGamificationsCustomer';
+    const ADMIN_GAMIFICATIONS_MODULE_CONTROLLER           = 'AdminGamificationsModule';
+    const ADMIN_GAMIFICATIONS_PREFERENCE_CONTROLLER       = 'AdminGamificationsPreference';
+    const ADMIN_GAMIFICATIONS_REWARD_CONTROLLER           = 'AdminGamificationsReward';
+    const ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER         = 'AdminGamificationsActivity';
+    const ADMIN_GAMIFICATIONS_DAILY_REWARDS_CONTROLLER    = 'AdminGamificationsDailyRewards';
+    const ADMIN_GAMIFICATIONS_POINT_EXCHANGE_CONTROLLER   = 'AdminGamificationsPointExchange';
+    const ADMIN_GAMIFICATIONS_STATS_CONTROLLER            = 'AdminGamificationsStats';
+    const ADMIN_GAMIFICATIONS_CUSTOMER_CONTROLLER         = 'AdminGamificationsCustomer';
     const ADMIN_GAMIFICATIONS_ACTIVITY_HISTORY_CONTROLLER = 'AdminGamificationsActivityHistory';
-    const ADMIN_GAMIFICATIONS_REFERRAL_CONTROLLER = 'AdminGamificationsReferral';
-    const ADMIN_GAMIFICATIONS_SHOPPING_POINT_CONTROLLER = 'AdminGamificationsShoppingPoint';
-    const ADMIN_GAMIFICATIONS_ABOUT_CONTROLLER = 'AdminGamificationsAbout';
+    const ADMIN_GAMIFICATIONS_REFERRAL_CONTROLLER         = 'AdminGamificationsReferral';
+    const ADMIN_GAMIFICATIONS_SHOPPING_POINT_CONTROLLER   = 'AdminGamificationsShoppingPoint';
+    const ADMIN_GAMIFICATIONS_ABOUT_CONTROLLER            = 'AdminGamificationsAbout';
 
     /**
      * Module front controllers
@@ -267,7 +267,7 @@ class Gamifications extends Module
         }
 
         $convertedPrice = Tools::convertPrice($orderTotalPrice, $this->context->currency, false);
-        $convertedPrice  = floor($convertedPrice);
+        $convertedPrice = floor($convertedPrice);
 
         $shoppingPointPointsRatio = (int) Configuration::get(GamificationsConfig::SHOPPING_POINTS_RATIO);
 

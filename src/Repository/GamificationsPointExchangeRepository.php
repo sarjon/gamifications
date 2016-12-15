@@ -84,4 +84,43 @@ class GamificationsPointExchangeRepository extends EntityRepository
 
         return $results;
     }
+
+    /**
+     * @param int $points
+     * @param array $groups
+     * @param int $idShop
+     *
+     * @return int
+     */
+    public function findClosestPointExchangeRewardByPoints($points, array $groups, $idShop)
+    {
+        $query = new DbQuery();
+
+        $query->select('pe.id_gamifications_point_exchange');
+        $query->from('gamifications_point_exchange', 'pe');
+        $query->leftJoin(
+            'gamifications_point_exchange_shop',
+            'pes',
+            'pes.id_gamifications_point_exchange = pe.id_gamifications_point_exchange'
+        );
+        $query->leftJoin(
+            'gamifications_point_exchange_group',
+            'peg',
+            'peg.id_gamifications_point_exchange = pe.id_gamifications_point_exchange'
+        );
+        $query->where('pes.id_shop = '.(int)$idShop);
+        $query->where('pe.points > '.(int)$points);
+        $query->where('pe.active = 1');
+        $query->where('peg.id_group IN ('.implode(',', array_map('intval', $groups)).')');
+        $query->orderBy('pe.points');
+        $query->limit(1);
+
+        $results = $this->db->select($query);
+
+        if (!$results || !is_array($results)) {
+            return null;
+        }
+
+        return (int) $results[0]['id_gamifications_point_exchange'];
+    }
 }
