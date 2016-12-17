@@ -137,6 +137,11 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_SHOPPING_POINT_CONTROLLER,
             ],
             [
+                'name' => $translator->trans('Customer ranking', [], 'Modules.Gamifications.Admin'),
+                'parent' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER,
+                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_RANKING_CONTROLLER,
+            ],
+            [
                 'name' => $translator->trans('Stats', [], 'Modules.Gamifications.Admin'),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_STATS_CONTROLLER,

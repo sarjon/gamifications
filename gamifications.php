@@ -29,6 +29,7 @@ class Gamifications extends Module
     const ADMIN_GAMIFICATIONS_REFERRAL_CONTROLLER         = 'AdminGamificationsReferral';
     const ADMIN_GAMIFICATIONS_SHOPPING_POINT_CONTROLLER   = 'AdminGamificationsShoppingPoint';
     const ADMIN_GAMIFICATIONS_ABOUT_CONTROLLER            = 'AdminGamificationsAbout';
+    const ADMIN_GAMIFICATIONS_RANKING_CONTROLLER          = 'AdminGamificationsRanking';
 
     /**
      * Module front controllers
