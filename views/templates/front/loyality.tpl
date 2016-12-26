@@ -29,8 +29,7 @@
                     <h3>{l s='Total points spent' d='Modules.Gamifications.Shop'}</h3>
                     <h3 class="display-1 text-primary">{$gamifications_customer.spent_points} {l s='pts' d='Modules.Gamifications.Shop'}</h3>
                 </div>
-
-                {if isset($next_reward) && !is_null($next_reward)}
+                {if isset($next_reward) && $next_reward}
                     {if $point_exchange.points <= $gamifications_customer.total_points}
                         {assign var="progressColor" value="success"}
                     {elseif $point_exchange.points * 0.2 > $gamifications_customer.total_points}
