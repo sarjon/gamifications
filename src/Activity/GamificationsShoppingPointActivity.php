@@ -117,4 +117,32 @@ class GamificationsShoppingPointActivity
             );
         }
     }
+
+    /**
+     * Calculate how many ponts customer will get after placing an order
+     *
+     * @return int
+     */
+    public function calculatePossiblePoints()
+    {
+        $context = Context::getContext();
+
+        $orderTotalPrice = $context->cart->getOrderTotal();
+
+        $includeShippingPrice = (bool) Configuration::get(GamificationsConfig::SHOPPING_POINTS_INCLUDE_SHIPPNG_PRICE);
+
+        if (!$includeShippingPrice) {
+            $shippingPrice = $context->cart->getTotalShippingCost();
+            $orderTotalPrice -= $shippingPrice;
+        }
+
+        $convertedPrice = Tools::convertPrice($orderTotalPrice, $context->currency, false);
+        $convertedPrice = floor($convertedPrice);
+
+        $shoppingPointPointsRatio = (int) Configuration::get(GamificationsConfig::SHOPPING_POINTS_RATIO);
+
+        $possiblePoints = $shoppingPointPointsRatio * $convertedPrice;
+
+        return $possiblePoints;
+    }
 }
