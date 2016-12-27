@@ -117,6 +117,34 @@ class GamificationsCustomer extends ObjectModel
     }
 
     /**
+     * Remove gamifications customer
+     *
+     * @param Customer $customer
+     *
+     * @return bool
+     */
+    public static function remove(Customer $customer)
+    {
+        /** @var Gamifications $gamifications */
+        $gamifications = Module::getInstanceByName('gamifications');
+
+        $context = Context::getContext();
+        $em      = $gamifications->getEntityManager();
+
+        /** @var GamificationsCustomerRepository $customerRepository */
+        $customerRepository      = $em->getRepository('GamificationsCustomer');
+        $idGamificationsCustomer = $customerRepository->findIdByCustomerId($customer->id, $context->shop->id);
+
+        if (null === $idGamificationsCustomer) {
+            return true;
+        }
+
+        $gamificationsCustomer = new GamificationsCustomer($idGamificationsCustomer);
+
+        return $gamificationsCustomer->delete();
+    }
+
+    /**
      * Add points
      *
      * @param int $points

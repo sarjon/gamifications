@@ -203,6 +203,19 @@ class Gamifications extends Module
     }
 
     /**
+     * Delete gamifications customer on customer delete
+     *
+     * @param array $params
+     */
+    public function hookActionObjectCustomerDeleteAfter(array $params)
+    {
+        /** @var Customer $customer */
+        $customer = $params['object'];
+
+        GamificationsCustomer::remove($customer);
+    }
+
+    /**
      * Display how many points will be earned
      *
      * @return string
