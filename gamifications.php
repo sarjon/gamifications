@@ -261,7 +261,9 @@ class Gamifications extends Module
     {
         static $hasProcessed;
 
-        if ($hasProcessed) {
+        $orderKey = sprintf('processShoppingPoints_order_%s', $order->id);
+
+        if (isset($hasProcessed[$orderKey])) {
             return;
         }
 
@@ -274,7 +276,7 @@ class Gamifications extends Module
         $shoppingPointActivity = new GamificationsShoppingPointActivity($this->getEntityManager());
         $shoppingPointActivity->processOrder($order, $createObject);
 
-        $hasProcessed = true;
+        $hasProcessed[$orderKey] = true;
     }
 
     /**
