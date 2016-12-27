@@ -164,6 +164,31 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
             return;
         }
 
+        $path = sprintf('modules/%s/views/js/front/referral.js', $this->module->name);
+        $this->registerJavascript('modules-gamifications-referraljs', $path, ['media' => 'all', 'priority' => 150]);
+
+        $idLang = (int) $this->context->language->id;
+        $idShop = (int) $this->context->shop->id;
+
+        $referralRewardName = null;
+        $newCustomerRewardName = null;
+
+        $idReferralReward   = (int) Configuration::get(GamificationsConfig::REFERRAL_REWARD);
+        $rewardNewCustomer  = (bool) Configuration::get(GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD_ENABLED);
+
+        if ($idReferralReward) {
+            $referralReward = new GamificationsReward($idReferralReward, $idLang, $idShop);
+            $referralRewardName = $referralReward->name;
+        }
+
+        if ($rewardNewCustomer) {
+            $idNewCusomerReward = (int) Configuration::get(GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD);
+            if ($idNewCusomerReward) {
+                $referralReward = new GamificationsReward($idNewCusomerReward, $idLang, $idShop);
+                $newCustomerRewardName = $referralReward->name;
+            }
+        }
+
         $referralUrl = sprintf('%s?', $this->context->link->getPageLink('authentication'));
         $referralUrl .= http_build_query([
             'create_account' => 1,
@@ -171,7 +196,9 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
         ]);
 
         $this->context->smarty->assign([
-            'referral_url' => $referralUrl,
+            'referral_url'             => $referralUrl,
+            'referral_reward_name'     => $referralRewardName,
+            'new_customer_reward_name' => $newCustomerRewardName,
         ]);
     }
 

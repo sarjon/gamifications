@@ -18,14 +18,21 @@
         <div class="row">
             <div class="col-md-6">
                 <h4>{l s='Your unique referral link:' d='Modules.Gamifications.Shop'}</h4>
-                <p  class="display-4">{$referral_url}</p>
+                <input title="{l s='Your unique referral link' d='Modules.Gamifications.Shop'}" class="js-gamifications-referral-url-input form-control" type="text" value="{$referral_url}">
+                <a href="#" class="text-muted js-gamifications-referral-url-copy">{l s='Copy to clipboard.' d='Modules.Gamifications.Shop'} </a>
             </div>
 
             <div class="col-md-6">
-                <h4>{l s='For every invited friend you get' d='Modules.Gamifications.Shop'}</h4>
-                <h1 class="display-3 text-primary">100 points</h1>
-                <h4>{l s='Your friend gets' d='Modules.Gamifications.Shop'}</h4>
-                <h1 class="display-3 text-primary">10% Welcome discount</h1>
+                {if $referral_reward_name}
+                    <h4>{l s='For every invited friend you get' d='Modules.Gamifications.Shop'}</h4>
+                    <h1 class="display-3 text-primary">{$referral_reward_name}</h1>
+                {/if}
+
+                {if $new_customer_reward_name}
+                    <h4>{l s='Your friend gets' d='Modules.Gamifications.Shop'}</h4>
+                    <h1 class="display-3 text-primary">{$new_customer_reward_name}</h1>
+                {/if}
+
                 <hr>
                 <h1 class="display-3 text-primary">You have already invited 2 of your friends!</h1>
             </div>
