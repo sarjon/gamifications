@@ -34,7 +34,11 @@
                 {/if}
 
                 <hr>
-                <h1 class="display-3 text-primary">You have already invited 2 of your friends!</h1>
+                {if $invited_customers_count}
+                    <h1 class="display-3 text-primary">{l s='You have already invited %count% of your friends!' sprintf=['%count%' => $invited_customers_count] d='Modules.Gamifications.Shop'}</h1>
+                {else}
+                    <h1 class="display-3 text-primary">{l s='You have not invited any of your friends yet' d='Modules.Gamifications.Shop'}</h1>
+                {/if}
             </div>
         </div>
     </div>

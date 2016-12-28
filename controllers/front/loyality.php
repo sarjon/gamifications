@@ -195,10 +195,15 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
             'referral_code' => $this->gamificationCustomer->referral_code,
         ]);
 
+        /** @var GamificationsCustomerRepository $customerRepository */
+        $customerRepository    = $this->getEntityManager()->getRepository('GamificationsCustomer');
+        $invitedCustomersCount = $customerRepository->findInvitedCustomersCount($this->context->customer->id, $idShop);
+
         $this->context->smarty->assign([
             'referral_url'             => $referralUrl,
             'referral_reward_name'     => $referralRewardName,
             'new_customer_reward_name' => $newCustomerRewardName,
+            'invited_customers_count'  => $invitedCustomersCount,
         ]);
     }
 

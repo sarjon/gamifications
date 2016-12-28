@@ -84,10 +84,8 @@ class GamificationsCustomerRepository extends EntityRepository
         $sql = '
             SELECT gc.`id_gamifications_customer`, gc.`id_customer`
             FROM `'.$this->getPrefix().'gamifications_customer` gc
-            LEFT JOIN `'.$this->getPrefix().'gamifications_customer_shop` gcs
-                ON gcs.`id_gamifications_customer` = gc.`id_gamifications_customer`
             WHERE gc.`referral_code` = "'.$this->db->escape($referralCode).'"
-                AND gcs.`id_shop` = '.(int)$idShop.'
+                AND gc.`id_shop` = '.(int)$idShop.'
             LIMIT 1
         ';
 
@@ -98,5 +96,30 @@ class GamificationsCustomerRepository extends EntityRepository
         }
 
         return $results[0];
+    }
+
+    /**
+     * Find invited customers count
+     *
+     * @param int $idCustomer
+     * @param int $idShop
+     *
+     * @return int
+     */
+    public function findInvitedCustomersCount($idCustomer, $idShop)
+    {
+        $sql =
+            '
+            SELECT COUNT(`id_gamifications_referral`)
+            FROM `'.$this->getPrefix().'gamifications_referral`
+            WHERE `id_referral_customer` = '.(int)$idCustomer.'
+                AND `id_shop` = '.(int)$idShop.'
+        ';
+
+        $db = Db::getInstance();
+
+        $count = $db->getValue($sql);
+
+        return (int) $count;
     }
 }

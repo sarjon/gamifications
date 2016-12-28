@@ -40,7 +40,7 @@ class GamificationsReferralProgramActivity
         $context = Context::getContext();
 
         /** @var GamificationsCustomerRepository $customerRepository */
-        $customerRepository = $this->em->getRepository('GamificationsCustomer');
+        $customerRepository   = $this->em->getRepository('GamificationsCustomer');
         $referralCustomerData = $customerRepository->findByReferralCode($referralCode, $context->shop->id);
 
         if (null === $referralCustomerData) {
@@ -48,13 +48,13 @@ class GamificationsReferralProgramActivity
         }
 
         $referralGamificationsCustomer = new GamificationsCustomer($referralCustomerData['id_gamifications_customer']);
-        $invitedGamificationsCustomer = GamificationsCustomer::create($invitedCustomer, true);
+        $invitedGamificationsCustomer  = GamificationsCustomer::create($invitedCustomer, true);
 
-        $referral = new GamificationsReferral();
-        $referral->id_invited_customer = (int) $invitedGamificationsCustomer->id_customer;
+        $referral                       = new GamificationsReferral();
+        $referral->id_invited_customer  = (int) $invitedGamificationsCustomer->id_customer;
         $referral->id_referral_customer = (int) $referralGamificationsCustomer->id_customer;
-        $referral->id_shop = (int) $context->shop->id;
-        $referral->active = true;
+        $referral->id_shop              = (int) $context->shop->id;
+        $referral->active               = true;
 
         $referralRewardTime = (int) Configuration::get(GamificationsConfig::REFERRAL_REWARD_TIME);
         $isInvitedCustomerRewardEnabled =

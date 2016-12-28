@@ -155,18 +155,17 @@ class Gamifications extends Module
      */
     public function hookActionObjectCustomerAddAfter(array $params)
     {
-        /** @var Customer $invitedCustomer */
-        $invitedCustomer = $params['object'];
-
         if (!Tools::isSubmit('referral_code')) {
             return;
         }
 
         $isReferralProgramEnabled = (bool) Configuration::get(GamificationsConfig::REFERRAL_PROGRAM_STATUS);
-
         if (!$isReferralProgramEnabled) {
             return;
         }
+
+        /** @var Customer $invitedCustomer */
+        $invitedCustomer = $params['object'];
 
         $referralCode = Tools::getValue('referral_code');
 
