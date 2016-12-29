@@ -185,6 +185,7 @@ class Gamifications extends Module
 
         $this->processReferralProgramActivity($order);
         $this->processShoppingPoints($order, true);
+        $this->processRank($order, true);
     }
 
     /**
@@ -199,6 +200,7 @@ class Gamifications extends Module
 
         $this->processReferralProgramActivity($order);
         $this->processShoppingPoints($order);
+        $this->processRank($order);
     }
 
     /**
@@ -231,6 +233,11 @@ class Gamifications extends Module
         $possiblePoints = $shoppingPointActivity->calculatePossiblePoints();
 
         return $this->render('hook/displayReassurance.tpl', ['possible_points' => $possiblePoints]);
+    }
+
+    public function hookGamificationsActionSpendPoints($params)
+    {
+        //@todo: implement
     }
 
     /**
@@ -274,6 +281,33 @@ class Gamifications extends Module
 
         $shoppingPointActivity = new GamificationsShoppingPointActivity($this->getEntityManager());
         $shoppingPointActivity->processOrder($order, $createObject);
+
+        $hasProcessed[$orderKey] = true;
+    }
+
+    /**
+     * Process orders in customer rank activity
+     *
+     * @param Order $order
+     * @param bool $create
+     */
+    protected function processRank(Order $order, $create = false)
+    {
+        $isRanksEnabled = (bool) Configuration::get(GamificationsConfig::CUSTOMER_RANKING_STATUS);
+        if (!$isRanksEnabled) {
+            return;
+        }
+
+        $orderKey = sprintf('processRank_%s', $order->id);
+
+        static $hasProcessed;
+
+        if (isset($hasProcessed[$orderKey])) {
+            return;
+        }
+
+        $rankActivity = new GamificationsRankActivity();
+        $rankActivity->process($order, $create);
 
         $hasProcessed[$orderKey] = true;
     }

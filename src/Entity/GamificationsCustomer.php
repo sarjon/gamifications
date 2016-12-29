@@ -17,7 +17,6 @@ class GamificationsCustomer extends ObjectModel
      */
     public $id_customer;
 
-    //@todo: Implement or get rid of
     /**
      * @var int
      */
@@ -68,6 +67,7 @@ class GamificationsCustomer extends ObjectModel
         'fields' => [
             'id_customer' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
             'id_shop' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
+            'id_rank' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
             'total_points' => ['type' => self::TYPE_INT, 'required' => false, 'validate' => 'isUnsignedInt'],
             'spent_points' => ['type' => self::TYPE_INT, 'required' => false, 'validate' => 'isUnsignedInt'],
             'referral_code' => ['type' => self::TYPE_STRING, 'required' => false, 'validate' => 'isString'],

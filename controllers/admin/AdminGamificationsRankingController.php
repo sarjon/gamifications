@@ -13,6 +13,11 @@
 class AdminGamificationsRankingController extends GamificationsAdminController
 {
     /**
+     * @var GamificationsRank
+     */
+    protected $object;
+
+    /**
      * AdminGamificationsRankingController constructor.
      */
     public function __construct()
@@ -41,6 +46,18 @@ class AdminGamificationsRankingController extends GamificationsAdminController
     }
 
     /**
+     * Render list
+     *
+     * @return false|string
+     */
+    public function renderList()
+    {
+        $this->_where = 'AND a.`id_shop` = '.(int)$this->context->shop->id;
+
+        return parent::renderList();
+    }
+
+    /**
      * Init list
      */
     protected function initList()
@@ -48,6 +65,7 @@ class AdminGamificationsRankingController extends GamificationsAdminController
         $this->addRowAction('edit');
         $this->addRowAction('delete');
         $this->lang = true;
+        $defaultCurrency = Currency::getDefaultCurrency();
 
         $this->fields_list = [
             GamificationsRank::$definition['primary'] => [
@@ -62,6 +80,7 @@ class AdminGamificationsRankingController extends GamificationsAdminController
             'must_spend_money' => [
                 'title' => $this->trans('Must spend money', [], 'Modules.Gamifications.Admin'),
                 'type' => 'text',
+                'suffix' => $defaultCurrency->getSign(),
             ],
             'must_spend_points' => [
                 'title' => $this->trans('Must spend points', [], 'Modules.Gamifications.Admin'),
@@ -175,8 +194,18 @@ class AdminGamificationsRankingController extends GamificationsAdminController
      */
     public function getAvailableGroups()
     {
-        $keys = ['PS_UNIDENTIFIED_GROUP', 'PS_GUEST_GROUP', 'PS_CUSTOMER_GROUP'];
-        $excludeGroups = Configuration::getMultiple($keys);
+        /** @var GamificationsRankRepository $rankRepository */
+        $rankRepository = $this->module->getEntityManager()->getRepository('GamificationsRank');
+        $usedGroups = $rankRepository->findAllUsedGroupIds($this->context->shop->id);
+
+        $defaultGroups = ['PS_UNIDENTIFIED_GROUP', 'PS_GUEST_GROUP', 'PS_CUSTOMER_GROUP'];
+        $excludeGroups = Configuration::getMultiple($defaultGroups);
+
+        $excludeGroups = array_merge($excludeGroups, $usedGroups);
+
+        if ('edit' == $this->display) {
+            GamificationsArrayHelper::removeValue($this->object->id_group, $excludeGroups);
+        }
 
         $groups = Group::getGroups($this->context->language->id, $this->context->shop->id);
 

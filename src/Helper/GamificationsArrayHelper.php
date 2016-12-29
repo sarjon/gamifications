@@ -29,4 +29,25 @@ class GamificationsArrayHelper
 
         return $data[$randomKey];
     }
+
+    /**
+     * Remove value from array
+     *
+     * @param mixed $value
+     * @param array $data
+     *
+     * @return void
+     */
+    public static function removeValue($value, array &$data)
+    {
+        if (empty($data)) {
+            return;
+        }
+
+        $key = array_search($value, $data);
+
+        if (false !== $key) {
+            unset($data[$key]);
+        }
+    }
 }

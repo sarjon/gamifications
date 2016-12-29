@@ -64,4 +64,30 @@ class GamificationsRank extends ObjectModel
         ],
         'multilang' => true,
     ];
+
+    /**
+     * Get repository class name
+     *
+     * @return string
+     */
+    public static function getRepositoryClassName()
+    {
+        return 'GamificationsRankRepository';
+    }
+
+    /**
+     * Create rank order to track which orders are processed
+     *
+     * @param Order $order
+     */
+    public static function createRankOrder(Order $order)
+    {
+        $insert = [
+            'id_customer' => (int) $order->id_customer,
+            'id_order'    => (int) $order->id,
+            'active'      => 1,
+        ];
+
+        Db::getInstance()->insert('gamifications_rank_order', $insert);
+    }
 }

@@ -46,7 +46,7 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
      */
     public function renderList()
     {
-        $this->_select = 'c.`email`, c.`firstname`, c.`lastname`';
+        $this->_select = 'c.`email`, c.`firstname`, c.`lastname`, c.`date_add` AS `registration`';
 
         $this->_join = '
             INNER JOIN `'._DB_PREFIX_.'customer` c
@@ -113,6 +113,7 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
     protected function initList()
     {
         $this->addRowAction('edit');
+        $defaultCurrency = Currency::getDefaultCurrency();
 
         $this->fields_list = [
             GamificationsCustomer::$definition['primary'] => [
@@ -143,6 +144,16 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
             'spent_points' => [
                 'title' => $this->trans('Spent points', [], 'Modules.Gamifications.Admin'),
                 'align' => 'center',
+            ],
+            'spent_money' => [
+                'title' => $this->trans('Spent money', [], 'Modules.Gamifications.Admin'),
+                'align' => 'center',
+                'prefix' => $defaultCurrency->getSign(),
+            ],
+            'registration' => [
+                'title' => $this->trans('Registered', [], 'Modules.Gamifications.Admin'),
+                'type' => 'date',
+                'filter_key' => 'c!date_add',
             ],
         ];
     }
