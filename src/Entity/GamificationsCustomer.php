@@ -72,7 +72,7 @@ class GamificationsCustomer extends ObjectModel
         'fields' => [
             'id_customer' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
             'id_shop' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
-            'id_rank' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
+            'id_rank' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
             'total_points' => ['type' => self::TYPE_INT, 'required' => false, 'validate' => 'isUnsignedInt'],
             'spent_points' => ['type' => self::TYPE_INT, 'required' => false, 'validate' => 'isUnsignedInt'],
             'spent_money' => ['type' => self::TYPE_FLOAT, 'required' => false, 'validate' => 'isFloat'],
@@ -113,6 +113,7 @@ class GamificationsCustomer extends ObjectModel
         $gamificationsCustomer->active        = true;
         $gamificationsCustomer->referral_code = strtolower(Tools::passwdGen(16));
         $gamificationsCustomer->id_shop       = (int) $context->shop->id;
+        $gamificationsCustomer->id_rank       = 0;
 
         $created = $gamificationsCustomer->save();
 

@@ -60,11 +60,6 @@ class AdminGamificationsPreferenceController extends GamificationsAdminControlle
             ],
             'activities' => [
                 'title' => $this->trans('Activity preferences', [], 'Modules.Gamifications.Admin'),
-                'description' => $this->trans(
-                    'Configure activity before enabling it to avoid customers dissatisfaction',
-                    [],
-                    'Modules.Gamifications.Admin'
-                ),
                 'fields' => [
                     GamificationsConfig::DAILY_REWARDS_STATUS => [
                         'title' => $this->trans('Enable Daily Rewards', [], 'Modules.Gamifications.Admin'),
