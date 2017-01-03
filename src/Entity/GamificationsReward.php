@@ -220,4 +220,51 @@ class GamificationsReward extends ObjectModel
             self::REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS,
         ];
     }
+
+    /**
+     * Custom delete
+     *
+     * @return bool
+     */
+    public function delete()
+    {
+        if (!$this->canDelete()) {
+            $module = Module::getInstanceByName('gamifications');
+            $translator = $module->getTranslator();
+
+            $controller = Context::getContext()->controller;
+            $controller->errors[] =
+                $translator->trans('Reward is in use, it can not be deleted.', [], 'Modules.Gamifications.Admin');
+            $controller->warnings[] = $translator->trans(
+                'Reward cannot be delete if it is used in activity or points exchange.',
+                [],
+                'Modules.Gamifications.Admin'
+            );
+            return false;
+        }
+
+        return parent::delete();
+    }
+
+    /**
+     * Check if reward can be deleted
+     *
+     * @return bool
+     */
+    protected function canDelete()
+    {
+        if (!Validate::isLoadedObject($this)) {
+            return true;
+        }
+
+        /** @var Gamifications $module */
+        $module = Module::getInstanceByName('gamifications');
+        $em = $module->getEntityManager();
+
+        /** @var GamificationsRewardRepository $rewardRepository */
+        $rewardRepository = $em->getRepository(__CLASS__);
+        $isInUse = $rewardRepository->isRewardInUse($this->id);
+
+        return !$isInUse;
+    }
 }

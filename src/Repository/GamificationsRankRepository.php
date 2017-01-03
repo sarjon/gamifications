@@ -10,21 +10,8 @@
 /**
  * Class GamificationsRankRepository
  */
-class GamificationsRankRepository
+class GamificationsRankRepository extends GamificationsAbstractRepository
 {
-    /**
-     * @var Db
-     */
-    private $db;
-
-    /**
-     * GamificationsRankRepository constructor.
-     */
-    public function __construct()
-    {
-        $this->db = Db::getInstance();
-    }
-
     /**
      * Find all currently used groups
      *

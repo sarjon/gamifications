@@ -7,12 +7,10 @@
  * @license   Addons PrestaShop license limitation
  */
 
-use PrestaShop\PrestaShop\Core\Foundation\Database\EntityRepository;
-
 /**
  * Class GamificationsRewardRepository
  */
-class GamificationsRewardRepository extends EntityRepository
+class GamificationsRewardRepository extends GamificationsAbstractRepository
 {
     /**
      * Find all rewards by given language id
@@ -27,24 +25,69 @@ class GamificationsRewardRepository extends EntityRepository
     {
         $sql = '
             SELECT gr.`id_gamifications_reward`, grl.`name`
-            FROM `'.$this->getPrefix().'gamifications_reward` gr
-            LEFT JOIN `'.$this->getPrefix().'gamifications_reward_lang` grl
+            FROM `'._DB_PREFIX_.'gamifications_reward` gr
+            LEFT JOIN `'._DB_PREFIX_.'gamifications_reward_lang` grl
                 ON grl.`id_gamifications_reward` = gr.`id_gamifications_reward`
-            LEFT JOIN `'.$this->getPrefix().'gamifications_reward_shop` grs
+            LEFT JOIN `'._DB_PREFIX_.'gamifications_reward_shop` grs
                 ON grs.`id_gamifications_reward` = grl.`id_gamifications_reward`
             WHERE grl.`id_lang` = '.(int)$idLang.'
-                AND grs.`id_shop` = '.(int)$idShop.'
-                '.(!empty($exludeRewardTypes) ?
+                AND grs.`id_shop` = '.(int)$idShop.
+                (!empty($exludeRewardTypes) ?
                 ' AND gr.`reward_type` NOT IN ('.implode(',', array_map('intval', $exludeRewardTypes)).')' :
                 ''
             );
 
-        $results = $this->db->select($sql);
+        $results = $this->db->executeS($sql);
 
         if (!$results || !is_array($results)) {
             return [];
         }
 
         return $results;
+    }
+
+    /**
+     * Check if reward is in use (in activities, in points exchange)
+     *
+     * @param int $idReward
+     *
+     * @return int
+     */
+    public function isRewardInUse($idReward)
+    {
+        $count = 0;
+        $sqls = [];
+
+        $sqls[] = '
+            SELECT COUNT(pe.`id_reward`)
+            FROM `'._DB_PREFIX_.'gamifications_point_exchange` pe
+            WHERE pe.`id_reward` = '.(int)$idReward.'
+        ';
+
+        $sqls[] = '
+            SELECT COUNT(dr.`id_reward`)
+            FROM `'._DB_PREFIX_.'gamifications_daily_reward` dr
+            WHERE dr.`id_reward` = '.(int)$idReward.'
+        ';
+
+        foreach ($sqls as $sql) {
+            $value = $this->db->getValue($sql);
+
+            if (is_numeric($value)) {
+                $count += (int) $value;
+            }
+        }
+
+
+        $referralReward = (int) Configuration::get(GamificationsConfig::REFERRAL_REWARD);
+        $newCustomerReward = (int) Configuration::get(GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD);
+
+        $idsRewards = [$referralReward, $newCustomerReward];
+
+        if (in_array($idReward, $idsRewards)) {
+            $count++;
+        }
+
+        return (bool) $count;
     }
 }
