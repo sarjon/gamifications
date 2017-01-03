@@ -196,7 +196,9 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
                             [],
                             'Modules.Gamifications.Admin'
                         ),
-                    'class' => 'fixed-width-xl'
+                    'class' => 'fixed-width-xl',
+                    'desc' =>
+                        $this->trans('Recommended boost is between 1 and 100.', [], 'Modules.Gamifications.Admin'),
                 ],
                 [
                     'label' => $this->trans('Enabled', [], 'Modules.Gamifications.Admin'),

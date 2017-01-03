@@ -260,7 +260,7 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                                 'id' => GamificationsReward::DISCOUNT_REDUCTION_AMOUNT,
                                 'name' => $this->trans(
                                     'Amount (%currency%)',
-                                    ['%currency%' => $defaultCurrency->sign],
+                                    ['%currency%' => $defaultCurrency->iso_code],
                                     'Modules.Gamifications.Admin'
                                 ),
                             ],
@@ -273,7 +273,7 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                     'name' => 'discount_value',
                     'hint' => $this->trans(
                         'Percent (%) or amount (%currency%)',
-                        ['%currency%' => $defaultCurrency->sign],
+                        ['%currency%' => $defaultCurrency->iso_code],
                         'Modules.Gamifications.Admin'
                     ),
                     'class' => 'fixed-width-sm',

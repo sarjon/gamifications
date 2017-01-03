@@ -102,7 +102,7 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
 
         return [
             [
-                'name' => $translator->trans('Gamification', [], 'Modules.Gamifications.Admin'),
+                'name' => $translator->trans('Gamifications', [], 'Modules.Gamifications.Admin'),
                 'parent' => 'IMPROVE',
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
             ],
@@ -135,11 +135,6 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
                 'name' => $translator->trans('Shopping points', [], 'Modules.Gamifications.Admin'),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_SHOPPING_POINT_CONTROLLER,
-            ],
-            [
-                'name' => $translator->trans('Customer ranking', [], 'Modules.Gamifications.Admin'),
-                'parent' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER,
-                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_RANKING_CONTROLLER,
             ],
             [
                 'name' => $translator->trans('Statistics', [], 'Modules.Gamifications.Admin'),
@@ -184,7 +179,6 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
             'actionObjectOrderUpdateAfter',
             'displayReassurance',
             'actionObjectCustomerDeleteAfter',
-            'gamificationsActionSpendPoints',
         ];
 
         foreach ($hooks as $hookName) {

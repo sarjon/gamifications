@@ -107,8 +107,6 @@ class GamificationsExchangePointsModuleFrontController extends GamificationsFron
         $this->gamificationCustomer->addSpentPoints($pointsExchangeReward->points);
         $this->gamificationCustomer->save();
 
-        Hook::exec('gamificationsActionSpendPoints', ['gamifications_customer' => $this->gamificationCustomer]);
-
         $rewardHandler = new GamificationsRewardHandler();
         $result = $rewardHandler
             ->handleCustomerReward($reward, $this->gamificationCustomer, GamificationsActivity::TYPE_POINT_EXCHANGE);

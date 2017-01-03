@@ -26,7 +26,6 @@ class GamificationsConfig
     const SHOPPING_POINTS_RATIO = 'GAMIFICATIONS_SHOPPING_POINTS_RATIO';
     const SHOPPING_POINTS_ORDER_STATES = 'GAMIFICATIONS_SHOPPING_POINTS_ORDER_STATES';
     const SHOPPING_POINTS_INCLUDE_SHIPPNG_PRICE = 'GAMIFICATIONS_SHOPPING_POINTS_INCLUDE_SHIPPNG_PRICE';
-    const CUSTOMER_RANKING_STATUS = 'GAMIFICATIONS_CUSTOMER_RANKING_STATUS';
 
     const DISPLAY_HELP = 'GAMIFICATIONS_DISPLAY_HELP';
     const FRONT_OFFICE_TITLE = 'GAMIFICATIONS_FRONT_OFFICE_TITLE';
@@ -41,7 +40,7 @@ class GamificationsConfig
         $frontOfficeTitle = [];
 
         foreach (Language::getIDs() as $idLang) {
-            $frontOfficeTitle[$idLang] = 'Loyality program';
+            $frontOfficeTitle[$idLang] = 'Loyalty program';
         }
 
         return [
@@ -56,7 +55,8 @@ class GamificationsConfig
             self::SHOPPING_POINTS_ORDER_STATES => json_encode([]),
             self::SHOPPING_POINTS_RATIO => 1,
             self::SHOPPING_POINTS_INCLUDE_SHIPPNG_PRICE => 1,
-            self::CUSTOMER_RANKING_STATUS => 0,
+            self::REFERRAL_NEW_CUSTOMER_REWARD => 0,
+            self::REFERRAL_REWARD => 0,
         ];
     }
 }
