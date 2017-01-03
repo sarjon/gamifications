@@ -37,6 +37,11 @@ class GamificationsCustomer extends ObjectModel
      */
     public $spent_points = 0;
 
+    /**
+     * @var float
+     */
+    public $spent_money = 0.0;
+
     //@todo: implement active
     /**
      * @var bool
@@ -70,6 +75,7 @@ class GamificationsCustomer extends ObjectModel
             'id_rank' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
             'total_points' => ['type' => self::TYPE_INT, 'required' => false, 'validate' => 'isUnsignedInt'],
             'spent_points' => ['type' => self::TYPE_INT, 'required' => false, 'validate' => 'isUnsignedInt'],
+            'spent_money' => ['type' => self::TYPE_FLOAT, 'required' => false, 'validate' => 'isFloat'],
             'referral_code' => ['type' => self::TYPE_STRING, 'required' => false, 'validate' => 'isString'],
             'date_add' => ['type' => self::TYPE_DATE, 'required' => false, 'validate' => 'isDate'],
             'date_upd' => ['type' => self::TYPE_DATE, 'required' => false, 'validate' => 'isDate'],
@@ -99,13 +105,14 @@ class GamificationsCustomer extends ObjectModel
     {
         $context = Context::getContext();
 
-        $gamificationsCustomer = new GamificationsCustomer();
-        $gamificationsCustomer->total_points = 0;
-        $gamificationsCustomer->spent_points = 0;
-        $gamificationsCustomer->id_customer = (int) $customer->id;
-        $gamificationsCustomer->active = true;
+        $gamificationsCustomer                = new GamificationsCustomer();
+        $gamificationsCustomer->total_points  = 0;
+        $gamificationsCustomer->spent_points  = 0;
+        $gamificationsCustomer->spent_money   = 0.0;
+        $gamificationsCustomer->id_customer   = (int) $customer->id;
+        $gamificationsCustomer->active        = true;
         $gamificationsCustomer->referral_code = strtolower(Tools::passwdGen(16));
-        $gamificationsCustomer->id_shop = (int) $context->shop->id;
+        $gamificationsCustomer->id_shop       = (int) $context->shop->id;
 
         $created = $gamificationsCustomer->save();
 
@@ -199,5 +206,24 @@ class GamificationsCustomer extends ObjectModel
     public function checkExchangePoints(GamificationsPointExchange $pointsExchangeReward)
     {
         return $pointsExchangeReward->points <= $this->total_points;
+    }
+
+    /**
+     * Add spent money
+     *
+     * @param float $money
+     * @param bool $commit
+     *
+     * @return $this
+     */
+    public function addSpentMoney($money, $commit = true)
+    {
+        $this->spent_money = (float) $this->spent_money + (float) $money;
+
+        if ($commit) {
+            $this->save();
+        }
+
+        return $this;
     }
 }

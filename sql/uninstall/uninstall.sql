@@ -12,3 +12,5 @@ DROP TABLE IF EXISTS `PREFIX_gamifications_activity_history`;
 DROP TABLE IF EXISTS `PREFIX_gamifications_rank`;
 DROP TABLE IF EXISTS `PREFIX_gamifications_rank_lang`;
 DROP TABLE IF EXISTS `PREFIX_gamifications_rank_order`;
+DROP TABLE IF EXISTS `PREFIX_gamifications_referral`;
+DROP TABLE IF EXISTS `PREFIX_gamifications_shopping_point`;

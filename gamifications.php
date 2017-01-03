@@ -306,8 +306,8 @@ class Gamifications extends Module
             return;
         }
 
-        $rankActivity = new GamificationsRankActivity();
-        $rankActivity->process($order, $create);
+        $rankActivity = new GamificationsRankActivity($this->getEntityManager());
+        $rankActivity->processOrder($order, $create);
 
         $hasProcessed[$orderKey] = true;
     }

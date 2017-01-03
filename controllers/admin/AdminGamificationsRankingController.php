@@ -37,7 +37,7 @@ class AdminGamificationsRankingController extends GamificationsAdminController
         if (empty($this->display)) {
             $this->page_header_toolbar_btn['new_rank'] = [
                 'href' => self::$currentIndex.'&addgamifications_rank&token='.$this->token,
-                'desc' => $this->trans('Add new Customer Rank'),
+                'desc' => $this->trans('Add new Customer Rank', [], 'Modules.Gamifications.Admin'),
                 'icon' => 'process-icon-new',
             ];
         }
@@ -52,9 +52,29 @@ class AdminGamificationsRankingController extends GamificationsAdminController
      */
     public function renderList()
     {
+        $this->_select = 'rl.`name` AS `parent_name`';
+
+        $this->_join = '
+            LEFT JOIN `'._DB_PREFIX_.'gamifications_rank_lang` rl
+                ON rl.`id_gamifications_rank` = a.`id_parent`
+                    AND rl.`id_lang` = '.(int)$this->context->language->id.'
+        ';
+
         $this->_where = 'AND a.`id_shop` = '.(int)$this->context->shop->id;
 
         return parent::renderList();
+    }
+
+    public function postProcess()
+    {
+        $parentReturn = parent::postProcess();
+
+        if (!empty($this->errors) && false === $parentReturn) {
+            $this->warnings[] =
+                $this->trans('Make sure your each rank has unique parent rank!', [], 'Modules.Gamifications.Admin');
+        }
+
+        return $parentReturn;
     }
 
     /**
@@ -76,6 +96,11 @@ class AdminGamificationsRankingController extends GamificationsAdminController
             'name' => [
                 'title' => $this->trans('Rank name', [], 'Modules.Gamifications.Admin'),
                 'type' => 'text',
+            ],
+            'parent_name' => [
+                'title' => $this->trans('Parent rank name', [], 'Modules.Gamifications.Admin'),
+                'type' => 'text',
+                'filter_key' => 'rl!name',
             ],
             'must_spend_money' => [
                 'title' => $this->trans('Must spend money', [], 'Modules.Gamifications.Admin'),
@@ -175,6 +200,22 @@ class AdminGamificationsRankingController extends GamificationsAdminController
                     ],
                 ],
                 [
+                    'label' => $this->trans('Parent rank', [], 'Modules.Gamifications.Admin'),
+                    'hint' => $this->trans(
+                        'Current rank goes after parent rank. E.g. Bronze (Parent rank) -> Silver (Current rank)',
+                        [],
+                        'Modules.Gamifications.Admin'
+                    ),
+                    'type' => 'select',
+                    'name' => 'id_parent',
+                    'options' => [
+                        'id' => 'id_gamifications_rank',
+                        'name' => 'name',
+                        'query' => $this->getAvailableParentRanks(),
+                    ],
+                    'required' => true,
+                ],
+                [
                     'type' => 'hidden',
                     'name' => 'id_shop',
                 ],
@@ -216,5 +257,32 @@ class AdminGamificationsRankingController extends GamificationsAdminController
         }
 
         return $groups;
+    }
+
+    /**
+     * Get available parent ranks
+     *
+     * @return array
+     */
+    public function getAvailableParentRanks()
+    {
+        $excludeIds = [];
+        if ('edit' == $this->display) {
+            $excludeIds[] = $this->object->id;
+        }
+
+        $idShop = $this->context->shop->id;
+        $idLang = $this->context->language->id;
+
+        /** @var GamificationsRankRepository $rankRepository */
+        $rankRepository = $this->module->getEntityManager()->getRepository('GamificationsRank');
+        $ranks = $rankRepository->findAllIdsAndNames($idShop, $idLang, $excludeIds);
+
+        $ranks[] = [
+            'name' => $this->trans('none', [], 'Modules.Gamifications.Admin'),
+            'id_gamifications_rank' => 0,
+        ];
+
+        return $ranks;
     }
 }

@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS `PREFIX_gamifications_rank` (
   `id_gamifications_rank` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_group` INT(11) UNSIGNED NOT NULL,
   `id_shop` INT(11) UNSIGNED NOT NULL,
+  `id_parent` INT(11) UNSIGNED NOT NULL UNIQUE,
   `must_spend_points` INT(11) UNSIGNED NOT NULL,
   `must_spend_money` DECIMAL(17, 2) UNSIGNED NOT NULL,
   `date_add` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -28,6 +28,11 @@ class GamificationsRank extends ObjectModel
     public $id_shop;
 
     /**
+     * @var int Reference to parent rank
+     */
+    public $id_parent;
+
+    /**
      * @var float
      */
     public $must_spend_money;
@@ -57,6 +62,7 @@ class GamificationsRank extends ObjectModel
             'name' => ['type' => self::TYPE_STRING, 'required' => true, 'validate' => 'isGenericName', 'lang' => true],
             'id_group' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedId'],
             'id_shop' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedId'],
+            'id_parent' => ['type' => self::TYPE_INT, 'required' => false, 'validate' => 'isUnsignedId'],
             'must_spend_money' => ['type' => self::TYPE_FLOAT, 'required' => true, 'validate' => 'isFloat'],
             'must_spend_points' => ['type' => self::TYPE_INT, 'required' => true, 'validate' => 'isUnsignedInt'],
             'date_add' => ['type' => self::TYPE_DATE, 'required' => false, 'validate' => 'isDate'],
@@ -89,5 +95,23 @@ class GamificationsRank extends ObjectModel
         ];
 
         Db::getInstance()->insert('gamifications_rank_order', $insert);
+    }
+
+    /**
+     * Mark order as completed (porcessed) in Customers ranking activity
+     *
+     * @param Order $order
+     */
+    public static function completeRankOrder(Order $order)
+    {
+        $update = [
+            'active' => 0,
+        ];
+
+        Db::getInstance()->update(
+            'gamifications_rank_order',
+            $update,
+            'id_customer = '.(int)$order->id_customer.' AND id_order = '.(int)$order->id
+        );
     }
 }
