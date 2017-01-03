@@ -64,7 +64,7 @@ class Gamifications extends Module
         $this->displayName = $this->trans('Gamification', [], 'Modules.Gamifications');
         $this->description = $this->trans(
             'Increase customers loyality by adding various activities to your shop! 
-             Daily rewards, challanges, points, gifts & more!',
+             Daily rewards, referral program, points, gifts & more!',
             [],
             'Modules.Gamifications'
         );

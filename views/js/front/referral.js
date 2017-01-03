@@ -1,3 +1,11 @@
+/**
+ * This file is part of the Gamifications module.
+ *
+ * @author    Sarunas Jonusas, <jonusas.sarunas@gmail.com>
+ * @copyright Copyright (c) permanent, Sarunas Jonusas
+ * @license   Addons PrestaShop license limitation
+ */
+
 (function() {
     var referralUrl = document.querySelector('.js-gamifications-referral-url-copy');
 

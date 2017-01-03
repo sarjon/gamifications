@@ -113,7 +113,8 @@ class AdminGamificationsShoppingPointController extends GamificationsAdminContro
                     'type' => 'swap',
                     'label' => $this->trans('Order states', [], 'Modules.Gamifications.Admin'),
                     'hint' => $this->trans(
-                        'Give points after order state is one of selected. If no orders states are selected then points will be given after placing an order.',
+                        'Give points after order state is one of selected. 
+                        If no orders states are selected then points will be given after placing an order.',
                         [],
                         'Modules.Gamifications.Admin'
                     ),

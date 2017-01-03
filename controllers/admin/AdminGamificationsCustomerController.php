@@ -24,7 +24,7 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
     {
         $this->className = 'GamificationsCustomer';
         $this->table = GamificationsCustomer::$definition['table'];
-        $this->identifier = GamificationsCustomer::$definition['primary'];;
+        $this->identifier = GamificationsCustomer::$definition['primary'];
 
         parent::__construct();
     }

@@ -129,7 +129,7 @@ class GamificationsRewardHandler
         if (GamificationsReward::REWARD_TYPE_DISCOUNT == $rewardType) {
             $this->configureDiscount($voucher, $reward);
         } elseif (GamificationsReward::REWARD_TYPE_FREE_SHIPPING == $rewardType) {
-            $this->configureFreeShipping($voucher, $reward);
+            $this->configureFreeShipping($voucher);
         } elseif (GamificationsReward::REWARD_TYPE_GIFT == $rewardType) {
             $this->configureGift($voucher, $reward);
         }
@@ -161,9 +161,8 @@ class GamificationsRewardHandler
      * Configure free shipping data from reward
      *
      * @param CartRule $voucher
-     * @param GamificationsReward $reward
      */
-    protected function configureFreeShipping(CartRule &$voucher, GamificationsReward $reward)
+    protected function configureFreeShipping(CartRule &$voucher)
     {
         $voucher->free_shipping = true;
     }
