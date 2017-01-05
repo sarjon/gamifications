@@ -153,4 +153,14 @@ class AdminGamificationsShoppingPointController extends GamificationsAdminContro
             ],
         ];
     }
+
+    /**
+     * Display help panel
+     */
+    protected function displayHelp()
+    {
+        return $this->context->smarty->fetch(
+            $this->module->getLocalPath().'views/templates/admin/shopping_points_info.tpl'
+        );
+    }
 }

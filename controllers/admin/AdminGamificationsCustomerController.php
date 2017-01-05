@@ -145,11 +145,6 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
                 'title' => $this->trans('Spent points', [], 'Modules.Gamifications.Admin'),
                 'align' => 'center',
             ],
-            'spent_money' => [
-                'title' => $this->trans('Spent money', [], 'Modules.Gamifications.Admin'),
-                'align' => 'center',
-                'prefix' => $defaultCurrency->getSign(),
-            ],
             'registration' => [
                 'title' => $this->trans('Registered', [], 'Modules.Gamifications.Admin'),
                 'type' => 'date',
@@ -219,9 +214,9 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
         $customer = new Customer($this->object->id_customer);
 
         $this->fields_value = [
-            'email' => $customer->email,
+            'email'      => $customer->email,
             'first_name' => $customer->firstname,
-            'last_name' => $customer->lastname,
+            'last_name'  => $customer->lastname,
         ];
     }
 }

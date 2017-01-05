@@ -209,6 +209,20 @@ class AdminGamificationsReferralController extends GamificationsAdminController
         $rewardRepository = $this->module->getEntityManager()->getRepository('GamificationsReward');
         $rewards = $rewardRepository->findAllNamesAndIds($idLang, $idShop);
 
+        if (empty($rewards)) {
+            $rewards[] = [
+                'id_gamifications_reward' => 0,
+                'name' => $this->trans('No available rewards', [], 'Modules.Gamifications.Admin'),
+            ];
+        } else {
+            $noReward = [
+                'id_gamifications_reward' => 0,
+                'name' => $this->trans('No reward', [], 'Modules.Gamifications.Admin'),
+            ];
+
+            array_unshift($rewards, $noReward);
+        }
+
         return $rewards;
     }
 

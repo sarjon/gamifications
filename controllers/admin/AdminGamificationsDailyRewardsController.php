@@ -170,6 +170,13 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
         $availableRewards =
             $rewardRepository->findAllNamesAndIds($this->context->language->id, $this->context->shop->id);
 
+        if (empty($availableRewards)) {
+            $availableRewards[] = [
+                'id_gamifications_reward' => '',
+                'name' => $this->trans('No available rewards', [], 'Modules.Gamifications.Admin'),
+            ];
+        }
+
         $this->fields_form = [
             'legend' => [
                 'title' => $this->trans('Daily reward', [], 'Modules.Gamifications.Admin'),
@@ -177,6 +184,11 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
             'input' => [
                 [
                     'label' => $this->trans('Choose reward', [], 'Modules.Gamifications.Admin'),
+                    'hint' => $this->trans(
+                        'Choose reward that customer will have a chance to get.',
+                        [],
+                        'Modules.Gamifications.Admin'
+                    ),
                     'type' => 'select',
                     'name' => 'id_reward',
                     'required' => true,
@@ -197,8 +209,11 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
                             'Modules.Gamifications.Admin'
                         ),
                     'class' => 'fixed-width-xl',
-                    'desc' =>
-                        $this->trans('Recommended boost is between 1 and 100.', [], 'Modules.Gamifications.Admin'),
+                    'desc' => $this->trans(
+                        'Recommended boost is between 1 (less chance to get) and 100 (more chance to get).',
+                        [],
+                        'Modules.Gamifications.Admin'
+                    ),
                 ],
                 [
                     'label' => $this->trans('Enabled', [], 'Modules.Gamifications.Admin'),

@@ -18,7 +18,9 @@
             <p>{l s='If you have any questions don\'t hesitate to ask.' d='Modules.Gamifications.Admin'}</p>
             <p>
                 {l s='You can contact me at' d='Modules.Gamifications.Admin'}
-                <a href="mailto:jonusas.sarunas@gmail.com">jonusas.sarunas@gmail.com</a>.
+                <a href="mailto:jonusas.sarunas@gmail.com">jonusas.sarunas@gmail.com</a>
+                {l s='or via Skype' d='Modules.Gamifications.Admin'}
+                <a href="skype:kleare.">.kleare</a>
             </p>
         </div>
 

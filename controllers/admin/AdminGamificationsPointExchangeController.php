@@ -157,6 +157,13 @@ class AdminGamificationsPointExchangeController extends GamificationsAdminContro
             $excludePointRewards
         );
 
+        if (empty($availableRewards)) {
+            $availableRewards[] = [
+                'id_gamifications_reward' => '',
+                'name' => $this->trans('No available rewards', [], 'Modules.Gamifications.Admin'),
+            ];
+        }
+
         $this->fields_form = [
             'legend' => [
                 'title' => $this->trans('Points exchange', [], 'Modules.Gamifications.Admin'),
@@ -177,7 +184,7 @@ class AdminGamificationsPointExchangeController extends GamificationsAdminContro
                     'type' => 'select',
                     'name' => 'id_reward',
                     'hint' => $this->trans(
-                        'List of availabhe rewards. NOTE: You cannot exchange points into points.',
+                        'List of available rewards. NOTE: You cannot exchange points into points.',
                         [],
                         'Modules.Gamifications.Admin'
                     ),
