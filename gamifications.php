@@ -55,6 +55,7 @@ class Gamifications extends Module
         $this->version = '1.0.0';
         $this->need_instance = 0;
         $this->controllers = [self::FRONT_LOYALITY_CONTROLLER, self::FRONT_EXCHANGE_POINTS_CONTROLLER];
+        $this->module_key = '03cb08b86e98167eccdc0b2c9dcd2084';
 
         parent::__construct();
 
