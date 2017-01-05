@@ -113,7 +113,6 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
     protected function initList()
     {
         $this->addRowAction('edit');
-        $defaultCurrency = Currency::getDefaultCurrency();
 
         $this->fields_list = [
             GamificationsCustomer::$definition['primary'] => [
