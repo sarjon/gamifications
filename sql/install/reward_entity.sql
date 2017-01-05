@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS `PREFIX_gamifications_reward` (
-  `id_gamifications_reward` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_gamifications_reward` INT(11) UNSIGNED AUTO_INCREMENT,
   `reward_type` VARCHAR(50) NOT NULL,
   `points` INT(11) UNSIGNED NOT NULL DEFAULT 0,
   `radius` INT(11) UNSIGNED NOT NULL DEFAULT 0,

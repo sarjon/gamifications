@@ -46,7 +46,7 @@ class GamificationsDbInstaller
             $sqlStatements = $this->getSqlStatements($sqlFile);
 
             if (!$this->execute($sqlStatements)) {
-                return false;
+                throw new Exception(sprintf('Invalid SQL statements in file: %s', $sqlFile));
             }
         }
 
@@ -82,7 +82,7 @@ class GamificationsDbInstaller
         try {
             $result = Db::getInstance()->execute($sqlStatements);
         } catch (Exception $e) {
-            throw new Exception('Invalid SQL statements.');
+            return false;
         }
 
         return (bool) $result;

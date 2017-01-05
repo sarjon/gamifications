@@ -1,11 +1,11 @@
 CREATE TABLE IF NOT EXISTS `PREFIX_gamifications_point_exchange` (
-  `id_gamifications_point_exchange` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_gamifications_point_exchange` INT(11) UNSIGNED AUTO_INCREMENT,
   `id_reward` INT(11) UNSIGNED NOT NULL,
   `points` INT(11) UNSIGNED NOT NULL,
   `times_exchanged` INT(11) UNSIGNED NOT NULL DEFAULT 0,
   `active` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
-  `date_add` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_upd` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_add` DATETIME NOT NULL,
+  `date_upd` DATETIME NOT NULL,
   PRIMARY KEY (`id_gamifications_point_exchange`, `id_reward`)
 ) ENGINE=ENGINE_TYPE DEFAULT CHARSET=utf8;
 

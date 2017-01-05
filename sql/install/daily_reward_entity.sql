@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS `PREFIX_gamifications_daily_reward` (
-  `id_gamifications_daily_reward` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_gamifications_daily_reward` INT(11) UNSIGNED AUTO_INCREMENT,
   `id_reward` INT(11) UNSIGNED NOT NULL,
   `boost` INT(11) UNSIGNED NOT NULL,
   `active` TINYINT(1) UNSIGNED NOT NULL,

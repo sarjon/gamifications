@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS `PREFIX_gamifications_shopping_point` (
-  `id_gamifications_shopping_point` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_gamifications_shopping_point` INT(11) AUTO_INCREMENT,
   `id_customer` INT(11) UNSIGNED NOT NULL,
   `id_order` INT(11) UNSIGNED NOT NULL,
   `id_shop` INT(11) UNSIGNED NOT NULL,
