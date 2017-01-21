@@ -148,13 +148,11 @@ class GamificationsReferralProgramActivity
         }
 
         $context = Context::getContext();
-        $translator = $context->getTranslator();
 
-        $context->controller->success[] = $translator->trans(
-            'You received a referral program reward! To check it out, go to your account page',
-            [],
-            'Modules.Gamifications.Shop'
-        );
+        $module = Module::getInstanceByName('gamifications');
+
+        $context->controller->success[] =
+            $module->l('You received a referral program reward! To check it out, go to your account page', __CLASS__);
 
         return true;
     }

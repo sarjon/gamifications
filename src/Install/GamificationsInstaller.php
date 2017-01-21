@@ -98,66 +98,64 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
      */
     protected function tabs()
     {
-        $translator = $this->module->getTranslator();
-
         return [
             [
-                'name' => $translator->trans('Gamifications', [], 'Modules.Gamifications.Admin'),
+                'name' => $this->module->l('Gamifications', __CLASS__),
                 'parent' => 'IMPROVE',
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
             ],
             [
-                'name' => $translator->trans('Rewards', [], 'Modules.Gamifications.Admin'),
+                'name' => $this->module->l('Rewards', __CLASS__),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_REWARD_CONTROLLER,
             ],
             [
-                'name' => $translator->trans('Points exchange', [], 'Modules.Gamifications.Admin'),
+                'name' => $this->module->l('Points exchange', __CLASS__),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_POINT_EXCHANGE_CONTROLLER,
             ],
             [
-                'name' => $translator->trans('Loyality', [], 'Modules.Gamifications.Admin'),
+                'name' => $this->module->l('Loyality', __CLASS__),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER,
             ],
             [
-                'name' => $translator->trans('Daily rewards', [], 'Modules.Gamifications.Admin'),
+                'name' => $this->module->l('Daily rewards', __CLASS__),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_DAILY_REWARDS_CONTROLLER,
             ],
             [
-                'name' => $translator->trans('Referral program', [], 'Modules.Gamifications.Admin'),
+                'name' => $this->module->l('Referral program', __CLASS__),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_REFERRAL_CONTROLLER,
             ],
             [
-                'name' => $translator->trans('Shopping points', [], 'Modules.Gamifications.Admin'),
+                'name' => $this->module->l('Shopping points', __CLASS__),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_SHOPPING_POINT_CONTROLLER,
             ],
             [
-                'name' => $translator->trans('Statistics', [], 'Modules.Gamifications.Admin'),
+                'name' => $this->module->l('Statistics', __CLASS__),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_STATS_CONTROLLER,
             ],
             [
-                'name' => $translator->trans('Customers', [], 'Modules.Gamifications.Admin'),
+                'name' => $this->module->l('Customers', __CLASS__),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_STATS_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_CUSTOMER_CONTROLLER,
             ],
             [
-                'name' => $translator->trans('Activities history', [], 'Modules.Gamifications.Admin'),
+                'name' => $this->module->l('Activities history', __CLASS__),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_STATS_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_HISTORY_CONTROLLER,
             ],
             [
-                'name' => $translator->trans('Preferences', [], 'Modules.Gamifications.Admin'),
+                'name' => $this->module->l('Preferences', __CLASS__),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_PREFERENCE_CONTROLLER,
             ],
             [
-                'name' => $translator->trans('About', [], 'Modules.Gamifications.Admin'),
+                'name' => $this->module->l('About', __CLASS__),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_ABOUT_CONTROLLER,
             ],

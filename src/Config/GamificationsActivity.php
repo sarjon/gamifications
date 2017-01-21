@@ -38,15 +38,13 @@ class GamificationsActivity
     public static function getActivityTypeTranslations($activityType = null)
     {
         $module = Module::getInstanceByName('gamifications');
-        $translator = $module->getTranslator();
 
         $translations = [
-            self::TYPE_DAILY_REWARD => $translator->trans('Daily Rewards', [], 'Modules.Gamifications.Admin'),
-            self::TYPE_POINT_EXCHANGE => $translator->trans('Points Exchange', [], 'Modules.Gamifications.Admin'),
-            self::TYPE_REFERRAL_PROGRAM => $translator->trans('Referral program', [], 'Modules.Gamifications.Admin'),
-            self::TYPE_SHOPPING_POINT => $translator->trans('Shopping points', [], 'Modules.Gamifications.Admin'),
-            self::TYPE_MANUALLY_ADDED_POINTS =>
-                $translator->trans('Manually added points', [], 'Modules.Gamifications.Admin'),
+            self::TYPE_DAILY_REWARD =>          $module->l('Daily Rewards', __CLASS__),
+            self::TYPE_POINT_EXCHANGE =>        $module->l('Points Exchange', __CLASS__),
+            self::TYPE_REFERRAL_PROGRAM =>      $module->l('Referral program', __CLASS__),
+            self::TYPE_SHOPPING_POINT =>        $module->l('Shopping points', __CLASS__),
+            self::TYPE_MANUALLY_ADDED_POINTS => $module->l('Manually added points', __CLASS__),
         ];
 
         if (null !== $activityType) {

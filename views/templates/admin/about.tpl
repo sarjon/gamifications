@@ -8,27 +8,27 @@
 
 <div class="panel">
     <div class="panel-heading">
-        {l s='About' d='Modules.Gamifications.Admin'}
+        {l s='About' mod='gamifications'}
     </div>
 
     <div class="panel-body" style="padding: 0;">
         <div>
-            <h2>{l s='About developer' d='Modules.Gamifications.Admin'}</h2>
-            <p>{l s='Hi, I\'m a web developer working with PrestaShop, Symfony, MySQL, JavaScript, Bootstrap and other web technologies.' d='Modules.Gamifications.Admin'}</p>
-            <p>{l s='If you have any questions don\'t hesitate to ask.' d='Modules.Gamifications.Admin'}</p>
+            <h2>{l s='About developer' mod='gamifications'}</h2>
+            <p>{l s='Hi, I\'m a web developer working with PrestaShop, Symfony, MySQL, JavaScript, Bootstrap and other web technologies.' mod='gamifications'}</p>
+            <p>{l s='If you have any questions don\'t hesitate to ask.' mod='gamifications'}</p>
             <p>
-                {l s='You can contact me at' d='Modules.Gamifications.Admin'}
+                {l s='You can contact me at' mod='gamifications'}
                 <a href="mailto:jonusas.sarunas@gmail.com">jonusas.sarunas@gmail.com</a>
-                {l s='or via Skype' d='Modules.Gamifications.Admin'}
+                {l s='or via Skype' mod='gamifications'}
                 <a href="skype:kleare.">.kleare</a>
             </p>
         </div>
 
         <div>
-            <h2>{l s='About module' d='Modules.Gamifications.Admin'}</h2>
-            <p>{l s='This module is intended to help you build customers loyality and increase sales.' d='Modules.Gamifications.Admin'}</p>
-            <p>{l s='It can be extended beyond current functionality. If you have modules like Product reviews or Product comments you can easily integrate those with Gamification to reward customers after writing commets or reviews.' d='Modules.Gamifications.Admin'}</p>
-            <p>{l s='If you need any help or modifications related to Gamification module or PrestaShop itself feel free to cantact me at' d='Modules.Gamifications.Admin'} <a href="mailto:jonusas.sarunas@gmail.com">jonusas.sarunas@gmail.com</a>.</p>
+            <h2>{l s='About module' mod='gamifications'}</h2>
+            <p>{l s='This module is intended to help you build customers loyality and increase sales.' mod='gamifications'}</p>
+            <p>{l s='It can be extended beyond current functionality. If you have modules like Product reviews or Product comments you can easily integrate those with Gamification to reward customers after writing commets or reviews.' mod='gamifications'}</p>
+            <p>{l s='If you need any help or modifications related to Gamification module or PrestaShop itself feel free to cantact me at' mod='gamifications'} <a href="mailto:jonusas.sarunas@gmail.com">jonusas.sarunas@gmail.com</a>.</p>
         </div>
     </div>
 </div>

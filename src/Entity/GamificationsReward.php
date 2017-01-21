@@ -194,15 +194,14 @@ class GamificationsReward extends ObjectModel
      */
     public static function getRewardsTranslations($rewardType = null)
     {
-        $translator = Context::getContext()->getTranslator();
+        $module = Module::getInstanceByName('gamifications');
 
         $translations = [
-            self::REWARD_TYPE_POINTS => $translator->trans('Fixed points', [], 'Modules.Gamifications'),
-            self::REWARD_TYPE_DISCOUNT => $translator->trans('Discount', [], 'Modules.Gamifications'),
-            self::REWARD_TYPE_FREE_SHIPPING => $translator->trans('Free shipping', [], 'Modules.Gamifications'),
-            self::REWARD_TYPE_GIFT => $translator->trans('Gift', [], 'Modules.Gamifications'),
-            self::REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS =>
-                $translator->trans('Random amount of points', [], 'Modules.Gamifications'),
+            self::REWARD_TYPE_POINTS => $module->l('Fixed points', __CLASS__),
+            self::REWARD_TYPE_DISCOUNT => $module->l('Discount', __CLASS__),
+            self::REWARD_TYPE_FREE_SHIPPING => $module->l('Free shipping', __CLASS__),
+            self::REWARD_TYPE_GIFT => $module->l('Gift', __CLASS__),
+            self::REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS => $module->l('Random amount of points', __CLASS__),
         ];
 
         return (null === $rewardType) ? $translations : $translations[$rewardType];
@@ -230,16 +229,11 @@ class GamificationsReward extends ObjectModel
     {
         if (!$this->canDelete()) {
             $module = Module::getInstanceByName('gamifications');
-            $translator = $module->getTranslator();
 
             $controller = Context::getContext()->controller;
-            $controller->errors[] =
-                $translator->trans('Reward is in use, it can not be deleted.', [], 'Modules.Gamifications.Admin');
-            $controller->warnings[] = $translator->trans(
-                'Reward cannot be delete if it is used in activity or points exchange.',
-                [],
-                'Modules.Gamifications.Admin'
-            );
+            $controller->errors[] = $module->l('Reward is in use, it can not be deleted.', __CLASS__);
+            $controller->warnings[] =
+                $module->l('Reward cannot be delete if it is used in activity or points exchange.', __CLASS__);
             return false;
         }
 

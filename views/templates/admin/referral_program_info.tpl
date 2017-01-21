@@ -9,13 +9,13 @@
 <div class="bootstrap">
     <div class="alert alert-info">
         <p>
-            <strong>{l s='What is Referral Program?' d='Modules.Gamifications.Admin'}</strong>
+            <strong>{l s='What is Referral Program?' mod='gamifications'}</strong>
         </p>
         <p>
-            {l s='Referral Program allows customers to invite their friends to your shop.' d='Modules.Gamifications.Admin'}
+            {l s='Referral Program allows customers to invite their friends to your shop.' mod='gamifications'}
         </p>
         <p>
-            {l s='To encourage to place an order you can configure rewards (usually discounts or points) for both referrer customer and invited customer.' d='Modules.Gamifications.Admin'}
+            {l s='To encourage to place an order you can configure rewards (usually discounts or points) for both referrer customer and invited customer.' mod='gamifications'}
         </p>
     </div>
 </div>

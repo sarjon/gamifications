@@ -9,22 +9,22 @@
 <div class="bootstrap">
     <div class="alert alert-info">
         <p>
-            <strong>{l s='What are rewards?' d='Modules.Gamifications.Admin'}</strong>
+            <strong>{l s='What are rewards?' mod='gamifications'}</strong>
         </p>
         <p>
-            {l s='Rewards are something that customer will get after completing or accomplishing some kind of task/challange.' d='Modules.Gamifications.Admin'}
+            {l s='Rewards are something that customer will get after completing or accomplishing some kind of task/challange.' mod='gamifications'}
         </p>
         <p>
-            {l s='All rewards (except points) will be provided in form of voucher.' d='Modules.Gamifications.Admin'}
+            {l s='All rewards (except points) will be provided in form of voucher.' mod='gamifications'}
         </p>
         <p>
-            {l s='Rewards can later be assigned to any activity or points exchange!' d='Modules.Gamifications.Admin'}
+            {l s='Rewards can later be assigned to any activity or points exchange!' mod='gamifications'}
         </p>
         <p>
-            <strong>{l s='How to use rewards?' d='Modules.Gamifications.Admin'}</strong>
+            <strong>{l s='How to use rewards?' mod='gamifications'}</strong>
         </p>
         <p>
-            {l s='Create reward and assign it to activity. You can use single reward in multiple activities.' d='Modules.Gamifications.Admin'}
+            {l s='Create reward and assign it to activity. You can use single reward in multiple activities.' mod='gamifications'}
         </p>
     </div>
 </div>

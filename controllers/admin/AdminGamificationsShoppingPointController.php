@@ -48,10 +48,10 @@ class AdminGamificationsShoppingPointController extends GamificationsAdminContro
         }
 
         if (!$success) {
-            $this->errors[] = $this->trans('Failed update', [], 'Modules.Gamifications.Admin');
+            $this->errors[] = $this->l('Failed update');
         }
 
-        $this->confirmations[] = $this->trans('Successful update', [], 'Modules.Gamifications.Admin');
+        $this->confirmations[] = $this->l('Successful update');
     }
 
     /**
@@ -89,35 +89,27 @@ class AdminGamificationsShoppingPointController extends GamificationsAdminContro
 
         $this->fields_form = [
             'legend' => [
-                'title' => $this->trans('Shopping points settings', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Shopping points settings'),
             ],
             'input' => [
                 [
                     'name' => GamificationsConfig::SHOPPING_POINTS_RATIO,
                     'type' => 'text',
-                    'label' => $this->trans('Points ratio', [], 'Modules.Gamifications.Admin'),
-                    'hint' => $this->trans(
-                        'Give X points for every spent %money%. Points are calculated by default currency.',
-                        ['%money%' => $currency->iso_code],
-                        'Modules.Gamifications.Admin'
+                    'label' => $this->l('Points ratio'),
+                    'hint' => sprintf(
+                        $this->l('Give X points for every spent %s. Points are calculated by default currency.'),
+                        $currency->iso_code
                     ),
-                    'suffix' => $this->trans(
-                        'points = for every spent %money%',
-                        ['%money%' => $currency->iso_code],
-                        'Modules.Gamifications.Admin'
-                    ),
-                    'prefix' => $this->trans('Give customer', [], 'Modules.Gamifications.Admin'),
+                    'suffix' => sprintf($this->l('points = for every spent %s'), $currency->iso_code),
+                    'prefix' => $this->l('Give customer'),
                     'class' => 'fixed-width-lg',
                 ],
                 [
                     'type' => 'swap',
-                    'label' => $this->trans('Order states', [], 'Modules.Gamifications.Admin'),
-                    'hint' => $this->trans(
-                        'Give points after order state is one of selected. 
-                        If no orders states are selected then points will be given after placing an order.',
-                        [],
-                        'Modules.Gamifications.Admin'
-                    ),
+                    'label' => $this->l('Order states'),
+                    'hint' =>
+                        $this->l('Give points after order state is one of selected.').' '.
+                        $this->l('If no orders states are selected then points will be given after placing an order.'),
                     'name' => GamificationsConfig::SHOPPING_POINTS_ORDER_STATES,
                     'multiple' => true,
                     'options' => [
@@ -128,13 +120,9 @@ class AdminGamificationsShoppingPointController extends GamificationsAdminContro
                 ],
                 [
                     'type' => 'switch',
-                    'label' => $this->trans('Include shipping price', [], 'Modules.Gamifications.Admin'),
+                    'label' => $this->l('Include shipping price'),
                     'name' => GamificationsConfig::SHOPPING_POINTS_INCLUDE_SHIPPNG_PRICE,
-                    'hint' => $this->trans(
-                        'Enabled to include shipping price when calculating points',
-                        [],
-                        'Modules.Gamifications.Admin'
-                    ),
+                    'hint' => $this->l('Enabled to include shipping price when calculating points'),
                     'is_bool' => true,
                     'values' => [
                         [
@@ -149,7 +137,7 @@ class AdminGamificationsShoppingPointController extends GamificationsAdminContro
                 ],
             ],
             'submit' => [
-                'title' => $this->trans('Save', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Save'),
             ],
         ];
     }

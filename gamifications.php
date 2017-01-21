@@ -62,13 +62,10 @@ class Gamifications extends Module
         $this->requireAutoloader();
 
         $this->ps_versions_compliancy = ['min' => '1.7.0.0', 'max' => _PS_VERSION_];
-        $this->displayName = $this->trans('Gamification: Customers loyalty program', [], 'Modules.Gamifications');
-        $this->description = $this->trans(
-            'Increase customers loyality by adding various activities to your shop! 
-             Daily rewards, referral program, shopping points, gifts & more!',
-            [],
-            'Modules.Gamifications'
-        );
+        $this->displayName = $this->l('Gamification: Customers loyalty program');
+        $this->description =
+            $this->l('Increase customers loyality by adding various activities to your shop!').' '.
+            $this->l('Daily rewards, referral program, shopping points, gifts & more!');
 
         $this->em = $em;
     }

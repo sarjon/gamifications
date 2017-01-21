@@ -35,7 +35,7 @@ abstract class GamificationsFrontController extends ModuleFrontController
         parent::init();
 
         if (!$this->loadGamificationsCustomerObject()) {
-            $this->errors[] = $this->trans('Unexpected error occured', [], 'Modules.Gamifications.Shop');
+            $this->errors[] = $this->l('Unexpected error occured');
             $this->redirectWithNotifications($this->context->link->getPageLink('my-account'));
         }
     }

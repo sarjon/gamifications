@@ -12,6 +12,8 @@
  */
 class GamificationsLoyalityModuleFrontController extends GamificationsFrontController
 {
+    const FILENAME = 'loyality';
+
     public $auth = true;
 
     /**
@@ -87,21 +89,11 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
         $now = new DateTime();
 
         if ($now->format('Y-m-d') === $nextDailyRewardAvailabeAt->format('Y-m-d')) {
-            $nextDailyRewardText = $this->trans(
-                'today at %time%',
-                [
-                    '%time%' => $nextDailyRewardAvailabeAt->format('H:i'),
-                ],
-                'Modules.Gamifications.Shop'
-            );
+            $nextDailyRewardText =
+                sprintf($this->l('today at %s', self::FILENAME), $nextDailyRewardAvailabeAt->format('H:i'));
         } elseif ($now->modify('+1 day')->format('Y-m-d') === $nextDailyRewardAvailabeAt->format('Y-m-d')) {
-            $nextDailyRewardText = $this->trans(
-                'tomorrow at %time%',
-                [
-                    '%time%' => $nextDailyRewardAvailabeAt->format('H:i'),
-                ],
-                'Modules.Gamifications.Shop'
-            );
+            $nextDailyRewardText =
+                sprintf($this->l('tomorrow at %s', self::FILENAME), $nextDailyRewardAvailabeAt->format('H:i'));
         } else {
             $nextDailyRewardText = $nextDailyRewardAvailabeAt->format('Y-m-d H:i');
         }
@@ -125,18 +117,15 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
         $dailyRewardActivity = new GamificationsDailyRewardActivity($this->module->getEntityManager());
 
         if (!$dailyRewardActivity->isDailyRewardAvailable()) {
-            $this->warning[] = $this->trans('Wooops, Daily Reward is not available at the moment.');
+            $this->warning[] = $this->l('Wooops, Daily Reward is not available at the moment.', self::FILENAME);
             return;
         }
 
         $reward = $dailyRewardActivity->getDailyReward();
 
         if (null === $reward) {
-            $this->warning[] = $this->trans(
-                'No Daily Rewards available at the moment, please check back soon!',
-                [],
-                'Modules.Gamifications.Shop'
-            );
+            $this->warning[] =
+                $this->trans('No Daily Rewards available at the moment, please check back soon!', self::FILENAME);
             return;
         }
 
@@ -145,12 +134,11 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
             ->handleCustomerReward($reward, $this->gamificationCustomer, GamificationsActivity::TYPE_DAILY_REWARD);
 
         if (!$results['success']) {
-            $this->errors[] =
-                $this->trans('Unexpected error occured, you should report it', [], 'Modules.Gamifications.Shop');
+            $this->errors[] = $this->l('Unexpected error occured, you should report it', self::FILENAME);
             return;
         }
 
-        $this->success[] = $this->trans($results['message'], [], 'Modules.Gamifications.Shop');
+        $this->success[] = $results['message'];
     }
 
     /**

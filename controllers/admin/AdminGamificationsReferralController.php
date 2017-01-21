@@ -63,10 +63,10 @@ class AdminGamificationsReferralController extends GamificationsAdminController
         }
 
         if (!$success) {
-            $this->errors[] = $this->trans('Failed update', [], 'Modules.Gamifications.Admin');
+            $this->errors[] = $this->l('Failed update');
         }
 
-        $this->confirmations[] = $this->trans('Successful update', [], 'Modules.Gamifications.Admin');
+        $this->confirmations[] = $this->l('Successful update');
     }
 
     /**
@@ -106,13 +106,13 @@ class AdminGamificationsReferralController extends GamificationsAdminController
     {
         $this->fields_form = [
             'legend' => [
-                'title' => $this->trans('Referral program settings', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Referral program settings'),
             ],
             'input' => [
                 [
                     'name' => GamificationsConfig::REFERRAL_REWARD,
-                    'label' => $this->trans('Referrer reward', [], 'Modules.Gamifications.Admin'),
-                    'hint' => $this->trans('Reward that referrer will get', [], 'Modules.Gamifications.Admin'),
+                    'label' => $this->l('Referrer reward'),
+                    'hint' => $this->l('Reward that referrer will get'),
                     'type' => 'select',
                     'options' => [
                         'query' => $this->getRewardsSelect(),
@@ -122,34 +122,26 @@ class AdminGamificationsReferralController extends GamificationsAdminController
                 ],
                 [
                     'name' => GamificationsConfig::REFERRAL_REWARD_TIME,
-                    'label' => $this->trans('Reward referrer when', [], 'Modules.Gamifications.Admin'),
-                    'hint' => $this->trans(
-                        'Time when referrer customer gets reward for inviting new customer',
-                        [],
-                        'Modules.Gamifications.Admin'
-                    ),
+                    'label' => $this->l('Reward referrer when'),
+                    'hint' => $this->l('Time when referrer customer gets reward for inviting new customer'),
                     'type' => 'radio',
                     'values' => [
                         [
                             'id' => GamificationsConfig::REFERRAL_REWARD_TIME.'_on_registration',
                             'value' => GamificationsActivity::REFERRAL_REWARD_ON_NEW_CUSTOMER_REGISTRATION,
-                            'label' => $this->trans('new customer registers', [], 'Modules.Gamifications.Admin'),
+                            'label' => $this->l('new customer registers'),
                         ],
                         [
                             'id' => GamificationsConfig::REFERRAL_REWARD_TIME.'_on_order',
                             'value' => GamificationsActivity::REFERRAL_REWARD_ON_NEW_CUSTOMER_ORDER,
-                            'label' => $this->trans('new customer places order', [], 'Modules.Gamifications.Admin'),
+                            'label' => $this->l('new customer places order'),
                         ],
                     ],
                 ],
                 [
                     'type' => 'swap',
-                    'label' => $this->trans('New customer order state', [], 'Modules.Gamifications.Admin'),
-                    'hint' => $this->trans(
-                        'Reward referrer customer when new customer\'s order state is one of selected',
-                        [],
-                        'Modules.Gamifications.Admin'
-                    ),
+                    'label' => $this->l('New customer order state'),
+                    'hint' => $this->l('Reward referrer customer when new customer\'s order state is one of selected'),
                     'name' => GamificationsConfig::REFERRAL_NEW_CUSTOMER_ORDER_STATES,
                     'multiple' => true,
                     'options' => [
@@ -160,27 +152,26 @@ class AdminGamificationsReferralController extends GamificationsAdminController
                 ],
                 [
                     'name' => GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD_ENABLED,
-                    'label' => $this->trans('Reward new customer', [], 'Modules.Gamifications.Admin'),
-                    'hint' =>
-                        $this->trans('Enabled if you want to reward new customer', [], 'Modules.Gamifications.Admin'),
+                    'label' => $this->l('Reward new customer'),
+                    'hint' => $this->l('Enabled if you want to reward new customer'),
                     'type' => 'switch',
                     'values' => [
                         [
                             'id' => 'active_on',
                             'value' => 1,
-                            'label' => $this->trans('Yes', [], 'Admin.Global'),
+                            'label' => $this->l('Yes', [], 'Admin.Global'),
                         ],
                         [
                             'id' => 'active_off',
                             'value' => 0,
-                            'label' => $this->trans('No', [], 'Admin.Global'),
+                            'label' => $this->l('No', [], 'Admin.Global'),
                         ],
                     ],
                 ],
                 [
                     'name' => GamificationsConfig::REFERRAL_NEW_CUSTOMER_REWARD,
-                    'label' => $this->trans('New customer reward', [], 'Modules.Gamifications.Admin'),
-                    'hint' => $this->trans('Reward that referrer will get', [], 'Modules.Gamifications.Admin'),
+                    'label' => $this->l('New customer reward'),
+                    'hint' => $this->l('Reward that referrer will get'),
                     'type' => 'select',
                     'options' => [
                         'query' => $this->getRewardsSelect(),
@@ -190,7 +181,7 @@ class AdminGamificationsReferralController extends GamificationsAdminController
                 ],
             ],
             'submit' => [
-                'title' => $this->trans('Save', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Save'),
             ],
         ];
     }
@@ -212,12 +203,12 @@ class AdminGamificationsReferralController extends GamificationsAdminController
         if (empty($rewards)) {
             $rewards[] = [
                 'id_gamifications_reward' => 0,
-                'name' => $this->trans('No available rewards', [], 'Modules.Gamifications.Admin'),
+                'name' => $this->l('No available rewards'),
             ];
         } else {
             $noReward = [
                 'id_gamifications_reward' => 0,
-                'name' => $this->trans('No reward', [], 'Modules.Gamifications.Admin'),
+                'name' => $this->l('No reward'),
             ];
 
             array_unshift($rewards, $noReward);

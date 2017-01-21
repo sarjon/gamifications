@@ -18,11 +18,6 @@ class GamificationsRewardHandler
     private $context;
 
     /**
-     * @var \PrestaShopBundle\Translation\TranslatorComponent
-     */
-    private $translator;
-
-    /**
      * GamificationsRewardHandler constructor.
      */
     public function __construct()
@@ -30,7 +25,6 @@ class GamificationsRewardHandler
         $context = Context::getContext();
 
         $this->context = $context;
-        $this->translator = $context->getTranslator();
     }
 
     /**
@@ -50,14 +44,15 @@ class GamificationsRewardHandler
         $results = [];
         $results['success'] = false;
 
+        $module = Module::getInstanceByName('gamificatioons');
+
         $points = 0;
 
         switch ((int) $reward->reward_type) {
             case GamificationsReward::REWARD_TYPE_POINTS:
                 $points = $reward->points;
                 $gamificationsCustomer->addPoints($points);
-                $results['message'] = $this->translator
-                    ->trans('You got %points% points!', ['%points%' => $reward->points], 'Modules.Gamifications.Shop');
+                $results['message'] = sprintf($module->l('You got %s points!'), $reward->points);
                 $results['success'] = true;
                 break;
             case GamificationsReward::REWARD_TYPE_RANDOM_AMOUNT_OF_POINTS:
@@ -65,19 +60,14 @@ class GamificationsRewardHandler
                 $max = $reward->points + $reward->radius;
                 $points = rand($min, $max);
                 $gamificationsCustomer->addPoints($points);
-                $results['message'] = $this->translator
-                    ->trans('You got %points% points!', ['%points%' => $points], 'Modules.Gamifications.Shop');
+                $results['message'] = sprintf($module->l('You got %s points!'), $points);
                 $results['success'] = true;
                 break;
             case GamificationsReward::REWARD_TYPE_DISCOUNT:
             case GamificationsReward::REWARD_TYPE_FREE_SHIPPING:
             case GamificationsReward::REWARD_TYPE_GIFT:
                 $this->createVoucher($reward, $gamificationsCustomer);
-                $results['message'] = $this->translator->trans(
-                    'You got %rewrd_name%!',
-                    ['%rewrd_name%' => $reward->name[$this->context->language->id]],
-                    'Modules.Gamifications.Shop'
-                );
+                $results['message'] = sprintf($module->l('You got %s!'), $reward->name[$this->context->language->id]);
                 $results['success'] = true;
                 break;
         }

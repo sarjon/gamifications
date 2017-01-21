@@ -12,6 +12,8 @@
  */
 class GamificationsExchangePointsModuleFrontController extends GamificationsFrontController
 {
+    const FILENAME = 'exchangepoints';
+
     public $auth = true;
 
     /**
@@ -71,7 +73,7 @@ class GamificationsExchangePointsModuleFrontController extends GamificationsFron
         }
 
         if (Tools::getValue('csrf_token') !== Tools::getToken()) {
-            $this->errors[] = $this->trans('#veryToken #muchSecurity #suchHacker :)', [], 'Modules.Gamifications.Shop');
+            $this->errors[] = '#veryToken #muchSecurity #suchHacker :)';
             return;
         }
 
@@ -81,16 +83,15 @@ class GamificationsExchangePointsModuleFrontController extends GamificationsFron
         $pointsExchangeReward = $pointsExchangeRewardRepository->findOne($idPointsExchangeReward);
 
         if (!$pointsExchangeReward instanceof GamificationsPointExchange) {
-            $this->errors[] = $this->trans('Unexpected error occured', [], 'Modules.Gamifications.Shop');
+            $this->errors[] = $this->l('Unexpected error occured', self::FILENAME);
             return;
         }
 
         if (!$this->gamificationCustomer->checkExchangePoints($pointsExchangeReward)) {
             $missingPoints = (int) $pointsExchangeReward->points - (int) $this->gamificationCustomer->total_points;
-            $this->warning[] = $this->trans(
-                'You still need %points% more points to get selected reward',
-                ['%points%' => $missingPoints],
-                'Modules.Gamifications.Shop'
+            $this->warning[] = sprintf(
+                $this->l('You still need % more points to get selected reward', self::FILENAME),
+                $missingPoints
             );
             return;
         }
@@ -99,7 +100,7 @@ class GamificationsExchangePointsModuleFrontController extends GamificationsFron
         $reward = new GamificationsReward($idReward, null, $this->context->shop->id);
 
         if (!Validate::isLoadedObject($reward)) {
-            $this->errors[] = $this->trans('Reward was not found', [], 'Modules.Gamifications.Shop');
+            $this->errors[] = $this->l('Reward was not found', self::FILENAME);
             return;
         }
 
@@ -112,21 +113,15 @@ class GamificationsExchangePointsModuleFrontController extends GamificationsFron
             ->handleCustomerReward($reward, $this->gamificationCustomer, GamificationsActivity::TYPE_POINT_EXCHANGE);
 
         if (!$result['success']) {
-            $this->errors[] = $this->trans(
-                'Unexpected error occured, please contact us if it keeps happening',
-                [],
-                'Modules.Gamifications.Shop'
-            );
+            $this->errors[] =
+                $this->l('Unexpected error occured, please contact us if it keeps happening', self::FILENAME);
             return;
         }
 
-        $this->success[] = $this->trans(
-            'You have successfully exchanged %points% points into %reward_title%!',
-            [
-                '%points%' => $pointsExchangeReward->points,
-                '%reward_title%' => $reward->name[$this->context->language->id],
-            ],
-            'Module.Gamifications.Shop'
+        $this->success[] = sprintf(
+            $this->l('You have successfully exchanged %s points into %s!', self::FILENAME),
+            (int) $pointsExchangeReward->points,
+            $reward->name[$this->context->language->id]
         );
     }
 
@@ -142,7 +137,7 @@ class GamificationsExchangePointsModuleFrontController extends GamificationsFron
         $breadcrumb['links'][] = $this->addMyAccountToBreadcrumb();
 
         $breadcrumb['links'][] = [
-            'title' => $this->trans('Exchange points', [], 'Modules.Gamifications.Shop'),
+            'title' => $this->l('Exchange points', self::FILENAME),
             'url' => $this->context->link->getModuleLink(
                 $this->module->name,
                 Gamifications::FRONT_EXCHANGE_POINTS_CONTROLLER

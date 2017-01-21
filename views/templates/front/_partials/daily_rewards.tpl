@@ -10,7 +10,7 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="text-primary">{l s='Daily Rewards' d='Modules.Gamifications.Shop'}</h1>
+                <h1 class="text-primary">{l s='Daily Rewards' mod='gamifications'}</h1>
                 <hr>
             </div>
         </div>
@@ -20,19 +20,19 @@
                 <div class="row">
                     <div class="col-md-6">
                         {if $can_play_daily_reward}
-                            <h4>{l s='It\'s ready for you!' d='Modules.Gamifications.Shop'}</h4>
+                            <h4>{l s='It\'s ready for you!' mod='gamifications'}</h4>
                             <form method="post">
                                 <button type="submit" name="get_daily_reward" class="btn btn-primary btn-block">
-                                    {l s='Get my Daily Reward!' d='Modules.Gamifications.Shop'}
+                                    {l s='Get my Daily Reward!' mod='gamifications'}
                                 </button>
                             </form>
                         {else}
-                            <h4>{l s='There\'s always another day!' d='Modules.Gamifications.Shop'}</h4>
+                            <h4>{l s='There\'s always another day!' mod='gamifications'}</h4>
                             <button type="submit" name="get_daily_reward" class="btn btn-primary btn-block disabled">
-                                {l s='Daily Reward is not available at the moment' d='Modules.Gamifications.Shop'}
+                                {l s='Daily Reward is not available at the moment' mod='gamifications'}
                             </button>
                             <p class="card-text">
-                                {l s='Next Daily Reward available' d='Modules.Gamifications.Shop'}
+                                {l s='Next Daily Reward available' mod='gamifications'}
                                 {$next_daily_reward_availabe_at}
                             </p>
                         {/if}
@@ -40,11 +40,11 @@
                     </div>
 
                     <div class="col-md-6">
-                        <h4>{l s='How it works?' d='Modules.Gamifications.Shop'}</h4>
+                        <h4>{l s='How it works?' mod='gamifications'}</h4>
                         <ul class="list-style">
-                           <li>{l s='1. Visit our shop daily' d='Modules.Gamifications.Shop'}</li>
-                           <li>{l s='2. Get Your Daily Reward!' d='Modules.Gamifications.Shop'}</li>
-                           <li>{l s='3. Spend Your points to get awesome prizes!' d='Modules.Gamifications.Shop'}</li>
+                           <li>{l s='1. Visit our shop daily' mod='gamifications'}</li>
+                           <li>{l s='2. Get Your Daily Reward!' mod='gamifications'}</li>
+                           <li>{l s='3. Spend Your points to get awesome prizes!' mod='gamifications'}</li>
                         </ul>
                     </div>
                 </div>

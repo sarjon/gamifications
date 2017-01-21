@@ -116,36 +116,36 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
 
         $this->fields_list = [
             GamificationsCustomer::$definition['primary'] => [
-                'title' => $this->trans('ID', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('ID'),
                 'width' => 20,
                 'align' => 'center',
             ],
             'id_customer' => [
-                'title' => $this->trans('Customer ID', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Customer ID'),
                 'align' => 'center',
             ],
             'email' => [
-                'title' => $this->trans('Email', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Email'),
                 'filter_key' => 'c!email',
             ],
             'firstname' => [
-                'title' => $this->trans('First name', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('First name'),
                 'filter_key' => 'c!firstname',
             ],
             'lastname' => [
-                'title' => $this->trans('Last name', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Last name'),
                 'filter_key' => 'c!lastname',
             ],
             'total_points' => [
-                'title' => $this->trans('Total points', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Total points'),
                 'align' => 'center',
             ],
             'spent_points' => [
-                'title' => $this->trans('Spent points', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Spent points'),
                 'align' => 'center',
             ],
             'registration' => [
-                'title' => $this->trans('Registered', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Registered'),
                 'type' => 'date',
                 'filter_key' => 'c!date_add',
             ],
@@ -159,48 +159,45 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
     {
         $this->fields_form = [
             'legend' => [
-                'title' => $this->trans('Edit', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Edit'),
             ],
-            'description' => $this->trans(
-                'Some fields are disabled, they only provide you information about customer and cannot be changed.',
-                [],
-                'Modules.Gamifications.Admin'
-            ),
+            'description' => $this
+                ->l('Some fields are disabled, they only provide information about customer and cannot be changed.'),
             'input' => [
                 [
-                    'label' => $this->trans('Email', [], 'Modules.Gamifications.Admin'),
+                    'label' => $this->l('Email'),
                     'type' => 'text',
                     'name' => 'email',
                     'disabled' => true,
                 ],
                 [
-                    'label' => $this->trans('First name', [], 'Modules.Gamifications.Admin'),
+                    'label' => $this->l('First name'),
                     'type' => 'text',
                     'name' => 'first_name',
                     'disabled' => true,
                 ],
                 [
-                    'label' => $this->trans('Last name', [], 'Modules.Gamifications.Admin'),
+                    'label' => $this->l('Last name'),
                     'type' => 'text',
                     'name' => 'last_name',
                     'disabled' => true,
                 ],
                 [
-                    'label' => $this->trans('Spent points', [], 'Modules.Gamifications.Admin'),
+                    'label' => $this->l('Spent points'),
                     'name' => 'spent_points',
                     'type' => 'text',
                     'disabled' => true,
                 ],
                 [
-                    'label' => $this->trans('Customer points', [], 'Modules.Gamifications.Admin'),
+                    'label' => $this->l('Customer points'),
                     'name' => 'total_points',
                     'type' => 'text',
                     'class' => 'fixed-width-lg',
-                    'hint' => $this->trans('You can add or remove customer points', [], 'Modules.Gamifications.Admin'),
+                    'hint' => $this->l('You can add or remove customer points'),
                 ],
             ],
             'submit' => [
-                'title' => $this->trans('Save', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Save'),
             ],
         ];
     }

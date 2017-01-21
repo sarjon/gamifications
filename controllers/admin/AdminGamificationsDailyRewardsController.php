@@ -33,7 +33,7 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
         if (empty($this->display)) {
             $this->page_header_toolbar_btn['new_daily_reward'] = [
                 'href' => self::$currentIndex.'&addgamifications_daily_reward&token='.$this->token,
-                'desc' => $this->trans('Add new Daily Reward'),
+                'desc' => $this->l('Add new Daily Reward'),
                 'icon' => 'process-icon-new',
             ];
         }
@@ -104,13 +104,13 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
 
         if (!Validate::isLoadedObject($dailyReward) || !$dailyReward->save()) {
             $response['error'] = true;
-            $response['text'] = $this->trans('Failed to update', [], 'Modules.Gamifications.Admin');
+            $response['text'] = $this->l('Failed to update');
 
             die(json_encode($response));
         }
 
         $response['success'] = true;
-        $response['text'] = $this->trans('Successful update', [], 'Modules.Gamifications.Admin');
+        $response['text'] = $this->l('Successful update');
 
         die(json_encode($response));
     }
@@ -125,27 +125,27 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
 
         $this->fields_list = [
             'id_gamifications_daily_reward' => [
-                'title' => $this->trans('ID', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('ID'),
                 'type' => 'text',
                 'width' => 20,
             ],
             'name' => [
-                'title' => $this->trans('Reward name', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Reward name'),
                 'type' => 'text',
             ],
             'reward_type' => [
-                'title' => $this->trans('Reward type', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Reward type'),
                 'type' => 'select',
                 'list' => GamificationsReward::getRewardsTranslations(),
                 'filter_key' => 'gr!reward_type',
             ],
             'boost' => [
-                'title' => $this->trans('Boost', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Boost'),
                 'type' => 'text',
                 'align' => 'center',
             ],
             'active' => [
-                'title' => $this->trans('Enabled', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Enabled'),
                 'active' => 'status',
                 'type' => 'bool',
                 'ajax' => true,
@@ -153,7 +153,7 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
                 'align' => 'center',
             ],
             'times_won' => [
-                'title' => $this->trans('Times won', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Times won'),
                 'type' => 'text',
                 'align' => 'center',
             ],
@@ -173,22 +173,18 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
         if (empty($availableRewards)) {
             $availableRewards[] = [
                 'id_gamifications_reward' => '',
-                'name' => $this->trans('No available rewards', [], 'Modules.Gamifications.Admin'),
+                'name' => $this->l('No available rewards'),
             ];
         }
 
         $this->fields_form = [
             'legend' => [
-                'title' => $this->trans('Daily reward', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Daily reward'),
             ],
             'input' => [
                 [
-                    'label' => $this->trans('Choose reward', [], 'Modules.Gamifications.Admin'),
-                    'hint' => $this->trans(
-                        'Choose reward that customer will have a chance to get.',
-                        [],
-                        'Modules.Gamifications.Admin'
-                    ),
+                    'label' => $this->l('Choose reward'),
+                    'hint' => $this->l('Choose reward that customer will have a chance to get.'),
                     'type' => 'select',
                     'name' => 'id_reward',
                     'required' => true,
@@ -199,62 +195,50 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
                     ],
                 ],
                 [
-                    'label' => $this->trans('Boost', [], 'Modules.Gamifications.Admin'),
+                    'label' => $this->l('Boost'),
                     'type' => 'text',
                     'name' => 'boost',
-                    'hint' => $this->trans('The chance of getting this reward.', [], 'Modules.Gamifications.Admin').' '.
-                        $this->trans(
-                            'The higher the boost the bigger chance of getting this reward.',
-                            [],
-                            'Modules.Gamifications.Admin'
-                        ),
+                    'hint' => $this->l('The chance of getting this reward.').' '.
+                        $this->l('The higher the boost the bigger chance of getting this reward.'),
                     'class' => 'fixed-width-xl',
-                    'desc' => $this->trans(
-                        'Recommended boost is between 1 (less chance to get) and 100 (more chance to get).',
-                        [],
-                        'Modules.Gamifications.Admin'
-                    ),
+                    'desc' =>
+                        $this->l('Recommended boost is between 1 (less chance to get) and 100 (more chance to get).'),
                 ],
                 [
-                    'label' => $this->trans('Enabled', [], 'Modules.Gamifications.Admin'),
+                    'label' => $this->l('Enabled'),
                     'type' => 'switch',
                     'values' => [
                         [
                             'id' => 'active_on',
                             'value' => 1,
-                            'label' => $this->trans('Yes', [], 'Admin.Global'),
+                            'label' => $this->l('Yes', [], 'Admin.Global'),
                         ],
                         [
                             'id' => 'active_off',
                             'value' => 0,
-                            'label' => $this->trans('No', [], 'Admin.Global'),
+                            'label' => $this->l('No', [], 'Admin.Global'),
                         ],
                     ],
                     'name' => 'active',
-                    'hint' => $this->trans(
-                        'If disabled then no one will be able to get this reward at Daily Rewards',
-                        [],
-                        'Modules.Gamifications.Admin'
-                    ),
+                    'hint' => $this->l('If disabled then no one will be able to get this reward at Daily Rewards'),
                 ],
                 [
-                    'label' => $this->trans('Groups', [], 'Modules.Gamifications.Admin'),
+                    'label' => $this->l('Groups'),
                     'type' => 'group',
                     'name' => 'groupBox',
                     'values' => Group::getGroups($this->context->language->id, $this->context->shop->id),
-                    'hint' => $this
-                        ->trans('Which customer groups can get this Daily Reward', [], 'Modules.Gamifications.Admin'),
+                    'hint' => $this->l('Which customer groups can get this Daily Reward'),
                 ],
             ],
             'submit' => [
-                'title' => $this->trans('Save', [], 'Modules.Gamifications.Admin'),
+                'title' => $this->l('Save'),
             ],
         ];
 
         if (Shop::isFeatureActive()) {
             $this->fields_form['input'][] = [
                 'type' => 'shop',
-                'label' => $this->trans('Shop association', [], 'Modules.Gamifications.Admin'),
+                'label' => $this->l('Shop association'),
                 'name' => 'checkBoxShopAsso',
             ];
         }

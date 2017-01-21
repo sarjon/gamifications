@@ -9,7 +9,7 @@
 <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="history-link" href="{url entity='module' name='gamifications' controller='exchangepoints'}">
     <span class="link-item">
         <i class="material-icons">&#xE8B1;</i>
-        {l s='Exchange points' d='Modules.Gamifications.Shop'}
+        {l s='Exchange points' mod='gamifications'}
     </span>
 </a>
 

@@ -9,7 +9,7 @@
 {extends file='page.tpl'}
 
 {block name='page_title'}
-    {l s='Exchange points' d='Modules.Gamifications.Shop'}
+    {l s='Exchange points' mod='gamifications'}
 {/block}
 
 {block name="page_content"}
@@ -47,7 +47,7 @@
                                 <p>{$reward.description}</p>
                                 <div class="text-xs-center text-muted" id="example-caption-1">
                                     {$gamifications_customer.total_points}/{$reward.points}
-                                    {l s='points' d='Modules.Gamifications.Shop'}
+                                    {l s='points' mod='gamifications'}
                                 </div>
                                 <progress class="progress progress-{$progressColor}" value="{$gamifications_customer.total_points}" max="{$reward.points}"></progress>
                                 <form method="post">
@@ -56,9 +56,9 @@
                                             name="exchange_points"
                                             {if $buttonStatus == 'disabled'}disabled{/if}
                                     >
-                                        {l s='Exchange' d='Modules.Gamifications.Shop'}
+                                        {l s='Exchange' mod='gamifications'}
                                         {$reward.points}
-                                        {l s='points' d='Modules.Gamifications.Shop'}!
+                                        {l s='points' mod='gamifications'}!
                                     </button>
                                     <input type="hidden" name="csrf_token" value="{$csrf_token}">
                                     <input type="hidden" name="id_point_exchange_reward" value="{$reward.id_gamifications_point_exchange}">
@@ -102,7 +102,7 @@
                                 <p>{$reward.description}</p>
                                 <div class="text-xs-center text-muted" id="example-caption-1">
                                     {$gamifications_customer.total_points}/{$reward.points}
-                                    {l s='points' d='Modules.Gamifications.Shop'}
+                                    {l s='points' mod='gamifications'}
                                 </div>
                                 <progress class="progress progress-{$progressColor}" value="{$gamifications_customer.total_points}" max="{$reward.points}"></progress>
                                 <form method="post">
@@ -111,9 +111,9 @@
                                             name="exchange_points"
                                             {if $buttonStatus == 'disabled'}disabled{/if}
                                     >
-                                        {l s='Exchange' d='Modules.Gamifications.Shop'}
+                                        {l s='Exchange' mod='gamifications'}
                                         {$reward.points}
-                                        {l s='points' d='Modules.Gamifications.Shop'}!
+                                        {l s='points' mod='gamifications'}!
                                     </button>
                                     <input type="hidden" name="csrf_token" value="{$csrf_token}">
                                     <input type="hidden" name="id_point_exchange_reward" value="{$reward.id_gamifications_point_exchange}">
@@ -128,7 +128,7 @@
         {else}
             <article class="alert alert-info" role="alert" data-alert="info">
                 <ul>
-                    <li>{l s='Theres no rewards at the moment, please check back soon!' d='Modules.Gamifications.Shop'}</li>
+                    <li>{l s='Theres no rewards at the moment, please check back soon!' mod='gamifications'}</li>
                 </ul>
             </article>
         {/if}
