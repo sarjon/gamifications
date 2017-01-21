@@ -27,11 +27,14 @@ class GamificationsProductRepository extends EntityRepository
     public function findAllProductsNamesAndIdsByQuery($query, $limit, $idLang, $idShop)
     {
         $sql = '
-            SELECT pl.`id_product`, pl.`name`
+            SELECT pl.`id_product`, pl.`name`, p.`reference`
             FROM `'.$this->getPrefix().'product_lang` pl
+            INNER JOIN `'.$this->getPrefix().'product` p
+                ON p.`id_product` = pl.`id_product`
             WHERE pl.`id_shop` = '.(int)$idShop.'
                 AND pl.`id_lang` = '.(int)$idLang.'
-                AND pl.`name` LIKE "%'.$this->db->escape($query).'%"
+                AND (pl.`name` LIKE "%'.$this->db->escape($query).'%" 
+                OR p.`reference` = "'.$this->db->escape($query).'")
             LIMIT '.(int)$limit.'
         ';
 
@@ -44,7 +47,10 @@ class GamificationsProductRepository extends EntityRepository
         $products = [];
 
         foreach ($result as $row) {
-            $products[] = ['id_product' => $row['id_product'], 'name' => $row['name']];
+            $products[] = [
+                'id_product' => $row['id_product'],
+                'name' => sprintf('%s (ref: %s)', $row['name'], $row['reference']),
+            ];
         }
 
         return $products;

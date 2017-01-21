@@ -38,7 +38,6 @@ class AdminGamificationsRewardController extends GamificationsAdminController
     public function postProcess()
     {
         if ($this->isXmlHttpRequest()) {
-
             $query = Tools::getValue('q');
             $limit = (int) Tools::getValue('limit');
 
@@ -226,9 +225,8 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                     'label' => $this->l('Product'),
                     'name' => 'product_name',
                     'type' => 'text',
-                    'hint' => $this->l('Enter product name and available products will show up'),
+                    'hint' => $this->l('Enter product name or full reference and available products will show up'),
                     'class' => 'fixed-width-xxl',
-
                 ],
                 [
                     'label' => '',
@@ -314,7 +312,7 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                 );
 
                 if (Validate::isLoadedObject($product)) {
-                    $this->object->product_name = $product->name;
+                    $this->object->product_name = sprintf('%s (ref: %s)', $product->name, $product->reference);
                 }
             }
 
