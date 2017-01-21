@@ -109,10 +109,7 @@ class GamificationsRewardHandler
         $voucher->quantity = 1;
         $voucher->minimum_amount = $reward->minimum_cart_amount;
         $voucher->minimum_amount_currency = $defaultCurrencyId;
-
-        if ($reward->discount_apply_type = GamificationsReward::DISCOUNT_TYPE_CODE) {
-            $voucher->code = Tools::passwdGen();
-        }
+        $voucher->code = Tools::passwdGen();
 
         $rewardType = (int) $reward->reward_type;
 

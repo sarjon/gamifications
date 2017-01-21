@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS `PREFIX_gamifications_reward` (
   `id_product` INT(11) NOT NULL DEFAULT 0,
   `minimum_cart_amount` INT(11) UNSIGNED NOT NULL DEFAULT 0,
   `discount_reduction_type` VARCHAR(50) NOT NULL DEFAULT '',
-  `discount_apply_type` VARCHAR(50) NOT NULL DEFAULT '',
   `discount_value` INT(11) UNSIGNED NOT NULL DEFAULT 0,
   `discount_valid_days` INT(11) UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id_gamifications_reward`)

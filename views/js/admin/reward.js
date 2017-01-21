@@ -60,7 +60,6 @@ $(document).ready(function () {
     var $productNameInput = $('#product_name').closest('div.form-group');
     var $discountReductionTypeInput = $('#discount_reduction_type').closest('div.form-group');
     var $discountValueInput = $('#discount_value').closest('div.form-group');
-    var $discountApplyTypeInput = $('#discount_apply_type').closest('div.form-group');
     var $discountValidDaysInput = $('#discount_valid_days').closest('div.form-group');
     var $minimumCartAmountInput = $('#minimum_cart_amount').closest('div.form-group');
     var $pointsRadiusInput = $('#radius').closest('div.form-group');
@@ -81,7 +80,6 @@ $(document).ready(function () {
                 $productNameInput.hide();
                 $discountReductionTypeInput.hide();
                 $discountValueInput.hide();
-                $discountApplyTypeInput.hide();
                 $discountValidDaysInput.hide();
                 $minimumCartAmountInput.hide();
                 $pointsRadiusInput.hide();
@@ -91,7 +89,6 @@ $(document).ready(function () {
                 $productNameInput.hide();
                 $discountReductionTypeInput.show();
                 $discountValueInput.show();
-                $discountApplyTypeInput.show();
                 $discountValidDaysInput.show();
                 $minimumCartAmountInput.show();
                 $pointsRadiusInput.hide();
@@ -101,7 +98,6 @@ $(document).ready(function () {
                 $productNameInput.hide();
                 $discountReductionTypeInput.hide();
                 $discountValueInput.hide();
-                $discountApplyTypeInput.show();
                 $discountValidDaysInput.show();
                 $minimumCartAmountInput.show();
                 $pointsRadiusInput.hide();
@@ -111,7 +107,6 @@ $(document).ready(function () {
                 $productNameInput.show();
                 $discountReductionTypeInput.hide();
                 $discountValueInput.hide();
-                $discountApplyTypeInput.show();
                 $discountValidDaysInput.show();
                 $minimumCartAmountInput.show();
                 $pointsRadiusInput.hide();
@@ -121,7 +116,6 @@ $(document).ready(function () {
                 $productNameInput.hide();
                 $discountReductionTypeInput.hide();
                 $discountValueInput.hide();
-                $discountApplyTypeInput.hide();
                 $discountValidDaysInput.hide();
                 $minimumCartAmountInput.hide();
                 $pointsRadiusInput.show();

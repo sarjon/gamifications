@@ -258,29 +258,8 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                     'label' => $this->l('Discount value'),
                     'type' => 'text',
                     'name' => 'discount_value',
-                    'hint' => sprintf($this->l('Percent (%) or amount (%s)'), $defaultCurrency->iso_code),
+                    'hint' => $this->l('Percent (%) or amount'),
                     'class' => 'fixed-width-sm',
-                ],
-                [
-                    'label' => $this->l('Apply type'),
-                    'type' => 'select',
-                    'name' => 'discount_apply_type',
-                    'hint' =>
-                        $this->l('Whether to apply discount automatically to cart or give customer discount code'),
-                    'options' => [
-                        'id' => 'id',
-                        'name' => 'name',
-                        'query' => [
-                            [
-                                'id' => GamificationsReward::DISCOUNT_TYPE_AUTOMATICALLY_APPLIED,
-                                'name' => $this->l('Automatically in cart'),
-                            ],
-                            [
-                                'id' => GamificationsReward::DISCOUNT_REDUCTION_AMOUNT,
-                                'name' => $this->l('Provide code'),
-                            ],
-                        ],
-                    ],
                 ],
                 [
                     'label' => $this->l('Valid days'),

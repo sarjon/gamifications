@@ -69,11 +69,6 @@ class GamificationsReward extends ObjectModel
     public $discount_reduction_type;
 
     /**
-     * @var string
-     */
-    public $discount_apply_type;
-
-    /**
      * @var int
      */
     public $discount_value;
@@ -123,12 +118,6 @@ class GamificationsReward extends ObjectModel
                 'validate' => 'isUnsignedFloat',
             ],
             'discount_reduction_type' => [
-                'type' => self::TYPE_STRING,
-                'required' => false,
-                'size' => 50,
-                'validate' => 'isString',
-            ],
-            'discount_apply_type' => [
                 'type' => self::TYPE_STRING,
                 'required' => false,
                 'size' => 50,
