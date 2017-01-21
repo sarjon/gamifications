@@ -302,7 +302,6 @@ class AdminGamificationsRewardController extends GamificationsAdminController
         $parentResponse = parent::loadObject($opt);
 
         if (Validate::isLoadedObject($this->object)) {
-
             if ($this->object->id_product) {
                 $product = new Product(
                     $this->object->id_product,
@@ -315,7 +314,6 @@ class AdminGamificationsRewardController extends GamificationsAdminController
                     $this->object->product_name = sprintf('%s (ref: %s)', $product->name, $product->reference);
                 }
             }
-
         }
 
         return $parentResponse;

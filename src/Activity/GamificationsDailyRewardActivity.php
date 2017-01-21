@@ -98,7 +98,6 @@ class GamificationsDailyRewardActivity
 
         $isDailyRewardAvailable = false;
         if (is_array($mostRecentDailyRewardActivity)) {
-
             $now = new DateTime();
             $lastPlayed = new DateTime($mostRecentDailyRewardActivity['date_add']);
 

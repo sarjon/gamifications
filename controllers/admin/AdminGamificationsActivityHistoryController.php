@@ -85,7 +85,6 @@ class AdminGamificationsActivityHistoryController extends GamificationsAdminCont
         ];
 
         foreach ($this->_list as &$listItem) {
-
             if (!in_array($listItem['reward_type'], $rewardTypePoints)) {
                 $listItem['points'] = '-';
             }
