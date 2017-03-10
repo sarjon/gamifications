@@ -127,7 +127,7 @@ class GamificationsLoyalityModuleFrontController extends GamificationsFrontContr
 
         if (null === $reward) {
             $this->warning[] =
-                $this->trans('No Daily Rewards available at the moment, please check back soon!', self::FILENAME);
+                $this->l('No Daily Rewards available at the moment, please check back soon!', self::FILENAME);
             return;
         }
 

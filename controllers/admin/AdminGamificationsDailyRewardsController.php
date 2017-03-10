@@ -213,12 +213,12 @@ class AdminGamificationsDailyRewardsController extends GamificationsAdminControl
                         [
                             'id' => 'active_on',
                             'value' => 1,
-                            'label' => $this->l('Yes', [], 'Admin.Global'),
+                            'label' => $this->l('Yes'),
                         ],
                         [
                             'id' => 'active_off',
                             'value' => 0,
-                            'label' => $this->l('No', [], 'Admin.Global'),
+                            'label' => $this->l('No'),
                         ],
                     ],
                     'name' => 'active',

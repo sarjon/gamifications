@@ -105,6 +105,7 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
                 'name' => $this->module->l('Gamifications', __CLASS__),
                 'parent' => 'IMPROVE',
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
+                'icon' => 'loyalty',
             ],
             [
                 'name' => $this->module->l('Rewards', __CLASS__),

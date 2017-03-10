@@ -28,9 +28,9 @@ class AdminGamificationsReferralController extends GamificationsAdminController
         $this->context->smarty->assign('content', $this->content);
     }
 
-    public function setMedia()
+    public function setMedia($newTheme = false)
     {
-        parent::setMedia();
+        parent::setMedia($newTheme);
 
         $referralProgramJsUri = $this->module->getPathUri().'views/js/admin/referral_program.js';
 
@@ -161,12 +161,12 @@ class AdminGamificationsReferralController extends GamificationsAdminController
                         [
                             'id' => 'active_on',
                             'value' => 1,
-                            'label' => $this->l('Yes', [], 'Admin.Global'),
+                            'label' => $this->l('Yes'),
                         ],
                         [
                             'id' => 'active_off',
                             'value' => 0,
-                            'label' => $this->l('No', [], 'Admin.Global'),
+                            'label' => $this->l('No'),
                         ],
                     ],
                 ],

@@ -43,8 +43,9 @@ abstract class AbstractGamificationsInstaller
 
         foreach ($tabs as $tab) {
             $parentId = (int) Tab::getIdFromClassName($tab['parent']);
+            $icon = isset($tab['icon']) ? $tab['icon'] : null;
 
-            if (!$this->installTab($tab['name'], $parentId, $tab['class_name'])) {
+            if (!$this->installTab($tab['name'], $parentId, $tab['class_name'], $icon)) {
                 return false;
             }
         }
@@ -73,16 +74,18 @@ abstract class AbstractGamificationsInstaller
 
         return true;
     }
+
     /**
      * Install single tab
      *
      * @param string $name Tab name
      * @param int $parentId Tab parent id
      * @param string $className Tab class name
+     * @param string|null $icon
      *
      * @return bool
      */
-    private function installTab($name, $parentId, $className)
+    private function installTab($name, $parentId, $className, $icon = null)
     {
         if (!Tab::getIdFromClassName($className)) {
             $moduleTab = new Tab();
@@ -95,6 +98,7 @@ abstract class AbstractGamificationsInstaller
             $moduleTab->class_name = $className;
             $moduleTab->id_parent = $parentId;
             $moduleTab->module = $this->getModuleName();
+            $moduleTab->icon = $icon;
 
             if (!$moduleTab->save()) {
                 return false;
