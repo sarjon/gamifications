@@ -46,7 +46,7 @@ class GamificationsRewardHandler
         $results = [];
         $results['success'] = false;
 
-        $module = Module::getInstanceByName('gamificatioons');
+        $module = Module::getInstanceByName('gamifications');
 
         $points = 0;
 

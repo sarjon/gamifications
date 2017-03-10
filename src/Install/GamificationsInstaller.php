@@ -118,7 +118,7 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_POINT_EXCHANGE_CONTROLLER,
             ],
             [
-                'name' => $this->module->l('Loyality', __CLASS__),
+                'name' => $this->module->l('Loyalty', __CLASS__),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_ACTIVITY_CONTROLLER,
             ],
