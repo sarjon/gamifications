@@ -3,7 +3,9 @@
  *
  * @author    Sarunas Jonusas, <jonusas.sarunas@gmail.com>
  * @copyright Copyright (c) permanent, Sarunas Jonusas
- * @license   Addons PrestaShop license limitation
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  *}
 
 <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" id="history-link" href="{url entity='module' name='gamifications' controller='exchangepoints'}">

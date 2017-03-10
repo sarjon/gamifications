@@ -4,7 +4,9 @@
  *
  * @author    Sarunas Jonusas, <jonusas.sarunas@gmail.com>
  * @copyright Copyright (c) permanent, Sarunas Jonusas
- * @license   Addons PrestaShop license limitation
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 use PrestaShop\PrestaShop\Core\Foundation\Database\EntityManager;
@@ -28,7 +30,6 @@ class Gamifications extends Module
     const ADMIN_GAMIFICATIONS_ACTIVITY_HISTORY_CONTROLLER = 'AdminGamificationsActivityHistory';
     const ADMIN_GAMIFICATIONS_REFERRAL_CONTROLLER         = 'AdminGamificationsReferral';
     const ADMIN_GAMIFICATIONS_SHOPPING_POINT_CONTROLLER   = 'AdminGamificationsShoppingPoint';
-    const ADMIN_GAMIFICATIONS_ABOUT_CONTROLLER            = 'AdminGamificationsAbout';
     const ADMIN_GAMIFICATIONS_RANKING_CONTROLLER          = 'AdminGamificationsRanking';
 
     /**
@@ -52,10 +53,9 @@ class Gamifications extends Module
         $this->name = 'gamifications';
         $this->author = 'Šarūnas Jonušas';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.1';
+        $this->version = '1.0.0-dev';
         $this->need_instance = 0;
         $this->controllers = [self::FRONT_LOYALITY_CONTROLLER, self::FRONT_EXCHANGE_POINTS_CONTROLLER];
-        $this->module_key = '03cb08b86e98167eccdc0b2c9dcd2084';
 
         parent::__construct();
 

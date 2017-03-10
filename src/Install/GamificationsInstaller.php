@@ -4,7 +4,9 @@
  *
  * @author    Sarunas Jonusas, <jonusas.sarunas@gmail.com>
  * @copyright Copyright (c) permanent, Sarunas Jonusas
- * @license   Addons PrestaShop license limitation
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 /**
@@ -153,11 +155,6 @@ class GamificationsInstaller extends AbstractGamificationsInstaller
                 'name' => $this->module->l('Preferences', __CLASS__),
                 'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
                 'class_name' => Gamifications::ADMIN_GAMIFICATIONS_PREFERENCE_CONTROLLER,
-            ],
-            [
-                'name' => $this->module->l('About', __CLASS__),
-                'parent' => Gamifications::ADMIN_GAMIFICATIONS_MODULE_CONTROLLER,
-                'class_name' => Gamifications::ADMIN_GAMIFICATIONS_ABOUT_CONTROLLER,
             ],
         ];
     }

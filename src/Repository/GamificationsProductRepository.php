@@ -4,7 +4,9 @@
  *
  * @author    Sarunas Jonusas, <jonusas.sarunas@gmail.com>
  * @copyright Copyright (c) permanent, Sarunas Jonusas
- * @license   Addons PrestaShop license limitation
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 use PrestaShop\PrestaShop\Core\Foundation\Database\EntityRepository;
