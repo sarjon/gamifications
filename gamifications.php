@@ -53,7 +53,7 @@ class Gamifications extends Module
         $this->name = 'gamifications';
         $this->author = 'Šarūnas Jonušas';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.0-dev';
+        $this->version = '1.0.0';
         $this->need_instance = 0;
         $this->controllers = [self::FRONT_LOYALITY_CONTROLLER, self::FRONT_EXCHANGE_POINTS_CONTROLLER];
 
