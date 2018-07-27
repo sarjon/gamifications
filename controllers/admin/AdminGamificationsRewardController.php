@@ -61,9 +61,9 @@ class AdminGamificationsRewardController extends GamificationsAdminController
     /**
      * Add custom js & css to controller
      */
-    public function setMedia()
+    public function setMedia($isNewTheme = false)
     {
-        parent::setMedia();
+        parent::setMedia($isNewTheme);
 
         if (in_array($this->display, ['add', 'edit', 'list'])) {
             $this->addJqueryPlugin('autocomplete');
